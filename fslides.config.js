@@ -24,6 +24,7 @@ module.exports = {
     'multi-layer-security.html',
     'esql.html',
     'closing.html',
+    'demo.html',
   ],
 
   // Human-readable labels for the overview panel (must match slides array length)
@@ -44,6 +45,7 @@ module.exports = {
     'Multi-layer security',
     'ES|QL',
     'Thank you',
+    'Demo',
   ],
 
   // Optional: per-slide PDF overrides
