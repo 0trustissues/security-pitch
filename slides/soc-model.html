@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>SOC Operating Model</title>
+<link rel="stylesheet" href="style/eweb.css">
+<style>
+  .stage{position:absolute;left:0;top:0;width:1280px;height:720px;display:none;z-index:3;pointer-events:none}
+  .stage.on{display:block}
+  .stage > *{pointer-events:auto}
+  .hd{position:absolute;left:72px;top:82px;width:1136px}
+  .hd h1{font-size:46px;letter-spacing:-1.7px;margin:0}
+  .hd .sub{font-size:16.5px;max-width:960px;margin-top:10px}
+
+  /* the live graphic */
+  .scene{position:absolute;left:0;top:0;width:1280px;height:720px;z-index:2;display:none;pointer-events:none}
+  .scene.on{display:block}
+  .scene svg{position:absolute;left:0;top:0;overflow:visible}
+  .scene polygon{stroke:#1D1E24;stroke-width:1.2;stroke-linejoin:round}
+  .tl{position:absolute;width:0;height:0}
+  .blk{position:absolute;left:0;top:0;transform:translate(-50%,-50%);text-align:center;white-space:nowrap;line-height:0}
+  .blk svg{position:static;display:block;margin:0 auto 5px}
+  .blk b,.blk i{text-shadow:0 0 5px rgba(255,255,255,.6)}
+  .blk b{display:block;font:600 15px/1.15 var(--sans);letter-spacing:-.3px;color:var(--ink)}
+  .blk i{display:block;font:400 12px/1.3 var(--sans);font-style:normal;color:var(--char);margin-top:2px}
+
+  .sm .blk b{font-size:14px} .sm .blk i{font-size:11px} .sm .blk svg{margin-bottom:3px}
+  .cen{position:absolute;width:0;display:flex;justify-content:center}
+  .pill{flex:none;white-space:nowrap;font:600 10.5px var(--mono);letter-spacing:.08em;text-transform:uppercase;padding:5px 10px;border:1px solid var(--ink)}
+  .pill.o{background:var(--orange);color:var(--ink)} .pill.b{background:var(--blue);color:#fff;border-color:var(--blue)}
+  .cap{flex:none;text-align:center;font-size:13.5px;line-height:1.45;color:var(--grey)}
+
+  .info{position:absolute;left:800px;top:318px;width:408px;background:#fff;border:1px solid var(--ink);padding:20px 22px}
+  .info h3{font:600 20px var(--sans);letter-spacing:-.5px;display:flex;align-items:center;gap:10px}
+  .info ul{list-style:none;margin-top:14px}
+  .info li{display:flex;align-items:center;gap:12px;padding:9px 0;border-top:1px solid var(--line);font-size:14.5px;color:var(--char)}
+  .info li i{flex:none;width:8px;height:8px}
+  .info.o{box-shadow:8px 8px 0 var(--orange)} .info.o li i{background:var(--orange)}
+  .info.b{box-shadow:8px 8px 0 var(--blue)} .info.b li i{background:var(--blue)}
+
+  .shift{position:absolute;left:585px;width:110px;top:390px;display:flex;flex-direction:column;align-items:center;gap:8px;font:600 10.5px var(--mono);letter-spacing:.08em;text-transform:uppercase;color:var(--grey)}
+  .shift u{display:block;position:relative;width:100%;height:1px;background:var(--ink);text-decoration:none}
+  .shift u::after{content:'';position:absolute;right:-1px;top:-4.5px;border-left:7px solid var(--ink);border-top:4.5px solid transparent;border-bottom:4.5px solid transparent}
+
+  /* stage switcher */
+  #tabs{position:absolute;left:50%;top:628px;transform:translateX(-50%);display:flex;gap:8px;z-index:10}
+  .tab{font:600 11px var(--mono);letter-spacing:.06em;text-transform:uppercase;color:var(--grey);background:#fff;border:1px solid var(--line);padding:8px 14px 8px 10px;display:inline-flex;align-items:center;gap:8px;cursor:pointer}
+  .tab i{font-style:normal;width:18px;height:18px;border:1px solid currentColor;border-radius:50%;display:inline-flex;align-items:center;justify-content:center;font-size:10px}
+  .tab.on{color:var(--blue);border-color:var(--blue);background:var(--blue-l)}
+  .tab:hover{border-color:var(--blue);color:var(--blue)}
+  #replay{position:absolute;right:72px;top:628px;width:34px;height:34px;z-index:10;background:#fff;border:1px solid var(--line);color:var(--grey);cursor:pointer;display:flex;align-items:center;justify-content:center}
+  #replay:hover{border-color:var(--blue);color:var(--blue)}
+</style>
+</head>
+<body class="soft" data-foot="Security · SOC operating model">
+<div class="z"><div class="eyebrow in1">Security · <b>SOC operating model</b></div></div>
+
+<!-- 1. PYRAMID -->
+<section class="stage on" id="s1">
+  <div class="hd"><h1 class="in2">The triage <span class="b">pyramid.</span></h1>
+    <p class="sub in3">The traditional SOC pyramid, with masses of junior analysts triaging alerts, can't scale against AI-powered adversaries. The future is the diamond model.</p></div>
+  <div class="cen" style="left:392px;top:224px"><div class="pill o in3">Triage pyramid</div></div>
+  <div class="cen" style="left:392px;top:560px"><div class="cap in6" style="width:600px">Slow, manual triage. Built on burnout, and mathematically impossible to scale against AI-speed adversaries.</div></div>
+  <div class="info o in5"><h3><span class="ic" data-ic="warn" data-size="24"></span>The Pyramid</h3>
+    <ul><li><i></i>Junior-heavy alert triage</li><li><i></i>Burnout, churn, and cost</li><li><i></i>Breaks at AI attack speed</li></ul></div>
+</section>
+
+<!-- 2. DIAMOND -->
+<section class="stage" id="s2">
+  <div class="hd"><h1 class="in2">The <span class="b">diamond model.</span></h1>
+    <p class="sub in3">The traditional SOC pyramid, with masses of junior analysts triaging alerts, can't scale against AI-powered adversaries. The future is the diamond model.</p></div>
+  <div class="cen" style="left:392px;top:224px"><div class="pill b in3">Diamond model</div></div>
+  <div class="cen" style="left:392px;top:560px"><div class="cap in6" style="width:600px">Triage drops to automation. Analysts rise to investigation and engineering. Machine speed, with human judgment.</div></div>
+  <div class="info b in5"><h3><span class="ic" data-ic="gem" data-size="24"></span>The Diamond</h3>
+    <ul><li><i></i>Triage pushed to automation</li><li><i></i>Analysts elevated to engineering</li><li><i></i>Scales with machine-speed threats</li></ul></div>
+</section>
+
+<!-- 3. COMPARE -->
+<section class="stage" id="s3">
+  <div class="hd"><h1 class="in2">The shift, <span class="b">side by side.</span></h1></div>
+  <div class="cen" style="left:322px;top:190px"><div class="pill o in3">Triage pyramid</div></div>
+  <div class="cen" style="left:958px;top:190px"><div class="pill b in3">Diamond model</div></div>
+  <div class="shift in5"><span>The shift</span><u></u></div>
+  <div class="cen" style="left:322px;top:566px"><div class="cap in6" style="width:500px">Junior-heavy. Burnout. Breaks at AI speed.</div></div>
+  <div class="cen" style="left:958px;top:566px"><div class="cap in6" style="width:500px">Automated triage. Analysts elevated. Scales.</div></div>
+</section>
+
+<nav id="tabs">
+  <button class="tab on" data-i="0"><i>1</i>Pyramid</button>
+  <button class="tab" data-i="1"><i>2</i>Diamond</button>
+  <button class="tab" data-i="2"><i>3</i>Compare</button>
+</nav>
+<button id="replay" title="Replay this stage" aria-label="Replay"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 12a8 8 0 1 1-2.6-5.9"/><path d="M20 4v5h-5"/></svg></button>
+
+<script src="style/eweb.js"></script>
+<script src="/js/fuckslides.js"></script>
+<script>
+(function(){
+  const NS = 'http://www.w3.org/2000/svg';
+  const lerp = (a, b, t) => a + (b - a) * t, clamp = (v, a = 0, b = 1) => Math.min(b, Math.max(a, v));
+  const ease = t => t < .5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2;
+  const smooth = (a, b, v) => { const t = clamp((v - a) / (b - a)); return t * t * (3 - 2 * t); };
+  const hex = h => [1, 3, 5].map(i => parseInt(h.slice(i, i + 2), 16));
+  const mix = (a, b, t) => { const x = hex(a), y = hex(b); return '#' + x.map((v, i) => Math.round(lerp(v, y[i], t)).toString(16).padStart(2, '0')).join(''); };
+
+  // monochrome line icons, same family as the rest of the deck
+  const ICONS = {
+    user: '<circle cx="24" cy="15" r="8"/><path d="M8 42c0-9 7-14 16-14s16 5 16 14"/>',
+    users: '<circle cx="17" cy="17" r="6.5"/><circle cx="33" cy="19" r="5.5"/><path d="M4 41c0-8 5-12 13-12s13 4 13 12M30 30c8-1 14 3 14 11"/>',
+    gears: '<circle cx="18" cy="19" r="9" stroke-dasharray="4.4 3"/><circle cx="18" cy="19" r="3.5"/><circle cx="33" cy="33" r="7.5" stroke-dasharray="3.6 2.9"/><circle cx="33" cy="33" r="3"/>',
+    warn: '<path d="M24 6L43 40H5Z"/><path d="M24 18V28"/><circle cx="24" cy="34" r="1.6" fill="#1D1E24" stroke="none"/>',
+    gem: '<path d="M14 8H34L43 19L24 42L5 19Z"/><path d="M5 19H43M17 19L24 42L31 19M14 8L17 19M34 8L31 19M24 8V19"/>'
+  };
+  const icon = (n, z, c) => `<svg width="${z}" height="${z}" viewBox="0 0 48 48" fill="none" stroke="${c || '#1D1E24'}" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">${ICONS[n]}</svg>`;
+  document.querySelectorAll('.ic[data-ic]').forEach(el => { el.innerHTML = icon(el.dataset.ic, el.dataset.size || 24); el.style.lineHeight = 0; });
+
+  // tier fills: [pyramid, diamond]
+  const FILL = [['#D9E8FF', '#D9E8FF'], ['#DDE3EC', '#C8DCFB'], ['#F8D3CC', '#B4CFF8']];
+  const LABELS = [
+    [{n: 'Leads', s: 'Strategy & oversight', ic: 'user'}, {n: 'Leads', s: 'Strategy & oversight', ic: 'user'}],
+    [{n: 'Sr. Analysts', s: 'Deep investigation', ic: 'users'}, {n: 'SOC Analysts', s: 'Investigation & engineering', ic: 'users'}],
+    [{n: 'Entry-level triage analysts', s: 'Drowning in alerts', ic: 'users'}, {n: 'Automation layer', s: 'Machine-speed triage', ic: 'gears'}]
+  ];
+  const TXT_AT = [.58, .5, .38];   // where each tier's label sits within the tier
+
+  // One tiered shape that morphs from pyramid (k=0) to diamond (k=1), with alert particles flowing through it
+  function makeScene(o){
+    const {cx, apex, W, H} = o, TH = H / 3;
+    const root = document.createElement('div'); EW.gen(root); root.className = 'scene' + (o.small ? ' sm' : ''); document.body.appendChild(root);
+    const svg = document.createElementNS(NS, 'svg'); svg.setAttribute('width', 1280); svg.setAttribute('height', 720); root.appendChild(svg);
+    const S = {k: 0, kFrom: 0, kTo: undefined, mt0: 0, t0: 0, ready: 0, spawnT: 0, on: false, T: [], P: []};
+    const width = (f, k) => lerp(W * f, W * (1 - Math.abs(2 * f - 1)), k);
+    const yAt = f => apex + H * f;
+
+    for (let i = 0; i < 3; i++){
+      const g = document.createElementNS(NS, 'g'), poly = document.createElementNS(NS, 'polygon'); g.appendChild(poly); svg.appendChild(g);
+      const tl = document.createElement('div'); tl.className = 'tl';
+      tl.style.left = cx + 'px'; tl.style.top = (apex + TH * i + (o.small && i === 2 ? .42 : TXT_AT[i]) * TH) + 'px';
+      tl.innerHTML = LABELS[i].map(b => `<div class="blk">${o.small && i === 2 ? '' : icon(b.ic, o.small ? 20 : 24)}<b>${b.n}</b><i>${b.s}</i></div>`).join('');
+      root.appendChild(tl);
+      S.T.push({g, poly, tl, blk: [...tl.children]});
+    }
+    const gp = document.createElementNS(NS, 'g'); svg.appendChild(gp);
+    for (let i = 0; i < 48; i++){
+      const r = document.createElementNS(NS, 'rect'); r.setAttribute('width', 5); r.setAttribute('height', 5); r.setAttribute('opacity', 0); gp.appendChild(r);
+      S.P.push({r, alive: false});
+    }
+
+    function shape(){
+      const k = S.k;
+      S.T.forEach((t, i) => {
+        const f0 = i / 3, f1 = (i + 1) / 3, a = width(f0, k), b = width(f1, k);
+        const pts = [[cx - a / 2, yAt(f0)], [cx + a / 2, yAt(f0)]];
+        if (i === 1) { const m = width(.5, k); pts.push([cx + m / 2, yAt(.5)]); }
+        pts.push([cx + b / 2, yAt(f1)], [cx - b / 2, yAt(f1)]);
+        if (i === 1) { const m = width(.5, k); pts.push([cx - m / 2, yAt(.5)]); }
+        t.poly.setAttribute('points', pts.map(p => p[0].toFixed(1) + ',' + p[1].toFixed(1)).join(' '));
+        t.poly.setAttribute('fill', mix(FILL[i][0], FILL[i][1], smooth(.1, .9, k)));
+        const w = smooth(.35, .65, k);
+        t.blk[0].style.opacity = 1 - w; t.blk[1].style.opacity = w;
+      });
+    }
+    const y1 = apex + TH, y2 = apex + 2 * TH, yb = apex + H;
+    const hw = y => width(clamp((y - apex) / H), S.k) / 2;
+
+    function spawn(p){
+      const k = S.k;
+      p.alive = true; p.t = 0; p.y = y2 + 8 + Math.random() * (TH - 16); p.s = Math.random() * 2 - 1; p.jx = Math.random() * 6.28;
+      p.life = lerp(5.2, 2.8, k) * (.7 + Math.random() * .6);
+      p.esc = Math.random() < lerp(.1, .22, k); p.esc2 = p.esc && Math.random() < lerp(.3, .6, k); p.go = false;
+    }
+    function particles(now, dt){
+      if (!S.ready) return;
+      S.spawnT -= dt;
+      if (S.spawnT <= 0){ S.spawnT = lerp(.07, .22, S.k) * (.6 + Math.random() * .8); const p = S.P.find(p => !p.alive); if (p) spawn(p); }
+      for (const p of S.P){
+        if (!p.alive) continue;
+        p.t += dt;
+        if (p.esc && p.t > p.life * .5) p.go = true;
+        const up = p.go ? lerp(14, 46, S.k) : lerp(0, 22, S.k);
+        p.y -= up * dt;
+        p.s = clamp(p.s + Math.sin(now * 1.7 + p.jx) * dt * lerp(.5, .15, S.k), -1, 1);
+        let fade = 1;
+        if (!p.esc){ if (S.k > .5 && p.y < y2 + 10) fade = clamp((p.y - (y2 - 6)) / 16); if (p.t > p.life) fade = Math.min(fade, 1 - (p.t - p.life) / .5); }
+        else { const lim = p.esc2 ? apex + H * .16 : y1 + 14; if (p.y < lim + 14) fade = clamp((p.y - lim) / 14); }
+        if (fade <= 0){ p.alive = false; p.r.setAttribute('opacity', 0); continue; }
+        const c = S.k * clamp((yb - p.y) / (TH + 4));
+        p.r.setAttribute('fill', mix('#FF7E62', '#0B64DD', c));
+        p.r.setAttribute('x', (cx + p.s * hw(p.y) * .85 - 2.5).toFixed(1)); p.r.setAttribute('y', (p.y - 2.5).toFixed(1));
+        p.r.setAttribute('opacity', Math.min(1, p.t / .3, fade).toFixed(2));
+      }
+    }
+    function entry(now){
+      const T0 = S.t0;
+      S.T.forEach((t, i) => {
+        const a = ease(clamp((now - T0 - [.4, .25, .1][i]) / .6)), off = (1 - a) * 26;
+        t.g.setAttribute('transform', `translate(0,${off.toFixed(1)})`); t.g.style.opacity = a;
+        t.tl.style.opacity = a; t.tl.style.transform = `translateY(${off.toFixed(1)}px)`;
+      });
+      S.ready = now - T0 > .8;
+    }
+
+    S.update = (now, dt) => {
+      if (!S.on) return;
+      if (S.kTo !== undefined && now >= S.mt0){ const u = clamp((now - S.mt0) / 1.3); S.k = lerp(S.kFrom, S.kTo, ease(u)); }
+      shape(); entry(now); particles(now, dt);
+    };
+    S.show = on => { S.on = on; root.classList.toggle('on', on); };
+    S.enter = (k0) => { S.t0 = performance.now() / 1000; S.k = S.kFrom = k0; S.kTo = undefined; S.P.forEach(p => { p.alive = false; p.r.setAttribute('opacity', 0); }); S.ready = 0; };
+    S.go = (k, delay) => { S.kFrom = S.k; S.kTo = k; S.mt0 = performance.now() / 1000 + (delay || 0); };
+    // test hook: jump to a settled state
+    S.snap = (k, sec) => { S.t0 = -100; S.k = k; S.kTo = undefined; S.ready = 1; let t = 0; for (; t < (sec || 4); t += 1 / 30) S.update(1000 + t, 1 / 30); };
+    shape(); entry(0);
+    return S;
+  }
+
+  const A = makeScene({cx: 392, apex: 258, W: 620, H: 290});
+  const B = makeScene({cx: 322, apex: 232, W: 500, H: 316, small: true});
+  const C = makeScene({cx: 958, apex: 232, W: 500, H: 316, small: true});
+
+  EW.dots({x: 1090, y: 24, w: 170, h: 150, gap: 9, r: .9, seed: 5, blobs: 2, thr: .45});
+
+  // stage switching: tabs, number keys, or #2 style links. Arrow keys stay with the deck player.
+  const stages = [...document.querySelectorAll('.stage')], tabs = [...document.querySelectorAll('.tab')];
+  let cur = -1;
+  function go(i){
+    const prev = cur; cur = clamp(i, 0, stages.length - 1);
+    stages.forEach((s, k) => s.classList.toggle('on', k === cur));
+    tabs.forEach((t, k) => t.classList.toggle('on', k === cur));
+    if (cur < 2){
+      A.show(true); B.show(false); C.show(false);
+      if (prev < 0 || prev === 2) { A.enter(0); if (cur === 1) A.go(1, .9); }
+      else A.go(cur === 1 ? 1 : 0, 0);
+    } else {
+      A.show(false); B.show(true); C.show(true);
+      B.enter(0); C.enter(0); C.go(1, 1.1);
+    }
+  }
+  window.goStage = go; window.__soc = {A, B, C, go};
+  tabs.forEach(t => t.addEventListener('click', () => go(+t.dataset.i)));
+  document.getElementById('replay').addEventListener('click', () => { const c = cur; cur = -1; stages[c].classList.remove('on'); void stages[c].offsetWidth; go(c); });
+  addEventListener('keydown', e => { if (e.key >= '1' && e.key <= '3' && !e.metaKey && !e.ctrlKey && !e.altKey) go(+e.key - 1); });
+
+  const h = parseInt(location.hash.slice(1), 10);
+  go(h >= 1 && h <= 3 ? h - 1 : 0);
+  let last = performance.now() / 1000;
+  (function loop(){ const now = performance.now() / 1000, dt = Math.min(.05, now - last); last = now; A.update(now, dt); B.update(now, dt); C.update(now, dt); requestAnimationFrame(loop); })();
+})();
+</script>
+</body>
+</html>

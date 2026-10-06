@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>You can't bolt on an agentic SOC</title>
+<link rel="stylesheet" href="style/eweb.css">
+<style>
+  .hd{position:absolute;left:72px;top:78px;width:1136px}
+  .hd h1{font-size:40px;letter-spacing:-1.5px;margin:0}
+  .hd .sub{font-size:16px;margin-top:6px;max-width:900px}
+
+  .pn{position:absolute;background:#fff;border:2px solid var(--ink);z-index:3;overflow:hidden}
+  .pn h3{height:44px;display:flex;align-items:center;justify-content:center;gap:7px;font:600 18px var(--sans);letter-spacing:-.4px;border-bottom:2px solid var(--ink)}
+  .pn h3 em{font-weight:400;font-style:italic}
+  .pn p{height:64px;padding:12px 22px 0;text-align:center;font-size:14px;line-height:1.45;color:var(--char)}
+  .pn svg{display:block;margin:0 auto;overflow:visible}
+  .pn.l{left:72px;top:216px;width:352px;height:414px;box-shadow:6px 6px 0 var(--orange)} .l h3{background:var(--slate-l)}
+  .pn.c{left:448px;top:194px;width:416px;height:446px;box-shadow:8px 8px 0 var(--blue)} .c h3{background:var(--blue);color:#fff;height:48px}
+  .pn.r{left:888px;top:216px;width:320px;height:414px;box-shadow:6px 6px 0 var(--pink)} .r h3{background:var(--slate-l)}
+  .pn.c p{height:56px}
+  svg text{font-family:var(--sans)}
+</style>
+</head>
+<body class="soft" data-foot="Security · Agentic SOC">
+<div class="z"><div class="eyebrow in1">Security · <b>Agentic SOC</b></div></div>
+<div class="hd">
+  <h1 class="in2">You can't bolt on an <span class="b">agentic SOC.</span></h1>
+  <p class="sub in3">Meeting adversaries at machine speed requires a platform where data, AI and automation are native.</p>
+</div>
+
+<svg width="0" height="0" style="position:absolute"><defs>
+  <symbol id="i-spark" viewBox="0 0 48 48"><g fill="none" stroke="#1D1E24" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 10l3.5 10 10 3.5-10 3.5L20 37l-3.5-10-10-3.5 10-3.5z"/><path d="M37 6v9M32.5 10.5h9"/></g></symbol>
+  <symbol id="i-brain" viewBox="0 0 48 48"><g fill="none" stroke="#1D1E24" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M23 7c-5-3-12 0-12 6-4 1-6 6-3 10-3 3-2 8 2 10 0 5 6 8 10 5z"/><path d="M25 7c5-3 12 0 12 6 4 1 6 6 3 10 3 3 2 8-2 10 0 5-6 8-10 5z"/></g></symbol>
+  <symbol id="i-mon" viewBox="0 0 48 48"><g fill="none" stroke="#1D1E24" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><rect x="6" y="8" width="36" height="26" rx="3"/><path d="M17 42H31M24 34v8"/><path d="M24 14l7 3v6c0 4-3 7-7 8-4-1-7-4-7-8v-6z"/></g></symbol>
+  <symbol id="i-people" viewBox="0 0 48 48"><g fill="none" stroke="#1D1E24" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><circle cx="24" cy="20" r="7"/><path d="M10 42c0-8 6-12 14-12s14 4 14 12"/><circle cx="9" cy="12" r="4"/><circle cx="39" cy="12" r="4"/></g></symbol>
+  <symbol id="i-chip" viewBox="0 0 48 48"><g fill="none" stroke="#1D1E24" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><rect x="11" y="11" width="26" height="26" rx="3"/><rect x="18" y="18" width="12" height="12"/><path d="M18 5v6M30 5v6M18 37v6M30 37v6M5 18h6M5 30h6M37 18h6M37 30h6"/></g></symbol>
+</defs></svg>
+
+<!-- LEGACY -->
+<div class="pn l in3">
+  <h3>Legacy SOC <em>(Human-in-the-loop)</em></h3>
+  <p>Slow, manual process. The analyst is the bottleneck. Disconnected tools create friction.</p>
+  <svg id="sl" width="340" height="300" viewBox="0 0 340 300"></svg>
+</div>
+<!-- AGENTIC -->
+<div class="pn c in4">
+  <h3>Agentic SOC <em>(Human-on-the-loop)</em></h3>
+  <p>Machine speed with human judgement. The platform builds, the analyst approves.</p>
+  <svg id="sc" width="408" height="316" viewBox="0 0 408 316"></svg>
+</div>
+<!-- AUTONOMOUS -->
+<div class="pn r in5">
+  <h3>Theoretical autonomous SOC</h3>
+  <p>No human oversight. Risky and irresponsible. Not for security teams.</p>
+  <svg id="sr" width="320" height="300" viewBox="0 0 320 300"></svg>
+</div>
+
+<script src="style/eweb.js"></script>
+<script src="/js/fuckslides.js"></script>
+<script>
+(function(){
+  EW.dots({x: 1030, y: 14, w: 210, h: 150, gap: 9, r: .9, seed: 71, blobs: 2, thr: .45});
+  const $ = id => document.getElementById(id);
+  const clamp = (v, a = 0, b = 1) => Math.min(b, Math.max(a, v)), lerp = (a, b, t) => a + (b - a) * t;
+  const ease = t => t < .5 ? 2 * t * t : 1 - Math.pow(-2 * t + 2, 2) / 2;
+  const pt = (cx, cy, R, d) => [cx + R * Math.sin(d * Math.PI / 180), cy - R * Math.cos(d * Math.PI / 180)];
+  const ico = (n, x, y, s) => `<use href="#i-${n}" x="${x - s / 2}" y="${y - s / 2}" width="${s}" height="${s}"/>`;
+  const T = (x, y, t, o = {}) => `<text x="${x}" y="${y}" text-anchor="${o.a || 'middle'}" font-size="${o.s || 12}" font-weight="${o.w || 500}" fill="${o.c || '#1D1E24'}"${o.i ? ' font-style="italic"' : ''}>${t}</text>`;
+  const box = (x, y, w, h, o = {}) => `<rect ${o.id ? `id="${o.id}" ` : ''}x="${x}" y="${y}" width="${w}" height="${h}" fill="${o.f || '#fff'}" stroke="${o.k || '#1D1E24'}" stroke-width="${o.sw || 1.6}"${o.d ? ` stroke-dasharray="${o.d}"` : ''}/>`;
+  const arrowD = (x, y1, y2, c) => `<path d="M${x} ${y1}V${y2 - 5}" stroke="${c}" stroke-width="2.2"/><path d="M${x - 5} ${y2 - 6}L${x} ${y2}L${x + 5} ${y2 - 6}z" fill="${c}"/>`;
+
+  /* ---------- LEGACY ---------- */
+  const lcx = 170, lcy = 112, LR = 72;
+  let L = `<circle cx="${lcx}" cy="${lcy}" r="${LR}" fill="none" stroke="#DDE3EC" stroke-width="6"/>`;
+  L += box(lcx - 28, lcy - LR - 13, 56, 26, {f: '#EEF1F6'}) + T(lcx, lcy - LR + 5, 'SIEM', {w: 600});
+  L += box(lcx + LR - 26, lcy - 13, 52, 26, {f: '#EEF1F6'}) + T(lcx + LR, lcy + 5, 'XDR', {w: 600});
+  L += box(lcx - 30, lcy + LR - 21, 60, 42, {f: '#EEF1F6'}) + T(lcx, lcy + LR - 3, 'Threat', {w: 600}) + T(lcx, lcy + LR + 12, 'Intel', {w: 600});
+  L += box(lcx - LR - 28, lcy - 13, 56, 26, {f: '#EEF1F6'}) + T(lcx - LR, lcy + 5, 'SOAR', {w: 600});
+  L += ico('people', lcx, lcy + 6, 46) + T(lcx, lcy - 24, '?', {s: 22, w: 700});
+  [45, 135, 225, 315].forEach((d, q) => {
+    const [x, y] = pt(lcx, lcy, LR, d), right = Math.sin(d * Math.PI / 180) > 0;
+    L += `<g id="dm${q}" opacity=".5"><circle cx="${x}" cy="${y}" r="9" fill="#F04E98"/>${T(x, y + 4, '!', {c: '#fff', w: 700, s: 12})}${T(right ? x + 15 : x - 15, y + 4, 'Delay', {a: right ? 'start' : 'end', c: '#E0358A', w: 600, s: 13})}</g>`;
+  });
+  L += T(lcx, 238, 'Bolted-on barrier', {c: '#E0358A', w: 600, s: 14});
+  L += `<circle id="ld" r="6" fill="#0B64DD" stroke="#fff" stroke-width="2"/>`;
+  $('sl').innerHTML = L;
+
+  /* ---------- AGENTIC ---------- */
+  const ccx = 204, ccy = 120, CR = 70;
+  let C = `<rect x="64" y="2" width="140" height="0" fill="none"/>`;
+  C += box(134, 4, 140, 24, {f: '#48EFCF', sw: 1.4}) + T(204, 21, 'Judgement &amp; Approval', {w: 600, s: 12.5});
+  C += `<circle cx="${ccx}" cy="${ccy}" r="${CR}" fill="none" stroke="#0B64DD" stroke-width="4" stroke-dasharray="3 0" opacity=".9"/>`;
+  C += ico('chip', ccx, ccy - 10, 44) + T(ccx, ccy + 32, 'Agentic Platform', {c: '#0B64DD', w: 600, s: 14}) + T(ccx, ccy + 46, 'AI &amp; Automation', {c: '#0B64DD', s: 10.5});
+  const CN = [[0, 'people', '#48EFCF'], [90, 'brain', '#fff'], [180, 'mon', '#fff'], [270, 'spark', '#fff']];
+  CN.forEach(([d, i, f], k) => { const [x, y] = pt(ccx, ccy, CR, d); C += `<circle id="cn${k}" cx="${x}" cy="${y}" r="20" fill="${f}" stroke="#7B9BC4" stroke-width="2.4"/>` + ico(i, x, y, 24); });
+  C += T(ccx - CR - 28, ccy - 2, 'Investigate', {a: 'end', w: 600, s: 14}) + T(ccx - CR - 28, ccy + 12, '(AI)', {a: 'end', s: 10.5});
+  C += T(ccx + CR + 28, ccy - 2, 'Correlate', {a: 'start', w: 600, s: 14}) + T(ccx + CR + 28, ccy + 12, '(Machine Speed)', {a: 'start', s: 10.5});
+  C += T(ccx, ccy + CR + 38, 'Build Response Plan <tspan font-size="10.5" font-weight="400">(Auto)</tspan>', {w: 600, s: 14});
+  C += arrowD(ccx, ccy + CR + 46, ccy + CR + 64, '#0B64DD');
+  C += box(100, ccy + CR + 66, 128, 30, {id: 'act', f: '#0A4FB0', k: '#0A4FB0'}) + T(164, ccy + CR + 86, 'ACT <tspan font-size="10.5" font-weight="400">(Platform)</tspan>', {c: '#fff', w: 600, s: 14});
+  C += `<path d="M232 ${ccy + CR + 81}H262" stroke="#0B64DD" stroke-width="2.2"/><path d="M257 ${ccy + CR + 76}L263 ${ccy + CR + 81}L257 ${ccy + CR + 86}z" fill="#0B64DD"/>`;
+  C += box(268, ccy + CR + 62, 124, 38, {id: 'thr', f: '#48EFCF', sw: 1.4}) + T(330, ccy + CR + 78, 'Threat', {w: 600, s: 12.5}) + T(330, ccy + CR + 92, 'Neutralized', {w: 600, s: 12.5});
+  C += `<circle id="cd" r="6" fill="#0B64DD" stroke="#fff" stroke-width="2"/>`;
+  $('sc').innerHTML = C;
+
+  /* ---------- AUTONOMOUS ---------- */
+  const rcx = 160, rcy = 96, RR = 58;
+  let R = `<circle cx="${rcx}" cy="${rcy}" r="${RR}" fill="none" stroke="#DDE3EC" stroke-width="5" stroke-dasharray="4 5"/>`;
+  [[-52, 'spark'], [52, 'brain'], [180, 'mon']].forEach(([d, i], k) => { const [x, y] = pt(rcx, rcy, RR, d); R += `<circle id="rn${k}" cx="${x}" cy="${y}" r="19" fill="#fff" stroke="#9AA6BA" stroke-width="2.2"/>` + ico(i, x, y, 23); });
+  const [ix, iy] = pt(rcx, rcy, RR, -52), [kx, ky] = pt(rcx, rcy, RR, 52);
+  R += T(ix - 26, iy - 2, 'Investigate', {a: 'end', w: 600, s: 13}) + T(ix - 26, iy + 11, '(AI)', {a: 'end', s: 10}) ;
+  R += T(kx + 26, ky - 2, 'Correlate', {a: 'start', w: 600, s: 13}) + T(kx + 26, ky + 11, '(Machine Speed)', {a: 'start', s: 10});
+  R += T(rcx, rcy + RR + 40, 'Build Response Plan <tspan font-size="10" font-weight="400">(Auto)</tspan>', {w: 600, s: 13});
+  R += arrowD(rcx, rcy + RR + 48, rcy + RR + 66, '#9AA6BA');
+  R += box(76, rcy + RR + 68, 168, 28, {id: 'ract', f: '#EEF1F6', k: '#7B8799'}) + T(rcx, rcy + RR + 87, 'ACT <tspan font-size="10" font-weight="400">(Unsupervised)</tspan>', {w: 600, s: 13});
+  R += arrowD(rcx, rcy + RR + 98, rcy + RR + 116, '#9AA6BA');
+  R += box(86, rcy + RR + 118, 148, 28, {id: 'risk', f: '#F04E98', k: '#C21F6B', sw: 1.4}) + T(rcx, rcy + RR + 137, 'Risk / Unaccountable', {c: '#fff', w: 600, s: 12});
+  R += `<g id="rbad" opacity="0"><circle cx="232" cy="${rcy + RR + 118}" r="10" fill="#fff" stroke="#F04E98" stroke-width="2"/>${T(232, rcy + RR + 122, '!', {c: '#E0358A', w: 700, s: 13})}</g>`;
+  R += `<circle id="rd" r="6" fill="#0B64DD" stroke="#fff" stroke-width="2"/>`;
+  $('sr').innerHTML = R;
+
+  /* ---------- motion ---------- */
+  const near = (a, b, w) => { const d = Math.abs(((a - b + 540) % 360) - 180); return d < w; };
+  function frame(now){
+    const t = now / 1000;
+
+    // legacy: the pulse stalls at every handoff
+    { const P = 1.8, q = Math.floor((t % (4 * P)) / P), u = (t % (4 * P)) - q * P; let a, act = -1;
+      if (u < .5) a = q * 90 + 45 * ease(u / .5); else if (u < 1.3) { a = q * 90 + 45; act = q; } else a = q * 90 + 45 + 45 * ease((u - 1.3) / .5);
+      const [x, y] = pt(lcx, lcy, LR, a); $('ld').setAttribute('cx', x); $('ld').setAttribute('cy', y);
+      for (let k = 0; k < 4; k++){ const g = $('dm' + k); g.setAttribute('opacity', k === act ? 1 : .45); g.style.transform = ''; } }
+
+    // agentic: a continuous loop, then the platform acts
+    { const a = (t * 360 / 3) % 360, [x, y] = pt(ccx, ccy, CR, a); $('cd').setAttribute('cx', x); $('cd').setAttribute('cy', y);
+      [0, 90, 180, 270].forEach((d, k) => { const on = near(a, d, 28), el = $('cn' + k); el.setAttribute('r', on ? 23 : 20); el.setAttribute('stroke', on ? '#0B64DD' : '#7B9BC4'); el.setAttribute('fill', on ? '#D9E8FF' : (k === 0 ? '#48EFCF' : '#fff')); });
+      const acting = a > 165 && a < 300; $('act').setAttribute('fill', acting ? '#0B64DD' : '#0A4FB0'); $('thr').setAttribute('stroke-width', acting ? 3 : 1.4); }
+
+    // autonomous: spins, then drops straight into risk
+    { const c = t % 7, d = $('rd');
+      if (c < 3.2){ const [x, y] = pt(rcx, rcy, RR, (c / 1.6) * 360); d.setAttribute('cx', x); d.setAttribute('cy', y); d.setAttribute('opacity', 1); $('risk').setAttribute('stroke-width', 1.4); $('rbad').setAttribute('opacity', 0); }
+      else if (c < 4.6){ const u = ease((c - 3.2) / 1.4), y = lerp(rcy + RR, rcy + RR + 132, u); d.setAttribute('cx', rcx); d.setAttribute('cy', y); d.setAttribute('opacity', 1); }
+      else { d.setAttribute('opacity', 0); const f = .5 + .5 * Math.sin((c - 4.6) * 9); $('risk').setAttribute('stroke-width', 1.4 + f * 2.6); $('rbad').setAttribute('opacity', 1); }
+      [0, 1, 2].forEach(k => $('rn' + k).setAttribute('stroke', '#9AA6BA')); }
+    requestAnimationFrame(frame);
+  }
+  requestAnimationFrame(frame);
+})();
+</script>
+</body>
+</html>

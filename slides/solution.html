@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>The Elastic Security solution</title>
+<link rel="stylesheet" href="style/eweb.css">
+<style>
+  .a{position:absolute}
+
+  /* label tabs attached to the top-left of a panel */
+  .tb{position:absolute;height:32px;padding:0 14px;display:inline-flex;align-items:center;white-space:nowrap;font:600 11px var(--mono);letter-spacing:.06em;text-transform:uppercase;color:var(--ink);z-index:4}
+  .tb.teal{background:var(--teal)} .tb.or{background:var(--orange)} .tb.yl{background:var(--yellow)}
+  .tb.bl{background:var(--blue);color:#fff}
+  .fd5{animation:fdin .6s ease .7s both}
+  @keyframes fdin{from{opacity:0}to{opacity:1}}
+  .vt{position:absolute;z-index:5;display:flex;align-items:center;justify-content:center;writing-mode:vertical-rl;transform:rotate(180deg);font:600 11px var(--mono);letter-spacing:.1em;text-transform:uppercase}
+
+  /* white panels with an accent offset shadow */
+  .pn{position:absolute;z-index:2;background:#fff;border:1px solid var(--ink);padding:14px 16px;width:250px;height:160px}
+  .pn .note{font:500 10px var(--mono);letter-spacing:.08em;text-transform:uppercase;color:var(--grey);margin-bottom:10px}
+  .pn .chips{display:flex;flex-wrap:wrap;gap:6px}
+  .chip{font-size:10.5px;padding:4px 8px}
+  .chip.bl{border-color:var(--blue);background:var(--blue-l);color:var(--blue-d)}
+  .chip.or{border-color:var(--orange)}
+  .chip.yl{border-color:var(--yellow)}
+  .chip.dash{border-style:dashed;background:transparent;color:var(--grey)}
+  .pn.r{width:248px}
+  .pn.r .chip{font-size:12px;padding:9px 10px;font-family:var(--sans);text-transform:none;letter-spacing:0;font-weight:500;color:var(--ink)}
+
+  /* the platform */
+  .plat{left:372px;top:104px;width:528px;height:556px;background:var(--blue);z-index:1;border-radius:6px}
+  .badge{left:531px;top:70px;width:210px;height:56px;z-index:6;background:#fff;border:1px solid var(--ink);box-shadow:5px 5px 0 var(--orange);display:flex;align-items:center;justify-content:center;gap:10px;font:600 16px var(--sans);letter-spacing:-.3px}
+  .badge img{width:38px;height:38px;display:block}
+  .caps{left:388px;top:142px;width:496px;height:104px;z-index:3;display:grid;grid-template-columns:115px 100px 129px 122px;gap:10px}
+  .cap{background:#fff;padding:12px 10px;display:flex;flex-direction:column;justify-content:space-between}
+  .cap .t{font:600 14px/1.2 var(--sans);letter-spacing:-.3px;color:var(--ink)}
+  .cap .s{font:500 9.5px var(--mono);letter-spacing:.06em;text-transform:uppercase;color:var(--grey);margin-bottom:2px}
+  .cap .ic{line-height:0}
+  .icr{display:flex;gap:8px}
+  .cap.ai{background:var(--pink)}
+  .cap.ai .t{color:#fff;font-size:13px}
+  .inner{left:388px;top:264px;width:496px;height:382px;background:var(--blue-d);z-index:2;border-radius:6px}
+
+  .bar{left:430px;width:432px;z-index:3;display:flex;align-items:center;justify-content:center;font:500 13px var(--sans);color:var(--ink)}
+  .ccs{left:540px;top:410px;width:212px;height:34px;z-index:3;background:#fff;display:flex;align-items:center;justify-content:center;font:600 12.5px var(--sans);color:var(--ink)}
+  .st{width:64px;height:64px;top:470px;z-index:3;background:#fff;border:1px solid var(--ink);box-shadow:4px 4px 0 var(--char);display:flex;align-items:center;justify-content:center}
+  .st img{width:46px;height:46px;object-fit:contain;display:block}
+  .sl{width:80px;text-align:center;font:500 10px var(--mono);letter-spacing:.06em;text-transform:uppercase;color:#fff;z-index:3}
+  .snap{left:430px;top:566px;width:432px;height:60px;border:1px dashed rgba(255,255,255,.7);z-index:2}
+  .ss{width:80px;text-align:center;font:400 9.5px var(--mono);letter-spacing:.04em;text-transform:uppercase;color:var(--blue-l);z-index:3}
+  .snapt{left:430px;top:602px;width:432px;text-align:center;font:600 10.5px var(--mono);letter-spacing:.08em;text-transform:uppercase;color:#fff;z-index:3}
+
+  /* flow lines */
+  #flow{position:absolute;left:0;top:0;width:1280px;height:720px;z-index:4;pointer-events:none;overflow:visible}
+  #flow path,#flow line{fill:none;stroke-width:1.5}
+  .fl{stroke-dasharray:5 4;animation:march 1.6s linear infinite}
+  #flow path.ah{fill:#0B64DD;stroke:none}
+  #flow path.ah.o{fill:#FF7E62}
+  .fl.rev{animation-direction:reverse}
+  @keyframes march{to{stroke-dashoffset:-9}}
+</style>
+</head>
+<body class="soft" data-foot="Security · Solution">
+<div class="z">
+  <div class="eyebrow in1">Elastic · <b>Security</b></div>
+</div>
+
+<!-- left: your data -->
+<div class="tb teal in3" style="left:72px;top:120px">Bring your data</div>
+<div class="pn in3" style="left:72px;top:152px;box-shadow:5px 5px 0 var(--teal)">
+  <div class="note">Business data</div>
+  <div class="chips"><span class="chip bl">Cloud</span><span class="chip bl">Host</span><span class="chip bl">Network</span><span class="chip bl">User</span><span class="chip bl">Threat intel</span><span class="chip bl">Data lake</span><span class="chip dash">And more</span></div>
+</div>
+<div class="tb or in4" style="left:72px;top:400px">Data with Elastic protection</div>
+<div class="pn in4" style="left:72px;top:432px;box-shadow:5px 5px 0 var(--orange)">
+  <div class="chips" style="margin-top:6px"><span class="chip or">Windows</span><span class="chip or">macOS</span><span class="chip or">Linux</span><span class="chip or">Containers</span><span class="chip or">Servers</span><span class="chip or">Providers</span><span class="chip dash">And more</span></div>
+</div>
+
+<!-- center: the platform -->
+<div class="a plat in3"></div>
+<div class="a badge in3" id="badge"></div>
+<div class="a caps in4">
+  <div class="cap"><span class="ic" data-ic="dash"></span><div class="t">Dashboard and Reporting</div></div>
+  <div class="cap"><span class="icr"><span class="ic" data-ic="rules" data-size="34"></span><span class="ic" data-ic="ml" data-size="34"></span></span><div><div class="s">Rules and ML</div><div class="t">Threat Detection</div></div></div>
+  <div class="cap"><span class="ic" data-ic="chart"></span><div class="t">Advanced Entity Analytics</div></div>
+  <div class="cap ai"><span class="ic" data-ic="bot"></span><div class="t">AI Triage Agent<br>AI Chat Agent</div></div>
+</div>
+<div class="vt fd5" style="left:892px;top:146px;width:24px;height:96px;background:var(--ink);color:#fff">Connectors</div>
+
+<div class="a inner in4"></div>
+<div class="vt fd5" style="left:378px;top:288px;width:24px;height:200px;background:var(--teal);color:var(--ink)">Data ingest</div>
+<div class="a bar in5" style="top:292px;height:44px;background:var(--blue-l)">Data search, processing and normalization</div>
+<div class="a bar in5" style="top:336px;height:42px;background:var(--teal)">Normalized to ECS / OTel semantic convention</div>
+<div class="a ccs in6">Elastic Cross-Cluster Search</div>
+
+<div class="a st in6" style="left:452px"><img src="assets/google-cloud.svg" alt="Google Cloud"></div>
+<div class="a st in6" style="left:560px"><img src="assets/aws.svg" alt="AWS"></div>
+<div class="a st in6" style="left:668px"><img src="assets/azure.svg" alt="Microsoft Azure"></div>
+<div class="a st in6" style="left:776px"><span class="ic" data-ic="stack" data-a="19"></span></div>
+<div class="a sl in6" style="left:444px;top:542px">Google</div>
+<div class="a sl in6" style="left:552px;top:542px">Amazon</div>
+<div class="a sl in6" style="left:660px;top:542px">Microsoft</div>
+<div class="a sl in6" style="left:768px;top:542px">Local</div>
+<div class="a snap in6"></div>
+<div class="a ss in6" style="left:444px;top:574px">Cloud storage</div>
+<div class="a ss in6" style="left:552px;top:574px">S3</div>
+<div class="a ss in6" style="left:660px;top:574px">Azure blob</div>
+<div class="a ss in6" style="left:768px;top:574px">NAS</div>
+<div class="a snapt in6">Elastic searchable snapshots</div>
+
+<!-- right: integrations and content -->
+<div class="tb bl in4" style="left:960px;top:120px">3rd party integrations</div>
+<div class="pn r in4" style="left:960px;top:152px;box-shadow:5px 5px 0 var(--blue)">
+  <div class="chips"><span class="chip bl">Ticketing</span><span class="chip bl">SOAR</span><span class="chip bl">LLMs</span><span class="chip bl">Notification</span></div>
+</div>
+<div class="tb yl in5" style="left:960px;top:400px">Content</div>
+<div class="pn r in5" style="left:960px;top:432px;box-shadow:5px 5px 0 var(--yellow)">
+  <div class="chips"><span class="chip yl">SIEM Rules</span><span class="chip yl">Endpoint Rules</span><span class="chip yl">Threat Research</span></div>
+</div>
+
+<!-- dashed flows, drawn over the panels -->
+<svg id="flow" class="in5">
+  <path class="fl" stroke="#0B64DD" d="M322 200H346V330H372"/>
+  <path class="fl" stroke="#0B64DD" d="M322 224H338V352H372"/>
+  <path class="fl" stroke="#FF7E62" d="M322 490H346V420H372"/>
+  <path class="fl" stroke="#FF7E62" d="M322 514H354V442H372"/>
+  <!-- arrowheads where the data sources enter Data ingest -->
+  <path class="ah" d="M372 330l-7-3.5v7zM372 352l-7-3.5v7z"/>
+  <path class="ah o" d="M372 420l-7-3.5v7zM372 442l-7-3.5v7z"/>
+  <path class="fl" stroke="#fff" d="M402 312H430M402 334H430M402 358H430"/>
+  <!-- connectors: traffic runs both ways (out to 3rd parties, results back in) -->
+  <path class="fl" stroke="#0B64DD" d="M916 170H954M916 202H954"/>
+  <path class="fl rev" stroke="#0B64DD" d="M922 186H960M922 218H960"/>
+  <path class="ah" d="M960 170l-7-3.5v7zM960 202l-7-3.5v7z"/>
+  <path class="ah" d="M916 186l7-3.5v7zM916 218l7-3.5v7z"/>
+  <path class="fl" stroke="#48EFCF" d="M600 378V410M646 378V410M692 378V410"/>
+  <path stroke="#fff" d="M646 444V462M484 462H808M484 462V470M592 462V470M700 462V470M808 462V470"/>
+</svg>
+
+<script src="style/eweb.js"></script>
+<script src="/js/fuckslides.js"></script>
+<script>
+(function(){
+  // the Elastic Security logo, used as supplied
+  document.getElementById('badge').innerHTML = '<img src="assets/elastic-security.svg" alt="">Elastic Security';
+
+  // small icons: monochrome line work, plus isometric slabs for local storage
+  document.querySelectorAll('.ic').forEach(el => {
+    const k = el.dataset.ic;
+    if (k === 'bot'){
+      // AI agent: friendly robot head with antenna and smile, drawn in white for the pink tile
+      el.innerHTML = '<svg width="38" height="38" viewBox="0 0 48 48" fill="none" stroke="#fff" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">'
+        + '<path d="M24 12V8"/><circle cx="24" cy="5.5" r="2.4"/>'
+        + '<rect x="8" y="12" width="32" height="27" rx="9"/>'
+        + '<rect x="3" y="22" width="5" height="9" rx="2.5" fill="#fff" stroke="none"/><rect x="40" y="22" width="5" height="9" rx="2.5" fill="#fff" stroke="none"/>'
+        + '<circle cx="18" cy="24" r="2.6" fill="#fff" stroke="none"/><circle cx="30" cy="24" r="2.6" fill="#fff" stroke="none"/>'
+        + '<path d="M18 31.5Q24 36 30 31.5"/></svg>';
+      el.style.display = 'block';
+      return;
+    }
+    const LINE = {
+      // Rules: a target being hit by an arrow
+      rules: '<circle cx="21" cy="27" r="15"/><circle cx="21" cy="27" r="8.5"/><circle cx="21" cy="27" r="2.2" fill="#1D1E24" stroke="none"/><path d="M21 27L41 7M41 7H33M41 7V15"/>',
+      // ML: two brackets holding a small connected network
+      ml: '<path d="M14 6Q8 6 8 12V19Q8 24 3 24Q8 24 8 29V36Q8 42 14 42"/><path d="M34 6Q40 6 40 12V19Q40 24 45 24Q40 24 40 29V36Q40 42 34 42"/>'
+        + '<path d="M19 11L29 24L19 37M29 11L19 24L29 37"/>'
+        + '<circle cx="19" cy="11" r="2.6" fill="#fff"/><circle cx="29" cy="11" r="2.6" fill="#fff"/><circle cx="19" cy="24" r="2.6" fill="#fff"/><circle cx="29" cy="24" r="2.6" fill="#fff"/><circle cx="19" cy="37" r="2.6" fill="#fff"/><circle cx="29" cy="37" r="2.6" fill="#fff"/>',
+      // Dashboards: a framed window with a trend line and bars
+      dash: '<rect x="5" y="8" width="38" height="31" rx="3"/><path d="M10 31L17 22L23 28L30 16"/><path d="M34 33V27M39 33V20"/>',
+      // Entity analytics: axis plus three rounded bars with entity dots
+      chart: '<path d="M6 6V42H44"/><rect x="12" y="29" width="8" height="13" rx="3.5"/><rect x="23" y="14" width="8" height="28" rx="3.5"/><rect x="34" y="22" width="8" height="20" rx="3.5"/>'
+        + '<circle cx="16" cy="34" r="1.4" fill="#1D1E24" stroke="none"/><circle cx="27" cy="21" r="1.4" fill="#1D1E24" stroke="none"/><circle cx="27" cy="30" r="1.4" fill="#1D1E24" stroke="none"/><circle cx="38" cy="28" r="1.4" fill="#1D1E24" stroke="none"/>'
+    };
+    if (LINE[k]){
+      const z = el.dataset.size || 38;
+      el.innerHTML = `<svg width="${z}" height="${z}" viewBox="0 0 48 48" fill="none" stroke="#1D1E24" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">${LINE[k]}</svg>`;
+      el.style.display = 'block';
+      return;
+    }
+    const a = +el.dataset.a || 14, C = .866 * a, x = C + 1, F = EW.FACES[k === 'stack' ? 'slate' : k];
+    const p = (pts, f) => `<polygon points="${pts.map(q => q.join(',')).join(' ')}" fill="${f}" stroke="#1D1E24" stroke-width="1" stroke-linejoin="round"/>`;
+    const box = (y0, h) => p([[x - C, y0 + a / 2], [x, y0 + a], [x, y0 + a + h], [x - C, y0 + a / 2 + h]], F.left)
+      + p([[x, y0 + a], [x + C, y0 + a / 2], [x + C, y0 + a / 2 + h], [x, y0 + a + h]], F.right)
+      + p([[x, y0], [x + C, y0 + a / 2], [x, y0 + a], [x - C, y0 + a / 2]], F.top);
+    let body, H;
+    if (k === 'stack'){ const h = 6, g = 4; H = a + 2 * (h + g) + h + 2; body = box(1 + 2 * (h + g), h) + box(1 + (h + g), h) + box(1, h); }
+    else { H = 2 * a + 2; body = box(1, a); }
+    el.innerHTML = `<svg width="${(2 * C + 2).toFixed(1)}" height="${H}" viewBox="0 0 ${(2 * C + 2).toFixed(1)} ${H}">${body}</svg>`;
+    el.style.display = 'block';
+  });
+
+  EW.dots({x: 740, y: 20, w: 500, h: 90, gap: 9, r: .9, seed: 11, blobs: 4, thr: .5});
+})();
+</script>
+</body>
+</html>

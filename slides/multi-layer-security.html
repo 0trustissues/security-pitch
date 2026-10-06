@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Multi-layer security</title>
+<link rel="stylesheet" href="style/eweb.css">
+<style>
+  .hd{position:absolute;left:72px;top:78px;width:1136px}
+  .hd h1{font-size:40px;letter-spacing:-1.5px;margin:0}
+  .hd .sub{font-size:16px;margin-top:6px}
+
+  /* controls */
+  .ctl{position:absolute;left:72px;top:170px;width:1136px;height:42px;background:#fff;border:1px solid var(--line);display:flex;align-items:center;gap:8px;padding:0 12px;z-index:5;white-space:nowrap}
+  .ctl .lb{display:flex;align-items:center;gap:6px;font:600 10.5px var(--mono);letter-spacing:.08em;text-transform:uppercase;color:var(--grey)}
+  .ctl .lb svg{color:var(--blue)}
+  .ctl .sep{width:1px;height:22px;background:var(--line);margin:0 6px}
+  .rb{display:inline-flex;align-items:center;gap:7px;height:28px;padding:0 11px;background:#fff;border:1px solid var(--line);font:600 12px var(--sans);color:var(--grey);cursor:pointer}
+  .rb:hover{border-color:var(--blue);color:var(--blue)}
+  .rb.on{background:var(--blue-l);border-color:var(--blue);color:var(--blue)}
+  .sm{font:500 11px var(--sans);color:var(--grey);display:flex;align-items:center;gap:6px}
+  .ch{height:24px;padding:0 10px;background:#EEF1F6;border:1px solid transparent;font:500 11.5px var(--sans);color:var(--char);cursor:pointer}
+  .ch:hover{border-color:var(--blue)}
+  .ch.on{background:var(--blue);color:#fff}
+
+  /* access levels */
+  .lv{position:absolute;left:72px;top:224px;width:236px;height:420px;background:#fff;border:1px solid var(--ink);box-shadow:6px 6px 0 var(--blue);padding:14px 14px 12px;z-index:3}
+  .lv h4{display:flex;align-items:center;gap:7px;font:600 10.5px var(--mono);letter-spacing:.08em;text-transform:uppercase;color:var(--grey);margin-bottom:12px}
+  .lv h4 svg{color:var(--blue)}
+  .layer{position:relative;display:flex;align-items:center;gap:10px;height:50px;padding:0 12px;background:var(--blue-l);border:1px solid var(--blue);transition:opacity .3s,background .3s,border-color .3s}
+  .layer + .layer{margin-top:12px}
+  .layer + .layer::before{content:'';position:absolute;left:24px;top:-13px;height:12px;border-left:1.5px solid var(--slate)}
+  .layer .ico{flex:none;line-height:0;color:var(--blue)}
+  .layer .t{flex:1;min-width:0}
+  .layer b{display:block;font:600 13px var(--sans);letter-spacing:-.2px;color:var(--ink)}
+  .layer i{display:block;font:500 10px var(--mono);font-style:normal;color:var(--blue);margin-top:3px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .layer .st{flex:none;line-height:0}
+  .layer.no{background:#F3F5F9;border-color:var(--line);opacity:.65}
+  .layer.no .ico,.layer.no i{color:var(--grey-l)}
+  .lv hr{border:0;border-top:1px solid var(--line);margin:14px 0 10px}
+  .lv p{font-size:12.5px;line-height:1.55;color:var(--grey)}
+
+  /* the table */
+  .tb{position:absolute;left:322px;top:224px;width:886px;height:420px;background:#fff;border:1px solid var(--line);z-index:3;display:flex;flex-direction:column}
+  .bar{height:32px;flex:none;display:flex;align-items:center;justify-content:space-between;padding:0 12px;border-bottom:1px solid var(--line);background:#FAFBFD}
+  .bar .idx{display:flex;align-items:center;gap:8px;font:600 12.5px var(--sans);color:var(--ink)}
+  .bar .idx svg{color:var(--blue)}
+  .pills{display:flex;align-items:center;gap:6px}
+  .pl{display:inline-flex;align-items:center;gap:5px;height:20px;padding:0 8px;font:600 10px var(--sans);border-radius:10px}
+  .pl.b{background:var(--blue-l);color:var(--blue-d)} .pl.r{background:#FDE2DF;color:#C42B22} .pl.k{background:#FBDCEA;color:#C21F6B}
+  .tg{display:flex;align-items:center;gap:6px;margin-left:8px;padding-left:10px;border-left:1px solid var(--line);font:500 10.5px var(--sans);color:var(--grey);cursor:pointer;user-select:none}
+  .sw{position:relative;width:28px;height:16px;border-radius:8px;background:#D3DAE6;transition:background .2s}
+  .sw::after{content:'';position:absolute;left:2px;top:2px;width:12px;height:12px;border-radius:50%;background:#fff;transition:left .2s}
+  .tg.on .sw{background:var(--blue)} .tg.on .sw::after{left:14px}
+  .tg.on{color:var(--blue)}
+  .grid{display:grid;align-items:center;padding:0 12px;column-gap:6px}
+  .th{height:26px;flex:none;border-bottom:1px solid var(--line);font:600 10px var(--mono);letter-spacing:.06em;text-transform:uppercase;color:var(--char)}
+  .th span{display:flex;align-items:center;gap:4px;white-space:nowrap;transition:color .3s}
+  .th span.hide{color:#B9C1CE}
+  .th svg{flex:none}
+  .rows{flex:1}
+  .tr{height:24px;border-bottom:1px solid #EEF1F5;font:400 11px var(--mono);color:var(--char);animation:rowin .35s ease var(--d,0s) both}
+  @keyframes rowin{from{opacity:.2}to{opacity:1}}
+  .td{white-space:nowrap;overflow:hidden;text-overflow:clip}
+  .td.pii{color:var(--blue)}
+  .td.mk{color:var(--grey)}
+  .sk{display:block;height:7px;background:#EBEEF3;width:var(--w,60%)}
+  .sv{display:inline-block;padding:1px 6px;font:500 10.5px var(--sans)}
+  .sv.info{background:#E8EBF0;color:#69707D} .sv.medium{background:#FFF0B8;color:#7A5C00} .sv.high{background:#FFD9CF;color:#B8442C} .sv.critical{background:#FAD4D1;color:#E0352B}
+  .foot{height:24px;flex:none;border-top:1px solid var(--line);background:#FAFBFD;display:flex;align-items:center;justify-content:space-between;padding:0 12px;font:500 10.5px var(--sans);color:var(--grey)}
+  .foot b{color:var(--ink);font-weight:600}
+  .foot .r{display:flex;align-items:center;gap:12px}
+  .foot .r span{display:flex;align-items:center;gap:5px}
+</style>
+</head>
+<body class="soft" data-foot="Security · Multi-layer security">
+<div class="z"><div class="eyebrow in1">Multi-layer security</div></div>
+<div class="hd">
+  <h1 class="in2">See what <span class="b">they</span> see.</h1>
+  <p class="sub in3">Role and attribute-based controls, so every user sees exactly what they need, nothing more.</p>
+</div>
+
+<div class="ctl in3">
+  <span class="lb" id="i-shield"></span><span class="lb">Role</span>
+  <button class="rb on" data-role="admin"><span class="ri" data-ic="admin"></span>Admin</button>
+  <button class="rb" data-role="analyst"><span class="ri" data-ic="shield"></span>Security Analyst</button>
+  <button class="rb" data-role="dev"><span class="ri" data-ic="code"></span>Developer</button>
+  <button class="rb" data-role="auditor"><span class="ri" data-ic="clip"></span>Auditor</button>
+  <span class="sep"></span>
+  <span class="lb"><span data-ic="filter"></span>ABAC</span>
+  <span class="sm">Dept:</span>
+  <button class="ch" data-dept="Engineering">Engineering</button><button class="ch" data-dept="Finance">Finance</button><button class="ch" data-dept="Sales">Sales</button><button class="ch" data-dept="IT">IT</button>
+  <span class="sm" style="margin-left:6px">Region:</span>
+  <button class="ch" data-reg="US">US</button><button class="ch" data-reg="EU">EU</button><button class="ch" data-reg="APAC">APAC</button>
+</div>
+
+<div class="lv in4">
+  <h4><span data-ic="lock"></span>Access levels</h4>
+  <div id="layers"></div>
+  <hr><p id="desc"></p>
+</div>
+
+<div class="tb in5">
+  <div class="bar"><span class="idx"><span data-ic="db"></span><span id="idx">*</span></span>
+    <span class="pills"><span class="pl b" id="p-vis"></span><span class="pl r" id="p-fil"></span><span class="pl k" id="p-hid"></span>
+      <span class="tg" id="pii"><span class="sw"></span>Mask PII</span></span></div>
+  <div class="grid th" id="th"></div>
+  <div class="rows" id="rows"></div>
+  <div class="foot"><span id="f-role"></span><span class="r" id="f-cnt"></span></div>
+</div>
+
+<script src="style/eweb.js"></script>
+<script src="/js/fuckslides.js"></script>
+<script>
+(function(){
+  EW.dots({x: 1030, y: 14, w: 210, h: 150, gap: 9, r: .9, seed: 23, blobs: 2, thr: .45});
+
+  /* ---- icons (stroke, currentColor) ---- */
+  const P = {
+    admin: '<circle cx="19" cy="17" r="7"/><path d="M5 40c0-8 6-13 14-13M33 30l2-3 3 0 1 3 3 1-1 3 2 2-2 3-3 0-1 3-3-1-3 1-1-3-3-1 1-3z" />',
+    shield: '<path d="M24 5L41 11V24c0 9-7 15-17 19C14 39 7 33 7 24V11z"/>',
+    code: '<path d="M16 14L6 24l10 10M32 14l10 10-10 10M28 8L20 40"/>',
+    clip: '<rect x="9" y="8" width="30" height="34" rx="3"/><path d="M17 8V5h14v3M16 20h16M16 28h16M16 35h10"/>',
+    filter: '<path d="M5 8h38L29 26v14l-10 4V26z"/>',
+    lock: '<rect x="10" y="21" width="28" height="21" rx="3" fill="currentColor"/><path d="M16 21V15a8 8 0 0 1 16 0v6"/>',
+    db: '<ellipse cx="24" cy="12" rx="14" ry="5"/><path d="M10 12v24c0 3 6 5 14 5s14-2 14-5V12M10 24c0 3 6 5 14 5s14-2 14-5"/>',
+    server: '<rect x="6" y="8" width="36" height="13" rx="3"/><rect x="6" y="27" width="36" height="13" rx="3"/><path d="M13 14.5h2M13 33.5h2"/>',
+    doc: '<path d="M12 5h17l9 9v28H12z"/><path d="M29 5v9h9"/>',
+    tag: '<path d="M6 6h18l18 18-18 18L6 24z"/><circle cx="16" cy="16" r="2.5" fill="currentColor"/>',
+    eyeoff: '<path d="M4 24C9 15 16 11 24 11s15 4 20 13c-5 9-12 13-20 13S9 33 4 24z"/><path d="M8 41L40 7"/>',
+    check: '<circle cx="24" cy="24" r="21" fill="#0B64DD" stroke="none"/><path d="M14 25l7 7 14-15" stroke="#fff"/>',
+    x: '<circle cx="24" cy="24" r="21" fill="#FDE2DF" stroke="none"/><path d="M16 16l16 16M32 16L16 32" stroke="#E0352B"/>'
+  };
+  const ic = (n, z, sw) => `<svg width="${z}" height="${z}" viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="${sw || 3.2}" stroke-linecap="round" stroke-linejoin="round">${P[n]}</svg>`;
+  document.querySelectorAll('[data-ic]').forEach(el => { el.innerHTML = ic(el.dataset.ic, el.classList.contains('ri') ? 15 : 14); el.style.lineHeight = 0; });
+  document.getElementById('i-shield').innerHTML = ic('shield', 14);
+
+  /* ---- data ---- */
+  const COLS = [
+    {k: 'ts', h: 'Timestamp', w: 62}, {k: 'user', h: 'User', w: 160}, {k: 'ip', h: 'Source IP', w: 98, pii: 1},
+    {k: 'action', h: 'Action', w: 120}, {k: 'uid', h: 'User ID', w: 76, pii: 1}, {k: 'ssn', h: 'SSN', w: 88, pii: 1},
+    {k: 'sev', h: 'Severity', w: 66}, {k: 'dept', h: 'Department', w: 84}, {k: 'reg', h: 'Region', w: 48}
+  ];
+  const ROWS = [
+    ['09:23:41', 'john.smith@acme.com', '192.168.1.47', 'login_success', 'USR-48291', '123-45-4521', 'info', 'Engineering', 'US'],
+    ['09:24:12', 'sarah.jones@acme.com', '10.0.0.55', 'payment_processed', 'USR-77043', '234-56-8832', 'high', 'Finance', 'EU'],
+    ['09:26:55', 'admin@acme.com', '10.0.0.1', 'config_change', 'USR-00019', '345-67-1190', 'critical', 'IT', 'US'],
+    ['09:28:33', 'lisa.chen@acme.com', '192.168.2.101', 'data_export', 'USR-61882', '456-78-5567', 'high', 'Finance', 'APAC'],
+    ['09:30:17', 'emma.davis@acme.com', '192.168.3.88', 'api_request', 'USR-53410', '567-34-2209', 'info', 'Engineering', 'US'],
+    ['09:31:45', 'raj.patel@acme.com', '10.0.1.200', 'login_failed', 'USR-39027', '567-89-7789', 'medium', 'Sales', 'APAC'],
+    ['09:33:22', 'maria.garcia@acme.com', '172.16.5.33', 'refund_issued', 'USR-82156', '678-90-2341', 'high', 'Finance', 'EU'],
+    ['09:45:58', 'security_scan@acme.com', '10.0.0.100', 'vuln_detected', 'USR-00042', '789-23-6614', 'critical', 'IT', 'US'],
+    ['09:48:12', 'alex.kim@acme.com', '192.168.1.150', 'deployment', 'USR-74390', '890-45-3378', 'medium', 'Engineering', 'US'],
+    ['09:51:44', 'nina.wong@acme.com', '172.16.2.45', 'report_generated', 'USR-56614', '234-89-5501', 'info', 'IT', 'APAC'],
+    ['09:54:02', 'tom.brown@acme.com', '192.168.8.77', 'customer_lookup', 'USR-29835', '789-01-9988', 'info', 'Sales', 'EU'],
+    ['09:56:30', 'james.lee@acme.com', '192.168.4.201', 'transaction_void', 'USR-41107', '890-12-3322', 'high', 'Finance', 'US'],
+    ['09:59:11', 'svc_monitor@acme.com', '10.0.0.200', 'health_check', 'USR-00087', '456-12-7743', 'info', 'IT', 'US'],
+    ['10:02:44', 'kate.miller@acme.com', '192.168.5.66', 'contract_signed', 'USR-68523', '321-54-8876', 'medium', 'Sales', 'EU']
+  ];
+  const SEV = 6;
+  const ROLES = {
+    admin: {name: 'Admin', idx: '*', cluster: ['All operations', 1], index: '*', doc: 'No filters', field: 'All fields', hide: [], row: () => true,
+      desc: 'Unrestricted access to all indices, documents, and fields across the entire cluster.'},
+    analyst: {name: 'Security Analyst', idx: 'security-*, logs-*', cluster: ['Read only', 0], index: 'security-*, logs-*', doc: 'severity: high | critical', field: 'No PII fields', hide: ['uid', 'ssn', 'reg'],
+      row: r => r[SEV] === 'high' || r[SEV] === 'critical', desc: 'Read-only access to security logs. Only high and critical severity events are visible. PII fields are masked.'},
+    dev: {name: 'Developer', idx: 'logs-*, metrics-*', cluster: ['No access', 0], index: 'logs-*, metrics-*', doc: 'severity: not critical', field: 'Basic fields only', hide: ['user', 'ip', 'uid', 'ssn', 'reg'],
+      row: r => r[SEV] !== 'critical', desc: 'App log access with critical events withheld. No user identity or sensitive data exposed.'},
+    auditor: {name: 'Auditor', idx: 'audit-*', cluster: ['No access', 0], index: 'audit-*', doc: 'All documents', field: 'user, action, time', hide: ['ip', 'uid', 'ssn', 'sev', 'dept', 'reg'],
+      row: () => true, desc: 'Read-only audit trail access. Sees who did what and when, nothing more.'}
+  };
+  const KEY = {ts: 0, user: 1, ip: 2, action: 3, uid: 4, ssn: 5, sev: 6, dept: 7, reg: 8};
+
+  /* ---- state ---- */
+  let role = 'admin', dept = null, reg = null, mask = false, prevVis = null, delta = 0;
+  const cols = COLS.map(c => c.w + 'px').join(' ');
+  const $ = id => document.getElementById(id);
+  $('th').style.gridTemplateColumns = cols;
+
+  const maskVal = (k, v) => k === 'ip' ? v.split('.').slice(0, 2).join('.') + '.•.•' : k === 'uid' ? 'USR-•••••' : '•••-••-' + v.slice(-4);
+
+  function render(animate){
+    const R = ROLES[role];
+    const vis = ROWS.map(r => R.row(r) && (!dept || r[7] === dept) && (!reg || r[8] === reg));
+    const nVis = vis.filter(Boolean).length, nFil = 14 - nVis, nHid = R.hide.length;
+    if (prevVis !== null && prevVis !== nVis) delta = nVis - prevVis;
+    if (animate) prevVis = nVis; else if (prevVis === null) prevVis = nVis;
+
+    // layers
+    const L = [['server', 'Cluster', R.cluster[0], R.cluster[1]], ['db', 'Index', R.index, 1], ['doc', 'Document', R.doc, 1], ['tag', 'Field', R.field, 1]];
+    $('layers').innerHTML = L.map(([i, t, s, ok]) => `<div class="layer${ok ? '' : ' no'}"><span class="ico">${ic(i, 18)}</span><span class="t"><b>${t}</b><i>${s}</i></span><span class="st">${ic(ok ? 'check' : 'x', 18)}</span></div>`).join('');
+    $('desc').textContent = R.desc;
+    $('idx').textContent = R.idx;
+
+    // header
+    $('th').innerHTML = COLS.map(c => {
+      const hid = R.hide.includes(c.k);
+      return `<span class="${hid ? 'hide' : ''}">${c.h}${c.pii ? ic('lock', 10) : ''}${hid ? ic('eyeoff', 11, 3.4) : ''}</span>`;
+    }).join('');
+
+    // rows
+    $('rows').innerHTML = ROWS.map((r, n) => {
+      const d = animate ? (n * .018).toFixed(3) + 's' : '0s';
+      const cells = COLS.map((c, j) => {
+        if (!vis[n]) return `<div class="td"><span class="sk" style="--w:${[46, 78, 64, 56, 60, 66, 70, 52, 40][j]}%"></span></div>`;
+        if (R.hide.includes(c.k)) return `<div class="td"><span class="sk" style="--w:${c.k === 'sev' ? 70 : 48}%;background:#E3E7EE"></span></div>`;
+        const v = r[KEY[c.k]];
+        if (c.k === 'sev') return `<div class="td"><span class="sv ${v}">${v}</span></div>`;
+        if (c.pii) return mask ? `<div class="td pii mk">${maskVal(c.k, v)}</div>` : `<div class="td pii">${v}</div>`;
+        return `<div class="td">${v}</div>`;
+      }).join('');
+      return `<div class="grid tr" style="grid-template-columns:${cols};--d:${d}">${cells}</div>`;
+    }).join('');
+
+    // pills + footer
+    const dl = delta ? `<b>${delta > 0 ? '+' : '−'}${Math.abs(delta)}</b> · ` : '';
+    const vp = $('p-vis'); vp.innerHTML = `${dl}${nVis} of 14 rows visible`; vp.className = 'pl ' + (nVis < 14 && delta < 0 ? 'r' : 'b');
+    $('p-fil').style.display = nFil ? '' : 'none'; $('p-fil').textContent = nFil + ' filtered';
+    $('p-hid').style.display = nHid ? '' : 'none'; $('p-hid').textContent = nHid + ' hidden';
+    $('f-role').innerHTML = `Role: <b>${R.name}</b>${dept || reg ? ' <span style="color:#98A2B3">+ ABAC active</span>' : ''}`;
+    $('f-cnt').innerHTML = `<span style="color:var(--blue)">${ic('check', 12)}<span style="color:var(--grey)">${nVis} visible</span></span>${nFil ? `<span>${ic('x', 12)}${nFil} hidden</span>` : ''}`;
+
+    document.querySelectorAll('.rb').forEach(b => b.classList.toggle('on', b.dataset.role === role));
+    document.querySelectorAll('[data-dept]').forEach(b => b.classList.toggle('on', b.dataset.dept === dept));
+    document.querySelectorAll('[data-reg]').forEach(b => b.classList.toggle('on', b.dataset.reg === reg));
+    $('pii').classList.toggle('on', mask);
+  }
+
+  document.querySelectorAll('.rb').forEach(b => b.addEventListener('click', () => { role = b.dataset.role; render(true); }));
+  document.querySelectorAll('[data-dept]').forEach(b => b.addEventListener('click', () => { dept = dept === b.dataset.dept ? null : b.dataset.dept; render(true); }));
+  document.querySelectorAll('[data-reg]').forEach(b => b.addEventListener('click', () => { reg = reg === b.dataset.reg ? null : b.dataset.reg; render(true); }));
+  $('pii').addEventListener('click', () => { mask = !mask; render(false); });
+  window.__mls = {set: (r, d, g, m) => { role = r; dept = d || null; reg = g || null; mask = !!m; render(false); }};
+  render(false);
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>The Elastic Search AI Platform</title>
+<link rel="stylesheet" href="style/eweb.css">
+<style>
+  .hd{position:absolute;left:72px;top:78px;width:1136px}
+  .hd h1{font-size:40px;letter-spacing:-1.5px;margin:0}
+  .hd .sub{font-size:16px;max-width:900px;margin-top:8px}
+
+  #eng{position:absolute;left:0;top:0;z-index:2;overflow:visible}
+  #eng .pc{cursor:pointer;transition:opacity .3s}
+  .clk{cursor:pointer}
+
+  /* the seven layers */
+  #list{position:absolute;left:72px;top:204px;width:372px;z-index:4;pointer-events:none}
+  .it{display:flex;align-items:center;gap:12px;height:56px;padding:0 10px;margin-bottom:2px;border:1px solid transparent;opacity:0;transform:translateX(-14px);transition:opacity .5s,transform .5s,background .25s,border-color .25s;pointer-events:none;cursor:pointer}
+  .open .it{opacity:1;transform:none;pointer-events:auto}
+  .it .no{flex:none;width:22px;font:600 11px var(--mono);color:var(--grey-l)}
+  .it .ib{flex:none;width:36px;height:36px;display:flex;align-items:center;justify-content:center;line-height:0;background:var(--tint)}
+  .it b{display:block;font:600 15px var(--sans);letter-spacing:-.3px;color:var(--ink)}
+  .it i{display:block;font:400 11px var(--mono);font-style:normal;letter-spacing:.02em;color:var(--grey);margin-top:3px}
+  .it.hl{background:#fff;border-color:var(--ink);box-shadow:4px 4px 0 var(--c)}
+  .dim .it:not(.hl) b{color:var(--grey)}
+
+  #hint{position:absolute;left:0;width:1280px;top:612px;text-align:center;font:500 11px var(--mono);letter-spacing:.08em;text-transform:uppercase;color:var(--grey);z-index:3;transition:opacity .4s;pointer-events:none}
+  #hint span{display:inline-block;padding:7px 14px;border:1px dashed var(--grey-l);background:rgba(255,255,255,.7)}
+  .open #hint{opacity:0}
+  #back{position:absolute;right:72px;top:624px;z-index:6;height:32px;padding:0 12px;background:#fff;border:1px solid var(--line);font:600 11px var(--mono);letter-spacing:.06em;text-transform:uppercase;color:var(--grey);cursor:pointer;display:flex;align-items:center;gap:7px;opacity:0;pointer-events:none;transition:opacity .4s}
+  #back:hover{border-color:var(--blue);color:var(--blue)}
+  .open #back{opacity:1;pointer-events:auto}
+</style>
+</head>
+<body class="soft" data-foot="Security · Search AI Platform">
+<div class="z"><div class="eyebrow in1">The Elastic Search AI Platform</div></div>
+<div class="hd">
+  <h1 class="in2">From ingest to action. <span class="b">One engine.</span></h1>
+  <p class="sub in3">Ingestion, search, ML and automation are usually separate products held together by connectors and sync jobs. In Elastic, they are layers of the same engine, working on the same data in place.</p>
+</div>
+
+<svg id="eng" width="1280" height="720" viewBox="0 0 1280 720"><defs id="defs"></defs><g id="pieces"></g><g id="calls"></g><rect id="hit" x="470" y="250" width="340" height="340" fill="transparent" class="clk"/></svg>
+<div id="list"></div>
+<div id="hint"><span>Click the logo to open the engine</span></div>
+<button id="back">↺ Reassemble</button>
+
+<script src="style/eweb.js"></script>
+<script src="/js/fuckslides.js"></script>
+<script>
+(function(){
+  EW.dots({x: 1030, y: 14, w: 210, h: 150, gap: 9, r: .9, seed: 41, blobs: 2, thr: .45});
+  const NS = 'http://www.w3.org/2000/svg', $ = id => document.getElementById(id);
+  const lerp = (a, b, t) => a + (b - a) * t, clamp = (v, a = 0, b = 1) => Math.min(b, Math.max(a, v));
+  const ease = t => t < .5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2;
+  const hex = h => [1, 3, 5].map(i => parseInt(h.slice(i, i + 2), 16));
+  const mix = (a, b, t) => { const x = hex(a), y = hex(b); return '#' + x.map((v, i) => Math.round(lerp(v, y[i], t)).toString(16).padStart(2, '0')).join(''); };
+
+  // The Elastic glyph (280 x 280 artboard, assets/elastic-glyph.svg): backing shape plus six colored pieces, layer order as numbered 1 to 7
+  const CX = 140, CY = 139;
+  const L = [
+    {n: 'Ingestion',     s: 'Agents · integrations · pipelines', c: '#FEC514', ct: [150, 103], z: 64, call: [44, -30], d: 'M122.888 128.607L157.894 144.565L193.205 113.626C194.993 104.705 193.644 95.4404 189.388 87.3992C185.132 79.358 178.229 73.0337 169.847 69.496C161.465 65.9583 152.118 65.4244 143.387 67.9845C134.657 70.5447 127.079 76.0417 121.935 83.5459L116.055 114.04L122.888 128.607Z', ic: 'bolt'},
+    {n: 'Processing',    s: 'Transform · enrich · route',        c: '#45A8FF', ct: [88, 134],  z: 42, call: [-36, -30], d: 'M84.3562 110.811C79.1707 112.524 74.6423 115.8 71.3924 120.189C68.1425 124.578 66.3302 129.865 66.2043 135.324C66.0784 140.784 67.645 146.149 70.6891 150.683C73.7333 155.217 78.1058 158.699 83.2069 160.649L116.828 130.225L110.659 117.066L84.3562 110.811Z', ic: 'gear'},
+    {n: 'Storage',       s: 'Indices · tiers · snapshots',       c: '#9ADC30', ct: [180, 185], z: 22, call: [38, -8],  d: 'M164.337 195.803C167.129 197.954 170.469 199.278 173.977 199.625C177.485 199.972 181.02 199.328 184.179 197.765C187.339 196.203 189.997 193.785 191.851 190.787C193.705 187.789 194.68 184.331 194.666 180.806C194.676 178.564 194.29 176.338 193.525 174.23L169.56 168.624L164.337 195.803Z', ic: 'db'},
+    {n: 'Search',        s: 'Query · relevance · vectors',       c: '#343741', ct: [140, 139], z: 0,  call: [46, -26], d: 'M219.961 143.463C219.979 136.967 217.987 130.625 214.26 125.306C210.532 119.987 205.25 115.951 199.139 113.751C199.695 110.917 199.975 108.037 199.976 105.15C199.971 95.5984 196.939 86.2943 191.316 78.5742C185.692 70.8541 177.766 65.1153 168.676 62.1823C159.586 59.2494 149.8 59.2733 140.725 62.2506C131.65 65.2279 123.752 71.0053 118.166 78.7528C114.043 75.5686 108.997 73.8123 103.788 73.7492C98.5793 73.686 93.4916 75.3194 89.2931 78.4027C85.0947 81.486 82.0135 85.8517 80.515 90.8405C79.0164 95.8293 79.1819 101.17 80.9864 106.057C74.8676 108.285 69.5772 112.332 65.8257 117.654C62.0742 122.977 60.0414 129.32 60.0002 135.831C59.9745 142.357 61.9761 148.73 65.7284 154.069C69.4807 159.409 74.7986 163.451 80.9473 165.637C79.6786 172.165 79.8698 178.893 81.5072 185.339C83.1446 191.784 86.1876 197.788 90.4182 202.919C94.6487 208.05 99.962 212.181 105.977 215.017C111.992 217.853 118.56 219.323 125.211 219.322C132.369 219.329 139.426 217.623 145.791 214.348C152.157 211.073 157.647 206.323 161.803 200.494C165.912 203.715 170.961 205.504 176.181 205.59C181.4 205.677 186.505 204.055 190.718 200.972C194.932 197.89 198.022 193.515 199.52 188.514C201.017 183.513 200.84 178.159 199.014 173.269C205.138 171.04 210.433 166.988 214.185 161.659C217.937 156.33 219.966 149.98 220 143.463', ic: 'search', back: 1},
+    {n: 'Visualization', s: 'Dashboards · reports',              c: '#F04E98', ct: [101, 95],  z: 50, call: [-34, -24], d: 'M86.4206 105.103L110.425 110.764L115.679 83.4911C112.416 81.0205 108.44 79.6724 104.347 79.6483C100.253 79.6242 96.2621 80.9254 92.9695 83.3574C89.6769 85.7894 87.2598 89.2217 86.0794 93.1412C84.899 97.0607 85.0187 101.257 86.4206 105.103Z', ic: 'chart'},
+    {n: 'AI & ML',       s: 'Anomaly detection · GenAI',         c: '#0B64DD', ct: [195, 142], z: 18, call: [44, -28], d: 'M169.216 162.346L195.605 168.515C200.872 166.739 205.453 163.365 208.71 158.861C211.968 154.358 213.739 148.95 213.776 143.392C213.771 138.034 212.136 132.804 209.089 128.397C206.042 123.989 201.726 120.613 196.715 118.716L162.21 148.952L169.216 162.346Z', ic: 'brain'},
+    {n: 'Automation',    s: 'Rules · actions · workflows',       c: '#02BCB7', ct: [122, 175], z: 6,  call: [-38, 34], d: 'M86.6629 165.676C84.8396 174.639 86.1766 183.956 90.4466 192.045C94.7165 200.133 101.656 206.493 110.085 210.043C118.514 213.593 127.912 214.114 136.682 211.518C145.452 208.922 153.052 203.369 158.191 195.803L164.016 165.434L156.197 150.578L121.098 134.549L86.6629 165.676Z', ic: 'refresh'}
+  ];
+  const ICO = {
+    bolt: '<path d="M27 4L10 27H22L20 44L38 20H26Z"/>', gear: '<circle cx="24" cy="24" r="8"/><path d="M24 4v6M24 38v6M4 24h6M38 24h6M10 10l4 4M34 34l4 4M38 10l-4 4M14 34l-4 4"/>',
+    db: '<ellipse cx="24" cy="12" rx="14" ry="5"/><path d="M10 12v24c0 3 6 5 14 5s14-2 14-5V12M10 24c0 3 6 5 14 5s14-2 14-5"/>', search: '<circle cx="21" cy="21" r="13"/><path d="M31 31L43 43"/>',
+    chart: '<path d="M6 6V42H44"/><path d="M12 32L21 22L28 28L40 14"/>', brain: '<path d="M23 7c-5-3-12 0-12 6-4 1-6 6-3 10-3 3-2 8 2 10 0 5 6 8 10 5z"/><path d="M25 7c5-3 12 0 12 6 4 1 6 6 3 10 3 3 2 8-2 10 0 5-6 8-10 5z"/>',
+    refresh: '<path d="M8 24a16 16 0 0 1 28-10M40 24a16 16 0 0 1-28 10"/><path d="M38 6v9h-9M10 42v-9h9"/>'
+  };
+
+  // list, in layer order
+  $('list').innerHTML = L.map((p, i) => `<div class="it" data-i="${i}" style="--c:${p.c === '#343741' ? '#343741' : p.c};--tint:${p.c}2E;transition-delay:${(i * .06).toFixed(2)}s,${(i * .06).toFixed(2)}s,0s,0s"><span class="no">0${i + 1}</span><span class="ib"><svg width="20" height="20" viewBox="0 0 48 48" fill="none" stroke="${p.c}" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round">${ICO[p.ic]}</svg></span><span><b>${p.n}</b><i>${p.s}</i></span></div>`).join('');
+
+  // pieces: extruded stacks of the same path
+  const N = 11, STEP = 1.5, svgEl = $('eng'), defs = $('defs'), pieces = $('pieces'), calls = $('calls');
+  const order = [3, 0, 4, 1, 5, 2, 6];   // backing first, then back to front
+  const P = [];
+  L.forEach((p, i) => {
+    const g = document.createElementNS(NS, 'g'); g.id = 'g' + i; EW.gen(g);
+    const path = document.createElementNS(NS, 'path'); path.setAttribute('d', p.d); g.appendChild(path); defs.appendChild(g);
+    const wrap = document.createElementNS(NS, 'g'); wrap.setAttribute('class', 'pc'); EW.gen(wrap); wrap.dataset.i = i;
+    const uses = [];
+    for (let k = N; k >= 0; k--){
+      const u = document.createElementNS(NS, 'use'); u.setAttribute('href', '#g' + i); wrap.appendChild(u); uses[k] = u;
+    }
+    P[i] = {g, wrap, uses};
+  });
+  order.forEach(i => pieces.appendChild(P[i].wrap));
+
+  // callouts
+  L.forEach((p, i) => {
+    const c = document.createElementNS(NS, 'g'); EW.gen(c); c.setAttribute('opacity', 0);
+    c.innerHTML = `<line stroke="#1D1E24" stroke-width="1"/><circle r="11" fill="#fff" stroke="#1D1E24" stroke-width="1.2"/><text text-anchor="middle" dy="4" font-family="IBM Plex Mono, monospace" font-weight="600" font-size="11" fill="#1D1E24">${i + 1}</text>`;
+    calls.appendChild(c); P[i].call = c;
+  });
+
+  // state: p = 0 assembled (flat logo), 1 = exploded (isometric)
+  let p = 0, from = 0, to = 0, t0 = -10, hl = null, locked = false;
+  const FLAT = {s: 2.0, cx: 640, cy: 410}, ISO = {s: 1.3, cx: 860, cy: 392}, EX = .8;
+  const sideOf = c => mix(c, '#000000', .38);
+
+  function paint(force){
+    const e = p, s = lerp(FLAT.s, ISO.s, e);
+    const a = lerp(s, .866 * s, e), b = lerp(0, .5 * s, e), c = lerp(0, -.866 * s, e), d = lerp(s, .5 * s, e);
+    const cx = lerp(FLAT.cx, ISO.cx, e), cy = lerp(FLAT.cy, ISO.cy, e);
+    L.forEach((pc, i) => {
+      const back = !!pc.back, dx = back ? 0 : (pc.ct[0] - CX) * EX * e, dy = back ? 0 : (pc.ct[1] - CY) * EX * e, sc = back ? lerp(1, .6, e) : 1;
+      P[i].g.setAttribute('transform', `matrix(${a},${b},${c},${d},0,0) translate(${dx},${dy}) scale(${sc}) translate(${-CX},${-CY})`);
+      P[i].wrap.setAttribute('transform', `translate(${cx},${cy - pc.z * e * s})`);
+      const top = back ? mix('#FFFFFF', '#343741', e) : pc.c, side = sideOf(top);
+      P[i].uses.forEach((u, k) => {
+        if (k === 0) { u.setAttribute('fill', top); return; }
+        u.setAttribute('y', (k * STEP * e).toFixed(2));
+        u.setAttribute('fill', mix(top, side, k / N)); u.setAttribute('visibility', e < .02 ? 'hidden' : 'visible');
+      });
+      // callout: from the piece's projected centre out to a numbered marker
+      const lx = back ? 0 : (pc.ct[0] - CX) * (1 + EX * e), ly = back ? 0 : (pc.ct[1] - CY) * (1 + EX * e);
+      const px = cx + a * lx + c * ly, py = cy - pc.z * e * s + b * lx + d * ly;
+      const mx = px + pc.call[0] * 1.15, my = py + pc.call[1] * 1.15, g2 = P[i].call, ln = g2.children[0];
+      ln.setAttribute('x1', px); ln.setAttribute('y1', py); ln.setAttribute('x2', mx); ln.setAttribute('y2', my);
+      g2.children[1].setAttribute('cx', mx); g2.children[1].setAttribute('cy', my);
+      g2.children[2].setAttribute('x', mx); g2.children[2].setAttribute('y', my);
+      g2.setAttribute('opacity', clamp((e - .6) / .4));
+    });
+  }
+  function highlight(){
+    const on = hl !== null;
+    document.querySelectorAll('.it').forEach((el, i) => el.classList.toggle('hl', hl === i));
+    $('list').classList.toggle('dim', on);
+    L.forEach((_, i) => {
+      P[i].wrap.style.opacity = !on || hl === i ? 1 : .22;
+      const cir = P[i].call.children[1]; cir.setAttribute('fill', hl === i ? '#1D1E24' : '#fff');
+      P[i].call.children[2].setAttribute('fill', hl === i ? '#fff' : '#1D1E24');
+    });
+  }
+  function setOpen(open, instant){
+    from = p; to = open ? 1 : 0; t0 = instant ? -10 : performance.now() / 1000;
+    document.body.classList.toggle('open', !!open);
+    if (!open) { hl = null; locked = false; highlight(); }
+    if (instant) { p = to; paint(); }
+  }
+  (function loop(){
+    const T = performance.now() / 1000 - t0;
+    if (p !== to){ const u = clamp(T / 1.4); p = lerp(from, to, ease(u)); if (u >= 1) p = to; paint(); }
+    requestAnimationFrame(loop);
+  })();
+
+  $('hit').addEventListener('click', () => { if (!to) setOpen(true); });
+  document.addEventListener('click', e => { if (!to) { const r = e.target; if (r && r.closest && r.closest('#eng')) setOpen(true); } });
+  $('back').addEventListener('click', () => setOpen(false));
+  document.querySelectorAll('.it').forEach(el => {
+    const i = +el.dataset.i;
+    el.addEventListener('mouseenter', () => { if (!locked) { hl = i; highlight(); } });
+    el.addEventListener('mouseleave', () => { if (!locked) { hl = null; highlight(); } });
+    el.addEventListener('click', () => { if (locked && hl === i) { locked = false; hl = null; } else { locked = true; hl = i; } highlight(); });
+  });
+  P.forEach((q, i) => {
+    q.wrap.addEventListener('mouseenter', () => { if (to && !locked) { hl = i; highlight(); } });
+    q.wrap.addEventListener('mouseleave', () => { if (to && !locked) { hl = null; highlight(); } });
+    q.wrap.addEventListener('click', ev => { if (!to) return; ev.stopPropagation(); if (locked && hl === i) { locked = false; hl = null; } else { locked = true; hl = i; } highlight(); });
+  });
+  addEventListener('keydown', e => { if (e.key === '1') setOpen(false); if (e.key === '2') setOpen(true); });
+  window.__sap = {open: (v, instant) => setOpen(v, instant), hl: i => { hl = i; locked = true; highlight(); }};
+
+  document.body.classList.remove('open');
+  paint(); highlight();
+  if (navigator.webdriver) setOpen(true, true);     // PDF/PPTX export: show the opened engine
+})();
+</script>
+</body>
+</html>

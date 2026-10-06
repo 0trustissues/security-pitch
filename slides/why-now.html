@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Why now</title>
+<link rel="stylesheet" href="style/eweb.css">
+<style>
+  .stage{position:absolute;left:0;top:0;width:1280px;height:720px;display:none;z-index:2}
+  .stage.on{display:block}
+  .hd{position:absolute;left:72px;top:82px;width:1136px}
+  .hd h1{font-size:46px;letter-spacing:-1.7px;margin:0}
+  .hd .sub{font-size:16.5px;max-width:900px;margin-top:10px}
+  .ic svg{display:block}
+
+  /* stage 1: the pressure */
+  .g4{position:absolute;left:72px;top:240px;width:1130px;display:grid;grid-template-columns:repeat(4,1fr);gap:24px}
+  .st{background:#fff;border:1px solid var(--ink);box-shadow:6px 6px 0 var(--blue);padding:20px 22px;height:300px;display:flex;flex-direction:column}
+  .st .top{display:flex;align-items:flex-start;justify-content:space-between;height:40px}
+  .st .stat{font-size:64px;letter-spacing:-2.6px;margin-top:26px;white-space:nowrap}
+  .st .stat small{font-size:.34em;letter-spacing:-.5px;font-weight:500;margin-right:4px}
+  .st .tt{font:600 17px/1.25 var(--sans);letter-spacing:-.3px;margin-top:14px}
+  .st .ds{margin-top:auto;padding-top:12px;border-top:1px solid var(--line);font-size:13.5px;line-height:1.45;color:var(--grey)}
+  .live{display:inline-flex;align-items:center;gap:7px;font:600 10.5px var(--mono);letter-spacing:.08em;color:var(--blue)}
+  .live i{width:8px;height:8px;background:var(--blue);animation:pulse 1.6s ease-in-out 1.8s infinite}
+  @keyframes pulse{0%,100%{opacity:1}50%{opacity:.25}}
+
+  /* stage 2: the taxes */
+  .tx{background:#fff;border:1px solid var(--line);padding:18px 20px;height:250px;display:flex;flex-direction:column;
+    animation:lit .3s ease var(--d) forwards}
+  .tx .top{display:flex;align-items:flex-start;justify-content:space-between;height:40px}
+  .tx .no{font:600 12px var(--mono);letter-spacing:.06em;color:var(--grey-l)}
+  .tx .tt{font:600 22px/1.15 var(--sans);letter-spacing:-.6px;margin-top:20px}
+  .tx .ds{font-size:14px;line-height:1.45;color:var(--char);margin-top:8px}
+  .tx .tag{margin-top:auto;align-self:flex-start;font:600 10.5px var(--mono);letter-spacing:.06em;text-transform:uppercase;color:var(--grey-l);border:1px solid var(--line);padding:5px 8px;animation:tagit .3s ease var(--d) forwards}
+  @keyframes lit{to{border-color:var(--ink);box-shadow:6px 6px 0 var(--orange)}}
+  @keyframes tagit{to{background:var(--orange);border-color:var(--orange);color:var(--ink)}}
+  .path{position:absolute;left:72px;top:540px;width:1136px;height:36px}
+  .path .who{position:absolute;left:0;top:0;height:36px;display:flex;align-items:center;gap:8px;font:600 13px var(--sans)}
+  .path .ln{position:absolute;left:118px;right:128px;top:18px;border-top:1.5px dashed var(--ink)}
+  .path .mid{position:absolute;left:50%;top:7px;transform:translateX(-50%);background:var(--bg);padding:0 12px;font:500 11px var(--mono);letter-spacing:.06em;text-transform:uppercase;color:var(--grey)}
+  .path .mk{position:absolute;left:118px;top:13px;width:10px;height:10px;background:var(--orange);opacity:0;animation:go 1.4s linear .3s forwards}
+  @keyframes go{0%{left:118px;opacity:1}100%{left:1002px;opacity:1}}
+  .path .ex{position:absolute;right:0;top:3px;font:600 11px var(--mono);letter-spacing:.08em;text-transform:uppercase;color:var(--grey-l);border:1px solid var(--line);padding:6px 12px;animation:exit .3s ease 1.75s forwards}
+  @keyframes exit{to{background:var(--orange);border-color:var(--ink);color:var(--ink)}}
+
+  /* stage 3: the SOC models */
+  .soc{position:absolute;top:240px;height:300px;background:#fff;border:1px solid var(--line);padding:22px 24px}
+  .soc h3{font:600 24px/1.1 var(--sans);letter-spacing:-.7px;display:flex;align-items:center;justify-content:space-between}
+  .soc .lab{font:600 11px var(--mono);letter-spacing:.08em;text-transform:uppercase;margin-top:12px}
+  .soc p{font-size:14.5px;line-height:1.5;color:var(--char);position:absolute;left:24px;right:24px;bottom:22px}
+  .soc.leg{left:72px;width:330px}
+  .soc.ag{left:458px;width:380px;border-color:var(--ink);box-shadow:8px 8px 0 var(--blue)}
+  .soc.au{left:894px;width:314px}
+  .leg .lab{color:var(--grey)} .ag .lab{color:var(--blue)} .au .lab{color:#E0352B}
+  .badge{font:600 10.5px var(--mono);letter-spacing:.08em;background:var(--blue);color:#fff;padding:5px 9px}
+  .scat{display:flex;flex-wrap:wrap;gap:10px 8px;margin-top:20px}
+  .scat .c{font:500 11px var(--mono);letter-spacing:.04em;text-transform:uppercase;color:var(--char);border:1px dashed var(--slate);padding:6px 9px;background:#fff}
+  .scat .c:nth-child(1){transform:translate(-2px,2px) rotate(-2deg)} .scat .c:nth-child(2){transform:translate(4px,-3px) rotate(2deg)}
+  .scat .c:nth-child(3){transform:translate(-1px,4px) rotate(1.5deg)} .scat .c:nth-child(4){transform:translate(3px,0) rotate(-2.5deg)}
+  .late{display:inline-flex;align-items:center;gap:6px;margin-top:12px;font:600 10.5px var(--mono);letter-spacing:.06em;text-transform:uppercase;border:1px solid var(--orange);padding:4px 8px}
+  .fuse{display:flex;margin-top:20px;background:var(--blue);border:1px solid var(--ink)}
+  .fuse span{flex:1;text-align:center;padding:12px 0;font:600 10.5px var(--mono);letter-spacing:.02em;text-transform:uppercase;color:#fff;border-left:1px solid rgba(255,255,255,.35);animation:snap .6s cubic-bezier(.2,.9,.25,1.1) .7s both}
+  .fuse span:first-child{border-left:0}
+  .fuse span:nth-child(1){--x:-22px} .fuse span:nth-child(2){--x:-8px} .fuse span:nth-child(3){--x:8px} .fuse span:nth-child(4){--x:22px}
+  @keyframes snap{from{transform:translateX(var(--x));opacity:.2}to{transform:none;opacity:1}}
+  .free{margin-top:20px;border:1px dashed #E0352B;padding:8px;display:flex;gap:8px}
+  .free span{flex:1;text-align:center;padding:10px 0;font:500 11px var(--mono);letter-spacing:.04em;text-transform:uppercase;color:var(--char);background:var(--bg)}
+  .free span.x{color:#E0352B;background:#fff;border:1px solid #E0352B}
+  .ar{position:absolute;top:390px;height:1px;background:var(--ink)}
+  .ar::after{content:'';position:absolute;top:-4.5px;border-top:4.5px solid transparent;border-bottom:4.5px solid transparent}
+  .ar.r::after{right:-1px;border-left:7px solid var(--ink)}
+  .ar.l::after{left:-1px;border-right:7px solid var(--ink)}
+
+  /* stage 4: built as one */
+  .col{position:absolute;top:262px;height:270px;background:#fff;border:1px solid var(--ink);padding:18px 20px 16px}
+  .col .cap{position:absolute;left:0;top:-30px;font:600 11px var(--mono);letter-spacing:.08em;text-transform:uppercase;color:var(--grey);display:flex;align-items:center;gap:8px}
+  .col.c1{left:72px;width:340px;box-shadow:6px 6px 0 var(--blue)}
+  .col.c2{left:468px;width:300px;box-shadow:6px 6px 0 var(--orange)}
+  .col.c3{left:824px;width:376px;box-shadow:6px 6px 0 var(--teal)}
+  .row{display:flex;align-items:baseline;gap:12px;padding:9px 0;border-top:1px solid var(--line);font-size:13.5px;color:var(--char)}
+  .row:first-of-type{border-top:0;padding-top:2px}
+  .row b{flex:none;width:106px;font:500 24px/1 var(--sans);letter-spacing:-1px;color:var(--blue);white-space:nowrap}
+  .row.t{align-items:center;font:600 15.5px var(--sans);letter-spacing:-.3px;color:var(--ink)}
+  .row.t em{flex:none;font:600 11px var(--mono);font-style:normal;color:var(--grey-l);width:22px}
+  .row.t i{flex:none;width:9px;height:9px;background:var(--orange)}
+  .col .fuse{margin-top:6px}
+  .col .fuse2{display:grid;grid-template-columns:1fr 1fr;gap:0;margin-top:6px;border:1px solid var(--ink);background:var(--blue)}
+  .col .fuse2 span{padding:20px 0;text-align:center;font:600 12px var(--mono);letter-spacing:.06em;text-transform:uppercase;color:#fff;border-right:1px solid rgba(255,255,255,.35);border-bottom:1px solid rgba(255,255,255,.35)}
+  .col .fuse2 span:nth-child(2n){border-right:0} .col .fuse2 span:nth-child(n+3){border-bottom:0}
+  .col .lead{margin-top:16px;font:600 17px/1.3 var(--sans);letter-spacing:-.4px}
+  .col .lead span{color:var(--blue)}
+  .one{position:absolute;left:72px;top:560px;width:1128px;height:50px;background:var(--blue);display:flex;align-items:center;gap:14px;padding:0 16px;color:#fff;font:600 17px var(--sans);letter-spacing:-.3px}
+  .one img{width:30px;height:30px;background:#fff;padding:3px;display:block}
+  .one em{margin-left:auto;font:500 11px var(--mono);font-style:normal;letter-spacing:.08em;text-transform:uppercase;opacity:.85}
+
+  /* stage switcher */
+  #tabs{position:absolute;left:50%;top:628px;transform:translateX(-50%);display:flex;gap:8px;z-index:10}
+  .tab{font:600 11px var(--mono);letter-spacing:.06em;text-transform:uppercase;color:var(--grey);background:#fff;border:1px solid var(--line);padding:8px 14px 8px 10px;display:inline-flex;align-items:center;gap:8px;cursor:pointer}
+  .tab i{font-style:normal;width:18px;height:18px;border:1px solid currentColor;border-radius:50%;display:inline-flex;align-items:center;justify-content:center;font-size:10px}
+  .tab.on{color:var(--blue);border-color:var(--blue);background:var(--blue-l)}
+  .tab:hover{border-color:var(--blue);color:var(--blue)}
+  #replay{position:absolute;right:72px;top:628px;width:34px;height:34px;z-index:10;background:#fff;border:1px solid var(--line);color:var(--grey);cursor:pointer;display:flex;align-items:center;justify-content:center}
+  #replay:hover{border-color:var(--blue);color:var(--blue)}
+</style>
+</head>
+<body class="soft" data-foot="Security · Why now">
+<div class="z"><div class="eyebrow in1">Security · <b>Why now</b></div></div>
+
+<!-- 1. WHY NOW -->
+<section class="stage on" id="s1">
+  <div class="hd"><h1 class="in2">The world has <span class="b">changed.</span></h1>
+    <p class="sub in3">Nation-state capabilities are now commodity. AI has collapsed the cost of attack. Breakout times are measured in seconds, not hours.</p></div>
+  <div class="g4">
+    <div class="st in3"><div class="top"><span class="ic" data-ic="bolt"></span></div><div class="stat">80–90%</div><div class="tt">Lower cost to build custom malware with AI</div><div class="ds">What once took a skilled team now takes a prompt</div></div>
+    <div class="st in4"><div class="top"><span class="ic" data-ic="clock"></span><span class="live"><i></i>LIVE</span></div><div class="stat"><small>Every</small><span data-n="17" data-post="m">17m</span></div><div class="tt">A new vulnerability published globally</div><div class="ds">Oct 2025: 172 patches in one Patch Tuesday</div></div>
+    <div class="st in5"><div class="top"><span class="ic" data-ic="bug"></span></div><div class="stat"><span data-n="42" data-pre="+" data-post="%">+42%</span></div><div class="tt">More zero-days exploited before disclosure</div><div class="ds">AI agents auto-fuzz and discover vulnerabilities</div></div>
+    <div class="st in6"><div class="top"><span class="ic" data-ic="warn"></span></div><div class="stat"><span data-n="100" data-post="+">100+</span></div><div class="tt">CVEs per month in 2026</div><div class="ds">Manual patch cycles can no longer keep pace</div></div>
+  </div>
+</section>
+
+<!-- 2. THE TAXES -->
+<section class="stage" id="s2">
+  <div class="hd"><h1 class="in2">The industry taxes your SOC. <span class="b">It doesn't secure it.</span></h1>
+    <p class="sub in3">The adversary follows the money, slipping through every gap the status quo leaves open.</p></div>
+  <div class="g4">
+    <div class="in3"><div class="tx" style="--d:.35s"><div class="top"><span class="ic" data-ic="monitor"></span><span class="no">01</span></div><div class="tt">Endpoint Tax</div><div class="ds">Pay twice: protection, then telemetry.</div><div class="tag">Breach · uncovered endpoints</div></div></div>
+    <div class="in3"><div class="tx" style="--d:.8s"><div class="top"><span class="ic" data-ic="gears"></span><span class="no">02</span></div><div class="tt">Automation Tax</div><div class="ds">A separate SOAR just to use your SIEM.</div><div class="tag">Breach · SOAR handoffs</div></div></div>
+    <div class="in3"><div class="tx" style="--d:1.25s"><div class="top"><span class="ic" data-ic="lock"></span><span class="no">03</span></div><div class="tt">AI Black-Box Tax</div><div class="ds">A vendor LLM you can't verify.</div><div class="tag">Breach · black-box AI</div></div></div>
+    <div class="in3"><div class="tx" style="--d:1.7s"><div class="top"><span class="ic" data-ic="db"></span><span class="no">04</span></div><div class="tt">Data Tax</div><div class="ds">Rehydration fees for your own data.</div><div class="tag">Rehydration wall</div></div></div>
+  </div>
+  <div class="path in5">
+    <div class="who"><span class="ic" data-ic="skull" data-size="26"></span>Adversary</div>
+    <div class="ln"></div><div class="mid">moves through every gap</div><div class="mk"></div>
+    <div class="ex">Exfiltration</div>
+  </div>
+</section>
+
+<!-- 3. AGENTIC SOC -->
+<section class="stage" id="s3">
+  <div class="hd"><h1 class="in2">You can't bolt on an <span class="b">agentic SOC.</span></h1>
+    <p class="sub in3">Machine speed with human judgment requires a platform where data, AI and automation are native, not stitched together.</p></div>
+  <div class="soc leg in3">
+    <h3>Legacy SOC <span class="ic" data-ic="user" data-size="26"></span></h3>
+    <div class="lab">Human-in-the-loop</div>
+    <div class="scat"><span class="c">SIEM</span><span class="c">SOAR</span><span class="c">XDR</span><span class="c">Intel</span></div>
+    <span class="late"><span class="ic" data-ic="clock" data-size="14"></span>delays</span>
+    <p>Bolted-on tools, broken handoffs, analyst as the bottleneck.</p>
+  </div>
+  <div class="ar r in5" style="left:410px;width:44px"></div>
+  <div class="soc ag in4">
+    <h3>Agentic SOC <span class="badge">ELASTIC</span></h3>
+    <div class="lab">Human-on-the-loop</div>
+    <div class="fuse"><span>SIEM</span><span>XDR</span><span>AI</span><span>Automation</span></div>
+    <p>One platform builds the response at machine speed; the analyst approves.</p>
+  </div>
+  <div class="ar l in5" style="left:846px;width:44px"></div>
+  <div class="soc au in5">
+    <h3>Autonomous SOC <span class="ic" data-ic="ban" data-size="26"></span></h3>
+    <div class="lab">Unsupervised</div>
+    <div class="free"><span>Unified</span><span class="x">No approval</span></div>
+    <p>No human oversight. Risky and unaccountable: not for security teams.</p>
+  </div>
+</section>
+
+<!-- 4. BUILT AS ONE -->
+<section class="stage" id="s4">
+  <div class="hd"><h1 class="in2">Built as one. <span class="b">Not stitched together.</span></h1>
+    <p class="sub in3">The world changed, the industry taxes the gaps, and an agentic SOC closes them on one platform.</p></div>
+
+  <div class="col c1 in3"><div class="cap"><span class="ic" data-ic="bolt" data-size="18"></span>1 · Why now</div>
+    <div class="row"><b>80–90%</b>lower cost to build malware with AI</div>
+    <div class="row"><b>17m</b>between new vulnerabilities</div>
+    <div class="row"><b>+42%</b>zero-days exploited before disclosure</div>
+    <div class="row"><b>100+</b>CVEs per month in 2026</div>
+  </div>
+  <div class="ar r in4" style="top:397px;left:418px;width:44px"></div>
+  <div class="col c2 in4"><div class="cap"><span class="ic" data-ic="warn" data-size="18"></span>2 · The taxes</div>
+    <div class="row t"><em>01</em><i></i>Endpoint Tax</div>
+    <div class="row t"><em>02</em><i></i>Automation Tax</div>
+    <div class="row t"><em>03</em><i></i>AI Black-Box Tax</div>
+    <div class="row t"><em>04</em><i></i>Data Tax</div>
+    <div class="row" style="padding-top:12px;font-size:13px;color:var(--grey)">Each one is a gap the adversary can use.</div>
+  </div>
+  <div class="ar r in5" style="top:397px;left:774px;width:44px"></div>
+  <div class="col c3 in5"><div class="cap"><span class="ic" data-ic="shield" data-size="18"></span>3 · Agentic SOC</div>
+    <div class="fuse2"><span>SIEM</span><span>XDR</span><span>AI</span><span>Automation</span></div>
+    <div class="lead">Machine speed, <span>human-on-the-loop.</span></div>
+    <div class="row" style="border-top:0;padding-top:6px;font-size:13px;color:var(--grey)">One platform builds the response; the analyst approves.</div>
+  </div>
+
+  <div class="one in6"><img src="assets/elastic-security.svg" alt="">Data, AI and automation, native to one platform.<em>Elastic Security</em></div>
+</section>
+
+<nav id="tabs">
+  <button class="tab on" data-i="0"><i>1</i>Why now</button>
+  <button class="tab" data-i="1"><i>2</i>The taxes</button>
+  <button class="tab" data-i="2"><i>3</i>Agentic SOC</button>
+  <button class="tab" data-i="3"><i>4</i>Built as one</button>
+</nav>
+<button id="replay" title="Replay this stage" aria-label="Replay"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 12a8 8 0 1 1-2.6-5.9"/><path d="M20 4v5h-5"/></svg></button>
+
+<script src="style/eweb.js"></script>
+<script src="/js/fuckslides.js"></script>
+<script>
+(function(){
+  EW.dots({x: 1090, y: 24, w: 170, h: 150, gap: 9, r: .9, seed: 5, blobs: 2, thr: .45});
+
+  // monochrome line icons, same family as the solution slide
+  const ICONS = {
+    bolt: '<path d="M27 4L10 27H22L20 44L38 20H26Z"/>',
+    clock: '<circle cx="24" cy="24" r="18"/><path d="M24 13V25L32 30"/>',
+    bug: '<path d="M17 22a7 7 0 0 1 14 0v10a7 7 0 0 1-14 0z"/><path d="M24 22V39M19 15a5 5 0 0 1 10 0M17 26H9M17 33H9M31 26H39M31 33H39M18 18L12 13M30 18L36 13"/>',
+    warn: '<path d="M24 6L43 40H5Z"/><path d="M24 18V28"/><circle cx="24" cy="34" r="1.6" fill="#1D1E24" stroke="none"/>',
+    monitor: '<rect x="6" y="8" width="36" height="25" rx="3"/><path d="M17 41H31M24 33V41"/>',
+    gears: '<circle cx="18" cy="19" r="9" stroke-dasharray="4.4 3"/><circle cx="18" cy="19" r="3.5"/><circle cx="33" cy="33" r="7.5" stroke-dasharray="3.6 2.9"/><circle cx="33" cy="33" r="3"/>',
+    lock: '<rect x="10" y="21" width="28" height="21" rx="3"/><path d="M16 21V15a8 8 0 0 1 16 0v6"/><circle cx="24" cy="31" r="2.2" fill="#1D1E24" stroke="none"/>',
+    db: '<ellipse cx="24" cy="12" rx="14" ry="5"/><path d="M10 12v24c0 3 6 5 14 5s14-2 14-5V12M10 24c0 3 6 5 14 5s14-2 14-5"/>',
+    skull: '<path d="M10 22a14 14 0 1 1 28 0c0 5-2 7-5 9v7H15v-7c-3-2-5-4-5-9z"/><circle cx="18" cy="23" r="2.6" fill="#1D1E24" stroke="none"/><circle cx="30" cy="23" r="2.6" fill="#1D1E24" stroke="none"/><path d="M21 38v-4M27 38v-4"/>',
+    user: '<circle cx="24" cy="15" r="8"/><path d="M8 42c0-9 7-14 16-14s16 5 16 14"/>',
+    ban: '<circle cx="24" cy="24" r="18" stroke="#E0352B"/><path d="M11 37L37 11" stroke="#E0352B"/>',
+    shield: '<path d="M24 5L41 11V24c0 9-7 15-17 19C14 39 7 33 7 24V11z"/><path d="M16 24l6 6 11-12"/>'
+  };
+  function icons(root){
+    (root || document).querySelectorAll('.ic[data-ic]').forEach(el => {
+      const z = el.dataset.size || 40;
+      el.innerHTML = `<svg width="${z}" height="${z}" viewBox="0 0 48 48" fill="none" stroke="#1D1E24" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">${ICONS[el.dataset.ic]}</svg>`;
+    });
+  }
+  icons();
+
+  // stage switching: tabs, number keys, or #2 style links. Arrow keys stay with the deck player.
+  const stages = [...document.querySelectorAll('.stage')], tabs = [...document.querySelectorAll('.tab')];
+  let cur = 0;
+  function count(){
+    document.querySelectorAll('#s1 [data-n]').forEach(n => EW.count(n, +n.dataset.n, {pre: n.dataset.pre || '', post: n.dataset.post || '', delay: .35, dur: 1.1}));
+  }
+  function go(i){
+    cur = Math.max(0, Math.min(stages.length - 1, i));
+    stages.forEach((s, k) => s.classList.toggle('on', k === cur));
+    tabs.forEach((t, k) => t.classList.toggle('on', k === cur));
+    if (cur === 0) count();
+  }
+  window.goStage = go;
+  tabs.forEach(t => t.addEventListener('click', () => go(+t.dataset.i)));
+  document.getElementById('replay').addEventListener('click', () => {
+    const s = stages[cur]; s.classList.remove('on'); void s.offsetWidth; go(cur);
+  });
+  addEventListener('keydown', e => { if (e.key >= '1' && e.key <= '4' && !e.metaKey && !e.ctrlKey && !e.altKey) go(+e.key - 1); });
+  const h = parseInt(location.hash.slice(1), 10);
+  if (h >= 1 && h <= 4) go(h - 1); else count();
+})();
+</script>
+</body>
+</html>

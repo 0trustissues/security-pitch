@@ -1,0 +1,193 @@
+<html lang="en"><head>
+<meta charset="UTF-8">
+<title>Unified platform</title>
+<link rel="stylesheet" href="style/eweb.css">
+<style>
+  .hd{position:absolute;left:72px;top:78px;width:1136px}
+  .hd h1{font-size:40px;line-height:1.04;letter-spacing:-1.5px;margin:0}
+  .hd .sub{font-size:16px;margin-top:8px}
+
+  /* sidebar */
+  .side{position:absolute;left:72px;top:230px;width:250px;height:332px;background:#fff;border:1px solid var(--ink);box-shadow:6px 6px 0 var(--blue);padding:16px 18px 14px;z-index:3}
+  .sv{display:none} .sv.on{display:block}
+  .side h3{font:600 18px var(--sans);letter-spacing:-.4px;display:flex;align-items:center;gap:10px}
+  .side ul{list-style:none;margin-top:8px}
+  .side li{display:flex;align-items:center;gap:10px;padding:4px 0;font-size:13px;line-height:1.3;color:var(--char)}
+  .side li i{flex:none;width:6px;height:6px;background:var(--orange)}
+  .side li .mi{flex:none;line-height:0;width:24px;height:24px;background:var(--blue-l);display:flex;align-items:center;justify-content:center}
+  .stat2{position:absolute;left:18px;right:18px;bottom:14px;background:var(--bg);border:1px solid var(--line);padding:10px 14px}
+  .stat2 b{display:block;font:500 34px/1 var(--sans);letter-spacing:-1.5px;color:var(--blue)}
+  .stat2 span{display:block;font-size:11.5px;line-height:1.35;color:var(--grey);margin-top:4px}
+  #go{position:absolute;left:72px;top:574px;width:250px;height:44px;z-index:4;background:var(--blue);color:#fff;border:0;border-radius:4px;font:600 15px var(--sans);cursor:pointer;display:flex;align-items:center;justify-content:center;gap:8px}
+  #go:hover{background:var(--blue-d)}
+
+  /* the stage */
+  #stage{position:absolute;left:350px;top:230px;width:858px;height:388px;background:#fff;border:1px solid var(--line);z-index:2}
+  #stage .cap0{position:absolute;left:0;right:0;bottom:14px;text-align:center;font:500 11px var(--mono);letter-spacing:.06em;text-transform:uppercase;color:var(--grey);transition:opacity .4s}
+  #stage.after .cap0{opacity:0}
+  .tool{position:absolute;left:0;top:0;width:140px;height:38px;z-index:3}
+  .tg{width:100%;height:100%;display:flex;align-items:center;justify-content:center;background:#fff;border:1px solid var(--ink);font:600 13.5px var(--sans);letter-spacing:-.2px;color:var(--ink);animation:ew-in .5s cubic-bezier(.2,.7,.2,1) var(--d) both}
+  .tool.cons .tg{box-shadow:3px 3px 0 var(--blue)} .tool.intg .tg{box-shadow:3px 3px 0 var(--teal)}
+
+  .lbl{position:absolute;top:14px;width:140px;text-align:center;font:600 11px var(--mono);letter-spacing:.08em;text-transform:uppercase;opacity:0;transition:opacity .5s .5s}
+  .after .lbl{opacity:1}
+  .lbl.l{left:24px;color:var(--blue)} .lbl.r{left:694px;color:var(--char)}
+  .arr{position:absolute;top:187px;width:30px;height:1.5px;background:var(--ink);opacity:0;transition:opacity .5s .7s}
+  .arr::after{content:'';position:absolute;top:-4.5px;border-top:5.5px solid transparent;border-bottom:5.5px solid transparent}
+  .arr.l{left:172px} .arr.l::after{right:-1px;border-left:8px solid var(--ink)}
+  .arr.r{left:656px} .arr.r::after{left:-1px;border-right:8px solid var(--ink)}
+  .after .arr{opacity:1}
+
+  .plat{position:absolute;opacity:0;transition:opacity .6s .55s,margin-top .6s .55s;margin-top:14px}
+  .after .plat{opacity:1;margin-top:0}
+  .pc{position:absolute;top:44px;width:138px;height:52px;background:#fff;border:2px solid;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center}
+  .pc span{font:500 11px var(--sans);color:var(--grey)} .pc b{font:600 15px var(--sans);letter-spacing:-.3px;color:var(--ink);margin-top:2px}
+  .pc.y{left:210px;border-color:var(--yellow)} .pc.p{left:360px;border-color:var(--pink)} .pc.o{left:510px;border-color:var(--orange);box-shadow:4px 4px 0 var(--orange)}
+  .pb{position:absolute;left:210px;top:106px;width:438px;height:200px;background:#fff;border:1px solid var(--ink);box-shadow:6px 6px 0 var(--blue)}
+  .pb h4{position:absolute;left:0;right:0;top:12px;text-align:center;font:600 16px var(--sans);letter-spacing:-.3px}
+  .cp{position:absolute;width:95px;height:52px;background:var(--bg);border:1px solid var(--line);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;font:500 10.5px var(--mono);letter-spacing:.04em;color:var(--grey)}
+  .cp .ic{line-height:0}
+  .cp.hi{background:var(--blue-l);border-color:var(--blue);color:var(--blue-d)}
+  .lake{position:absolute;left:79px;width:280px;top:166px;height:26px;border:1px solid var(--blue);background:var(--blue-l);color:var(--blue-d);display:flex;align-items:center;justify-content:center;font:600 11px var(--mono);letter-spacing:.08em;text-transform:uppercase}
+  .dp{position:absolute;top:320px;width:138px;height:52px;background:#fff;border:1px solid var(--line);display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center}
+  .dp b{font:600 13.5px var(--sans);letter-spacing:-.2px} .dp span{font-size:11.5px;color:var(--grey);margin-top:2px}
+</style>
+</head>
+<body class="soft" data-foot="Security · Unified platform">
+<div class="z">
+  <div class="eyebrow in1">Unified platform</div>
+</div>
+<div class="hd" style="">
+  <h1 class="in2">Consolidate point solutions,<br><span class="b">centralize data workflows.</span></h1>
+  <p class="sub in3">Replace disparate tools, and integrate with your broader ecosystem.</p>
+</div>
+
+<!-- sidebar: the problem, then the payoff -->
+<div class="side in3">
+  <div class="sv on" id="sv0">
+    <h3><span class="ic" data-ic="warn" data-size="22"></span>Data sources</h3>
+    <ul><li><i></i>Multiple licenses, contracts</li><li><i></i>Data silos and duplication</li><li><i></i>Context switching</li><li><i></i>Integration overhead</li><li><i></i>Inconsistent alerting</li></ul>
+    <div class="stat2"><b>76+</b><span>Avg. security tools per org<br>IBM / Palo Alto Networks</span></div>
+  </div>
+  <div class="sv" id="sv1">
+    <h3><span class="ic" data-ic="check" data-size="22"></span>With Elastic</h3>
+    <ul>
+      <li><span class="mi"><span class="ic" data-ic="dollar" data-size="16"></span></span>Reduced licensing costs</li>
+      <li><span class="mi"><span class="ic" data-ic="clock" data-size="16"></span></span>Faster triage and response</li>
+      <li><span class="mi"><span class="ic" data-ic="layers" data-size="16"></span></span>Unified data layer</li>
+      <li><span class="mi"><span class="ic" data-ic="db" data-size="16"></span></span>No data duplication</li>
+      <li><span class="mi"><span class="ic" data-ic="share" data-size="16"></span></span>Shared context</li>
+    </ul>
+    <div class="stat2"><b>3–5</b><span>Vendors eliminated on average</span></div>
+  </div>
+</div>
+<button id="go" class="in4">Consolidate <span>→</span></button>
+
+<div id="stage" class="in3">
+  <div class="cap0">Disconnected tools · Duplicated data · Fragmented workflows</div>
+  <div class="lbl l">Consolidated</div><div class="lbl r">Integrated</div>
+  <div class="arr l"></div><div class="arr r"></div>
+
+  <div class="plat">
+    <div class="pc y"><span>Build your own</span><b>Elasticsearch</b></div>
+    <div class="pc p"><span>Out-of-the-box</span><b>Observability</b></div>
+    <div class="pc o"><span>Out-of-the-box</span><b>Security</b></div>
+    <div class="pb"><h4>Search AI Platform</h4><div id="caps"></div><div class="lake">Search AI Lake</div></div>
+    <div class="dp" style="left:210px"><b>Self-managed</b><span>Full control</span></div>
+    <div class="dp" style="left:360px"><b>Elastic Cloud</b><span>AWS, GCP, Azure</span></div>
+    <div class="dp" style="left:510px"><b>Serverless</b><span>Zero ops</span></div>
+  </div>
+</div>
+
+<script src="style/eweb.js"></script>
+<script src="/js/fuckslides.js"></script>
+<script>
+(function(){
+  EW.dots({x: 1020, y: 18, w: 220, h: 150, gap: 9, r: .9, seed: 21, blobs: 2, thr: .45});
+  const lerp = (a, b, t) => a + (b - a) * t, clamp = (v, a = 0, b = 1) => Math.min(b, Math.max(a, v));
+  const ease = t => t < .5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2;
+
+  const ICONS = {
+    warn: '<path d="M24 6L43 40H5Z"/><path d="M24 18V28"/><circle cx="24" cy="34" r="1.6" fill="#0B64DD" stroke="none"/>',
+    check: '<path d="M8 25l11 11L40 12"/>',
+    dollar: '<path d="M24 5v38M32 14c-2-3-5-4-8-4-5 0-8 3-8 7s3 6 8 7 8 3 8 7-3 7-8 7c-4 0-7-1-9-4"/>',
+    clock: '<circle cx="24" cy="24" r="18"/><path d="M24 13V25L32 30"/>',
+    layers: '<path d="M24 6L43 16 24 26 5 16z"/><path d="M5 24l19 10 19-10M5 32l19 10 19-10"/>',
+    db: '<ellipse cx="24" cy="12" rx="14" ry="5"/><path d="M10 12v24c0 3 6 5 14 5s14-2 14-5V12M10 24c0 3 6 5 14 5s14-2 14-5"/>',
+    share: '<path d="M43 6L5 20l14 6 6 14z"/><path d="M19 26L43 6"/>',
+    bolt: '<path d="M27 4L10 27H22L20 44L38 20H26Z"/>',
+    gear: '<circle cx="24" cy="24" r="8"/><path d="M24 4v6M24 38v6M4 24h6M38 24h6M10 10l4 4M34 34l4 4M38 10l-4 4M14 34l-4 4"/>',
+    search: '<circle cx="21" cy="21" r="13"/><path d="M31 31L43 43"/>',
+    brain: '<path d="M23 7c-5-3-12 0-12 6-4 1-6 6-3 10-3 3-2 8 2 10 0 5 6 8 10 5z"/><path d="M25 7c5-3 12 0 12 6 4 1 6 6 3 10 3 3 2 8-2 10 0 5-6 8-10 5z"/>',
+    chart: '<path d="M6 6V42H44"/><path d="M12 32L21 22L28 28L40 14"/>',
+    refresh: '<path d="M8 24a16 16 0 0 1 28-10M40 24a16 16 0 0 1-28 10"/><path d="M38 6v9h-9M10 42v-9h9"/>'
+  };
+  const svgIcon = (n, z, c) => `<svg width="${z}" height="${z}" viewBox="0 0 48 48" fill="none" stroke="${c || '#0B64DD'}" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">${ICONS[n]}</svg>`;
+  document.querySelectorAll('.ic[data-ic]').forEach(el => { el.innerHTML = svgIcon(el.dataset.ic, el.dataset.size || 20); });
+
+  // platform capabilities: 4 + 3, centred
+  const CAPS = [['bolt', 'Ingestion'], ['gear', 'Processing'], ['db', 'Storage', 1], ['search', 'Search', 1], ['brain', 'AI and ML', 1], ['chart', 'Visualization'], ['refresh', 'Automation']];
+  const caps = document.getElementById('caps'), CW = 95, G = 8;
+  CAPS.forEach(([ic, name, hi], i) => {
+    const row = i < 4 ? 0 : 1, n = row ? 3 : 4, idx = row ? i - 4 : i;
+    const x = 16 + (406 - (n * CW + (n - 1) * G)) / 2 + idx * (CW + G), y = 44 + row * 60;
+    const d = document.createElement('div'); d.className = 'cp' + (hi ? ' hi' : '');
+    d.style.left = x + 'px'; d.style.top = y + 'px';
+    d.innerHTML = `<span class="ic">${svgIcon(ic, 20, hi ? '#0A4FB0' : '#69707D')}</span>${name}`;
+    caps.appendChild(d);
+  });
+
+  // the tool tags: scattered before, columns after
+  const CONS = ['SentinelOne', 'Grafana', 'Splunk', 'Datadog', 'CrowdStrike', 'QRadar'];
+  const INTG = ['AWS', 'Azure', 'ServiceNow', 'Slack', 'Okta', 'Jira'];
+  // interleave so the "before" mess mixes both kinds
+  const ORDER = [['c', 0], ['c', 1], ['i', 0], ['i', 1], ['c', 4], ['i', 2], ['c', 2], ['i', 3], ['c', 3], ['i', 4], ['c', 5], ['i', 5]];
+  const stage = document.getElementById('stage'), tags = [];
+  const COLS = 4, CELLW = 858 / COLS, CELLH = 300 / 3;
+  let seed = 7; const rnd = () => (seed = (seed * 16807) % 2147483647) / 2147483647;
+  ORDER.forEach(([k, j], n) => {
+    const el = document.createElement('div'); el.className = 'tool ' + (k === 'c' ? 'cons' : 'intg'); EW.gen(el);
+    el.innerHTML = `<div class="tg" style="--d:${(.3 + n * .05).toFixed(2)}s">${(k === 'c' ? CONS : INTG)[j]}</div>`;
+    stage.appendChild(el);
+    const col = n % COLS, row = Math.floor(n / COLS);
+    tags.push({
+      el,
+      bx: col * CELLW + 24 + rnd() * (CELLW - 190), by: 26 + row * CELLH + rnd() * (CELLH - 64), br: (rnd() - .5) * 14,
+      ax: k === 'c' ? 24 : 694, ay: 44 + j * 48, rank: j * 2 + (k === 'c' ? 0 : 1)
+    });
+  });
+
+  // state: 0 = before, 1 = after
+  let st = 0, tStart = -10, from = 0;
+  const side = [document.getElementById('sv0'), document.getElementById('sv1')], btn = document.getElementById('go');
+  function go(to, instant){
+    to = to ? 1 : 0; if (to === st && !instant) return;
+    st = to; from = 1 - to; tStart = instant ? -10 : performance.now() / 1000;
+    stage.classList.toggle('after', !!st);
+    side.forEach((s, k) => s.classList.toggle('on', k === st));
+    btn.innerHTML = st ? '<span>←</span> Show before' : 'Consolidate <span>→</span>';
+  }
+  window.goStage = i => go(i === 1);
+  window.__up = {go};
+  btn.addEventListener('click', () => go(!st));
+  st = 1; go(0, true);                       // normalise any saved state (stage class, sidebar, button)
+  // PDF/PPTX export drives a headless browser: show the finished "after" picture there
+  if (navigator.webdriver) go(1, true);
+  addEventListener('keydown', e => { if (e.key === '1') go(0); if (e.key === '2') go(1); });
+
+  (function loop(){
+    const now = performance.now() / 1000, T = now - tStart;
+    tags.forEach((t, i) => {
+      const u = ease(clamp((T - t.rank * .06) / .8));            // 0 -> 1 progress toward the target state
+      const p = st ? u : 1 - u;                                   // 0 = scattered, 1 = columns
+      let x = lerp(t.bx, t.ax, p), y = lerp(t.by, t.ay, p), r = lerp(t.br, 0, p);
+      if (p < .02){ x += Math.sin(now * .8 + i * 1.7) * 4; y += Math.cos(now * .7 + i * 1.1) * 4; r += Math.sin(now * .6 + i) * 1.2; }
+      t.el.style.transform = `translate(${x.toFixed(1)}px,${y.toFixed(1)}px) rotate(${r.toFixed(2)}deg)`;
+    });
+    requestAnimationFrame(loop);
+  })();
+})();
+</script>
+
+
+</body></html>

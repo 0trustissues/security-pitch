@@ -1,0 +1,3 @@
+{
+  "solution.html": "- The Elastic Security solution includes a SIEM with all the capabilities expected in an enterprise SIEM.\n- What makes the architecture different: \"schema on write\" makes search faster than other SIEM platforms and enables cross-cluster (federated) search.\n- Agents for endpoints include protection, detection and response (EDR) at no additional cost. Elastic Defend, our protection agent, achieved a best in class score of 100% in the recent AV-Comparatives Business Test.\n- Because we are open by design, we can ingest and get value from any data, endpoint or cloud service.\n- Ask: Are there any SIEM capabilities you think are requirements to replace your current SIEM?"
+}

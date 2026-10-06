@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>ES|QL</title>
+<link rel="stylesheet" href="style/eweb.css">
+<style>
+  .hd{position:absolute;left:72px;top:78px;width:1136px}
+  .hd h1{font-size:40px;letter-spacing:-1.5px;margin:0}
+  .hd .sub{font-size:16px;margin-top:6px}
+
+  .pn{position:absolute;top:176px;height:392px;background:#fff;border:1px solid var(--ink);z-index:3}
+  .pn h4{font:600 10.5px var(--mono);letter-spacing:.08em;text-transform:uppercase;color:var(--grey)}
+
+  /* the query, in a light window frame */
+  .code{left:72px;width:352px;box-shadow:6px 6px 0 var(--blue);display:flex;flex-direction:column}
+  .win{height:34px;flex:none;display:flex;align-items:center;gap:7px;padding:0 12px;border-bottom:1px solid var(--ink);background:#FAFBFD}
+  .win i{width:9px;height:9px;border:1.5px solid var(--ink);border-radius:50%}
+  .win span{margin-left:8px;font:500 11px var(--mono);color:var(--grey)}
+  .src{flex:1;padding:12px 0;font:400 11.5px var(--mono);color:var(--ink)}
+  .ln{display:flex;align-items:center;height:24px;padding:0 12px 0 0;cursor:pointer;opacity:.28;transition:opacity .3s,background .3s;white-space:pre;position:relative}
+  .ln.done{opacity:1} .ln.cur{opacity:1;background:var(--blue-l)}
+  .ln.cur::before{content:'';position:absolute;left:0;top:0;bottom:0;width:3px;background:var(--blue)}
+  .ln .cd{white-space:pre}
+  .ln .n{flex:none;width:34px;text-align:right;padding-right:10px;color:var(--grey-l)}
+  .ln .ind{display:inline-block;width:40px}
+  .kw{font-weight:700;color:#D81B77} .kw.from{background:var(--blue);color:#fff;padding:1px 5px}
+  .fn{color:#028A87;font-weight:500} .st{color:#B8442C} .nu{color:var(--blue);font-weight:500} .pp{color:var(--slate);margin-right:7px} .op{color:var(--grey)}
+  .note{flex:none;min-height:40px;padding:10px 14px;border-top:1px solid var(--line);font:500 11.5px/1.4 var(--sans);color:var(--grey)}
+
+  /* data reduction */
+  .red{left:442px;width:372px;box-shadow:6px 6px 0 var(--teal);padding:14px 16px}
+  .rw{position:absolute;left:16px;right:16px;height:30px;display:flex;align-items:center;gap:10px;cursor:pointer}
+  .rw .ib{flex:none;width:24px;height:24px;background:#F3F5F9;color:var(--slate);display:flex;align-items:center;justify-content:center;line-height:0;transition:background .3s,color .3s}
+  .rw .tr{flex:1;height:24px;background:#F1F3F7;position:relative}
+  .rw .tr i{position:absolute;left:0;top:0;bottom:0;width:0;background:#8DB1EE;transition:width .7s cubic-bezier(.2,.7,.2,1),background .3s}
+  .rw .lb{flex:none;width:94px;font:600 11px var(--sans);color:var(--grey-l);transition:color .3s;white-space:nowrap}
+  .rw.done .ib{background:var(--blue-l);color:var(--blue)} .rw.done .lb{color:var(--char)}
+  .rw.cur .ib{background:var(--blue);color:#fff} .rw.cur .tr i{background:var(--blue)} .rw.cur .lb{color:var(--ink)}
+
+  /* results */
+  .res{left:832px;width:376px;box-shadow:6px 6px 0 var(--orange);padding:14px 16px;overflow:hidden}
+  .tbl{margin-top:14px;font:400 12px var(--mono);opacity:0;transition:opacity .4s}
+  .res.on .tbl{opacity:1}
+  .tbl .tr2{display:grid;grid-template-columns:1fr 78px 36px;align-items:center;height:36px;border-top:1px solid #EEF1F5;gap:10px}
+  .tbl .th2{height:24px;border-top:0;color:var(--grey-l);font-size:11px}
+  .tbl .u{color:var(--blue);font-weight:500}
+  .tbl .a{display:flex;align-items:center;gap:6px;justify-content:flex-end;color:var(--ink)}
+  .tbl .a i{display:block;height:6px;background:var(--orange);width:0;transition:width .6s cubic-bezier(.2,.7,.2,1)}
+  .tbl .h{text-align:right;color:var(--char)}
+  .big{position:absolute;left:16px;right:16px;bottom:16px;opacity:0;transition:opacity .5s .5s;border-top:1px solid var(--line);padding-top:14px}
+  .res.on .big{opacity:1}
+  .big b{display:block;font:500 54px/1 var(--sans);letter-spacing:-2.4px;color:var(--blue)}
+  .big span{display:block;font-size:13px;line-height:1.4;color:var(--grey);margin-top:8px}
+  .big em{color:var(--blue);font-style:normal;font-weight:600}
+
+  /* benefits */
+  .bf{position:absolute;left:72px;top:590px;width:1136px;display:grid;grid-template-columns:repeat(4,1fr);gap:16px;z-index:3}
+  .bf div{background:#fff;border:1px solid var(--line);padding:10px 12px;height:66px}
+  .bf b{display:block;font:600 12.5px var(--sans);letter-spacing:-.2px}
+  .bf span{display:block;font-size:11.5px;line-height:1.35;color:var(--grey);margin-top:3px}
+
+  #replay{position:absolute;right:72px;top:82px;width:34px;height:34px;z-index:10;background:#fff;border:1px solid var(--line);color:var(--grey);cursor:pointer;display:flex;align-items:center;justify-content:center}
+  #replay:hover{border-color:var(--blue);color:var(--blue)}
+</style>
+</head>
+<body class="soft" data-foot="Security · ES|QL">
+<div class="z"><div class="eyebrow in1">ES|QL · <b>Elasticsearch Query Language</b></div></div>
+<div class="hd">
+  <h1 class="in2">Transform your <span class="b">investigation workflows.</span></h1>
+  <p class="sub in3">A next-generation piped query language. Search, aggregate, transform and visualize from a single query.</p>
+</div>
+<button id="replay" class="in3" title="Replay" aria-label="Replay"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 12a8 8 0 1 1-2.6-5.9"/><path d="M20 4v5h-5"/></svg></button>
+
+<div class="pn code in3">
+  <div class="win"><i></i><i></i><i></i><span>investigation.esql</span></div>
+  <div class="src" id="src"></div>
+  <div class="note" id="note"></div>
+</div>
+
+<div class="pn red in4"><h4>Data reduction</h4><div id="bars"></div></div>
+
+<div class="pn res in5" id="res">
+  <h4>Query results · top 5 suspicious accounts</h4>
+  <div class="tbl" id="tbl"></div>
+  <div class="big"><b>200,000×</b><span>From <em>1,000,000 events</em> to <em>5 actionable results</em>, in a single query.</span></div>
+</div>
+
+<div class="bf in6">
+  <div><b>Faster queries, at scale.</b><span>Multi-stage concurrent execution delivers greater speed and efficiency.</span></div>
+  <div><b>One query. One window.</b><span>Search, aggregate, transform and visualize from a single pipeline.</span></div>
+  <div><b>Lookup, join, and transform.</b><span>Reshape data in one query with lookups and joins.</span></div>
+  <div><b>More accurate alerting.</b><span>Review trends over isolated incidents to cut false positives.</span></div>
+</div>
+
+<script src="style/eweb.js"></script>
+<script src="/js/fuckslides.js"></script>
+<script>
+(function(){
+  EW.dots({x: 1090, y: 18, w: 150, h: 130, gap: 9, r: .9, seed: 31, blobs: 2, thr: .45});
+  const $ = id => document.getElementById(id);
+
+  // the query, one entry per line, tagged with the step that reveals it
+  const K = t => `<span class="kw">${t}</span>`, P = '<span class="pp">|</span>', IND = '<span class="ind"></span>';
+  const LINES = [
+    [0, `<span class="kw from">FROM</span> logs-*`],
+    [1, `${P}${K('WHERE')} event.category <span class="op">==</span> <span class="st">"authentication"</span>`],
+    [1, `${IND}${K('AND')} event.outcome <span class="op">==</span> <span class="st">"failure"</span>`],
+    [2, `${P}${K('STATS')} attempts <span class="op">=</span> <span class="fn">COUNT</span>(*),`],
+    [2, `${IND}hosts <span class="op">=</span> <span class="fn">COUNT_DISTINCT</span>(host.name)`],
+    [2, `${IND}${K('BY')} user.name`],
+    [3, `${P}${K('WHERE')} attempts <span class="op">&gt;</span> <span class="nu">50</span>`],
+    [4, `${P}${K('SORT')} attempts <span class="fn">DESC</span>`],
+    [5, `${P}${K('LIMIT')} <span class="nu">5</span>`]
+  ];
+  const NOTES = [
+    'Select one or many indices as your data source.',
+    'Push filtering close to the data: only failed logins survive.',
+    'Aggregate across all matching events. No separate analytics layer.',
+    'Chain a second filter at any stage. The logic is fully composable.',
+    'Order results for immediate triage: worst offenders first.',
+    'Surface only the top suspects: signal without the noise.'
+  ];
+  const BARS = [
+    ['db', '1,000,000 events', 100], ['filter', '12,400 events', 62], ['agg', '843 users', 42],
+    ['filter', '17 users', 22], ['sort', '17 users, ranked', 22], ['target', '5 results', 5]
+  ];
+  const ROWS = [['svc-backup', 847, 12], ['j.peterson', 412, 3], ['admin', 389, 28], ['sa-deploy', 271, 7], ['r.chen', 204, 2]];
+
+  const ICON = {
+    db: '<ellipse cx="24" cy="12" rx="14" ry="5"/><path d="M10 12v24c0 3 6 5 14 5s14-2 14-5V12M10 24c0 3 6 5 14 5s14-2 14-5"/>',
+    filter: '<path d="M5 8h38L29 26v14l-10 4V26z"/>',
+    agg: '<path d="M8 8v32h32"/><path d="M16 32h8M16 24h14M16 16h20"/>',
+    sort: '<path d="M14 6v34M6 32l8 8 8-8M28 12h14M28 22h10M28 32h6"/>',
+    target: '<circle cx="24" cy="24" r="17"/><circle cx="24" cy="24" r="8"/><circle cx="24" cy="24" r="2" fill="currentColor"/>'
+  };
+  const ic = n => `<svg width="14" height="14" viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="4" stroke-linecap="round" stroke-linejoin="round">${ICON[n]}</svg>`;
+
+  $('src').innerHTML = LINES.map(([s, h], i) => `<div class="ln" data-s="${s}"><span class="n">${i + 1}</span><span class="cd">${h}</span></div>`).join('');
+  $('bars').innerHTML = BARS.map(([i, l, w], k) => `<div class="rw" data-s="${k}" style="top:${44 + k * 56}px"><span class="ib">${ic(i)}</span><span class="tr"><i data-w="${w}"></i></span><span class="lb">${l}</span></div>`).join('');
+  $('tbl').innerHTML = `<div class="tr2 th2"><span>user.name</span><span style="text-align:right">attempts</span><span style="text-align:right">hosts</span></div>` +
+    ROWS.map(([u, a, h]) => `<div class="tr2"><span class="u">${u}</span><span class="a"><i data-w="${Math.round(a / 847 * 40)}"></i>${a}</span><span class="h">${h}</span></div>`).join('');
+
+  const lns = [...document.querySelectorAll('.ln')], rws = [...document.querySelectorAll('.rw')], res = $('res');
+  let step = -1, timer = 0;
+  function setStep(n){
+    step = n;
+    lns.forEach(l => { const s = +l.dataset.s; l.classList.toggle('cur', s === n); l.classList.toggle('done', s < n); });
+    rws.forEach(r => {
+      const s = +r.dataset.s, i = r.querySelector('i');
+      r.classList.toggle('cur', s === n); r.classList.toggle('done', s < n);
+      i.style.width = s <= n ? i.dataset.w + '%' : '0%';
+    });
+    $('note').textContent = n >= 0 ? NOTES[n] : '';
+    const fin = n === 5;
+    res.classList.toggle('on', fin);
+    document.querySelectorAll('.tbl .a i').forEach(b => b.style.width = fin ? b.dataset.w + 'px' : '0px');
+  }
+  function play(){
+    clearTimeout(timer); setStep(-1);
+    let i = 0;
+    (function next(){ setStep(i++); if (i < 6) timer = setTimeout(next, 950); })();
+  }
+  const jump = n => { clearTimeout(timer); setStep(n); };
+  lns.forEach(l => l.addEventListener('click', () => jump(+l.dataset.s)));
+  rws.forEach(r => r.addEventListener('click', () => jump(+r.dataset.s)));
+  $('replay').addEventListener('click', play);
+
+  if (navigator.webdriver) setStep(5);       // PDF/PPTX export: show the finished picture
+  else setTimeout(play, 700);
+})();
+</script>
+</body>
+</html>

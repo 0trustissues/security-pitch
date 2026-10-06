@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Senses, brain, hands</title>
+<link rel="stylesheet" href="style/eweb.css">
+<style>
+  body{--acc:var(--teal)}
+  .stage{position:absolute;left:0;top:0;width:1280px;height:720px;display:none;z-index:3;pointer-events:none}
+  .stage.on{display:block}
+  .stage > *{pointer-events:auto}
+  .hd{position:absolute;left:72px;top:82px;width:1136px}
+  .hd h1{font-size:46px;letter-spacing:-1.7px;margin:0}
+  .hd .sub{font-size:17px;margin-top:10px}
+
+  /* the rail: the three capabilities, always in the same order */
+  #rail{position:absolute;left:72px;top:232px;width:250px;z-index:4;display:none}
+  #rail.on{display:block}
+  .nd{position:relative;display:flex;align-items:center;gap:14px;width:250px;height:92px;padding:0 18px;margin-bottom:22px;background:#fff;border:1px solid var(--line);cursor:pointer;text-align:left;font-family:var(--sans);color:var(--grey)}
+  .nd:last-child{margin-bottom:0}
+  .nd:not(:last-child)::after{content:'';position:absolute;left:41px;top:93px;height:22px;border-left:1.5px dashed var(--slate)}
+  .nd .tx b{display:block;font:600 19px/1.1 var(--sans);letter-spacing:-.4px;color:var(--ink)}
+  .nd .tx i{display:block;font:500 10.5px var(--mono);font-style:normal;letter-spacing:.06em;text-transform:uppercase;margin-top:6px;color:var(--grey)}
+  .nd .ic{flex:none;line-height:0;opacity:.55}
+  .nd:hover{border-color:var(--ink)}
+  .nd.on{border-color:var(--ink);box-shadow:6px 6px 0 var(--acc);color:var(--ink)}
+  .nd.on .ic{opacity:1}
+
+  /* capability cards */
+  .cards{position:absolute;left:366px;top:232px;width:834px;display:grid;grid-template-columns:repeat(3,1fr);gap:24px}
+  .k{background:#fff;border:1px solid var(--ink);box-shadow:6px 6px 0 var(--acc);height:322px;padding:22px 22px 20px;display:flex;flex-direction:column}
+  .k .ic{line-height:0}
+  .k h3{font:600 20px/1.15 var(--sans);letter-spacing:-.5px;margin-top:16px}
+  .k p{font-size:14.5px;line-height:1.45;color:var(--char);margin-top:10px}
+  .k .vs{margin-top:auto;padding-top:12px;min-height:66px;border-top:1px solid var(--line);display:flex;gap:10px;align-items:flex-start;font-size:12.5px;line-height:1.4;color:var(--grey)}
+  .k .vs b{flex:none;font:700 10px var(--mono);letter-spacing:.08em;background:var(--orange);color:var(--ink);padding:3px 6px;margin-top:1px}
+
+  /* stage 4: the loop */
+  #loop{position:absolute;left:0;top:0;width:1280px;height:720px;z-index:3;pointer-events:none}
+  .nodeL{position:absolute;top:252px;width:96px;height:96px;border-radius:50%;background:#fff;border:2px solid var(--ink);display:flex;align-items:center;justify-content:center;line-height:0;z-index:4;transition:background .25s,box-shadow .25s}
+  .nodeL.hit{background:var(--blue);box-shadow:0 0 0 7px rgba(11,100,221,.18)}
+  .nodeL.hit svg{stroke:#fff}
+  .lb{position:absolute;top:372px;width:300px;text-align:center}
+  .lb b{display:block;font:600 24px var(--sans);letter-spacing:-.7px}
+  .lb i{display:block;font:600 11px var(--mono);font-style:normal;letter-spacing:.08em;text-transform:uppercase;color:var(--blue);margin-top:8px}
+  .lb span{display:block;font-size:14.5px;line-height:1.45;color:var(--char);margin-top:8px}
+  .cen{position:absolute;width:0;display:flex;justify-content:center}
+  .pillL{flex:none;white-space:nowrap;display:flex;align-items:center;gap:10px;background:var(--blue-l);border:1px solid var(--blue);color:var(--blue-d);font:600 12px var(--mono);letter-spacing:.08em;text-transform:uppercase;padding:9px 16px}
+
+  /* stage switcher */
+  #tabs{position:absolute;left:50%;top:628px;transform:translateX(-50%);display:flex;gap:8px;z-index:10}
+  .tab{font:600 11px var(--mono);letter-spacing:.06em;text-transform:uppercase;color:var(--grey);background:#fff;border:1px solid var(--line);padding:8px 14px 8px 10px;display:inline-flex;align-items:center;gap:8px;cursor:pointer}
+  .tab i{font-style:normal;width:18px;height:18px;border:1px solid currentColor;border-radius:50%;display:inline-flex;align-items:center;justify-content:center;font-size:10px}
+  .tab.on{color:var(--blue);border-color:var(--blue);background:var(--blue-l)}
+  .tab:hover{border-color:var(--blue);color:var(--blue)}
+  #replay{position:absolute;right:72px;top:628px;width:34px;height:34px;z-index:10;background:#fff;border:1px solid var(--line);color:var(--grey);cursor:pointer;display:flex;align-items:center;justify-content:center}
+  #replay:hover{border-color:var(--blue);color:var(--blue)}
+</style>
+</head>
+<body class="soft" data-foot="Security · Senses, brain, hands">
+<div class="z"><div class="eyebrow in1">Security · <b>Senses, brain, hands</b></div></div>
+
+<!-- shared rail (stages 1 to 3) -->
+<div id="rail" class="in3">
+  <button class="nd on" data-i="0"><span class="ic" data-ic="eye" data-size="40"></span><span class="tx"><b>Senses</b><i>Unified data</i></span></button>
+  <button class="nd" data-i="1"><span class="ic" data-ic="brain" data-size="40"></span><span class="tx"><b>Brain</b><i>Machine-speed reasoning</i></span></button>
+  <button class="nd" data-i="2"><span class="ic" data-ic="fist" data-size="40"></span><span class="tx"><b>Hands</b><i>Respond fast</i></span></button>
+</div>
+
+<!-- 1. SENSES -->
+<section class="stage on" id="s1">
+  <div class="hd"><h1 class="in2">Senses: <span class="b">unified data and visibility.</span></h1>
+    <p class="sub in3">Search across cloud, edge and on-prem without moving data.</p></div>
+  <div class="cards">
+    <div class="k in3"><span class="ic" data-ic="mesh"></span><h3>Hybrid data mesh</h3><p>Search cloud, edge and on-prem in place. No egress, no rehydration.</p><div class="vs"><b>VS</b>Legacy vendors charge rehydration and egress fees.</div></div>
+    <div class="k in4"><span class="ic" data-ic="db"></span><h3>SIEM</h3><p>Any data in, fast. Petabyte scale at pennies per GB, years searched in seconds.</p><div class="vs"><b>VS</b>Splunk searches across fragmented data buckets.</div></div>
+    <div class="k in5"><span class="ic" data-ic="monitor"></span><h3>Endpoint</h3><p>One agent for process, file and network telemetry. No per-device fees.</p><div class="vs"><b>VS</b>CrowdStrike charges for protection, then again for telemetry.</div></div>
+  </div>
+</section>
+
+<!-- 2. BRAIN -->
+<section class="stage" id="s2">
+  <div class="hd"><h1 class="in2">Brain: <span class="b">reason at machine speed.</span></h1>
+    <p class="sub in3">Model-agnostic reasoning, grounded in your data, running wherever you do.</p></div>
+  <div class="cards">
+    <div class="k in3"><span class="ic" data-ic="search"></span><h3>Native hybrid search</h3><p>BM25 and vector in a single query, grounded in your data at petabyte scale.</p><div class="vs"><b>VS</b>Disconnected stacks need DIY re-ranking.</div></div>
+    <div class="k in4"><span class="ic" data-ic="plug"></span><h3>Elastic Inference Service</h3><p>One gateway to OpenAI, Anthropic or local air-gapped models.</p><div class="vs"><b>VS</b>Charlotte AI locks you into CrowdStrike's model.</div></div>
+    <div class="k in5"><span class="ic" data-ic="bot"></span><h3>Agent Builder and skills</h3><p>Agents that run anywhere. Open by default: ECS, OCSF and open APIs.</p><div class="vs"><b>VS</b>Agents that only work inside one platform's walls.</div></div>
+  </div>
+</section>
+
+<!-- 3. HANDS -->
+<section class="stage" id="s3">
+  <div class="hd"><h1 class="in2">Hands: <span class="b">respond fast.</span></h1>
+    <p class="sub in3">Workflows as code, with full automation or human-on-the-loop. Your call.</p></div>
+  <div class="cards">
+    <div class="k in3"><span class="ic" data-ic="code"></span><h3>Workflows-as-code</h3><p>YAML and LLM-friendly. Describe what you need and the LLM writes it, reviewable before it runs.</p><div class="vs"><b>VS</b>No-code workflows locked inside a proprietary platform.</div></div>
+    <div class="k in4"><span class="ic" data-ic="gears"></span><h3>Deterministic plus agentic</h3><p>Scripted logic for known threats, AI judgment for novel ones.</p><div class="vs"><b>VS</b>Legacy SOAR: brittle playbooks that break when attacks pivot.</div></div>
+    <div class="k in5"><span class="ic" data-ic="shield"></span><h3>Prevention and extended response</h3><p>#1-rated endpoint protection, with response across cloud, identity and network.</p><div class="vs"><b>VS</b>Competitors unbundle SOAR, EDR and telemetry into separate SKUs.</div></div>
+  </div>
+</section>
+
+<!-- 4. TOGETHER -->
+<section class="stage" id="s4">
+  <div class="hd"><h1 class="in2">Built as one. <span class="b">Not stitched together.</span></h1>
+    <p class="sub in3">Three capabilities a platform must have natively to operate at machine speed.</p></div>
+  <svg id="loop" viewBox="0 0 1280 720">
+    <path id="lp" d="M232 300H1048V252C1048 175 232 175 232 252V300" fill="none" stroke="#B5BFCE" stroke-width="2" stroke-dasharray="6 5"/>
+    <path d="M440 300l-8-4.5v9zM848 300l-8-4.5v9zM632 194.4l8-4.5v9zM232 252l-4.5-8h9z" fill="#B5BFCE"/>
+    <rect id="pdot" x="-6" y="-6" width="12" height="12" fill="#0B64DD" opacity="0"/>
+  </svg>
+  <div class="nodeL in3" id="n0" style="left:184px"><span class="ic" data-ic="eye" data-size="48"></span></div>
+  <div class="nodeL in4" id="n1" style="left:592px"><span class="ic" data-ic="brain" data-size="48"></span></div>
+  <div class="nodeL in5" id="n2" style="left:1000px"><span class="ic" data-ic="fist" data-size="48"></span></div>
+  <div class="lb in3" style="left:82px"><b>Senses</b><i>Unified data and visibility</i><span>One agent. A hybrid data mesh with no egress and no rehydration.</span></div>
+  <div class="lb in4" style="left:490px"><b>Brain</b><i>Reason at machine speed</i><span>BM25 and vector in one query, with your choice of LLM.</span></div>
+  <div class="lb in5" style="left:898px"><b>Hands</b><i>Respond fast</i><span>Deterministic and agentic workflows. Automation or human-on-the-loop.</span></div>
+  <div class="cen" style="left:640px;top:500px"><div class="pillL in6"><span class="ic" data-ic="loop" data-size="18"></span>A continuous loop: detect, reason, respond</div></div>
+</section>
+
+<nav id="tabs">
+  <button class="tab on" data-i="0"><i>1</i>Senses</button>
+  <button class="tab" data-i="1"><i>2</i>Brain</button>
+  <button class="tab" data-i="2"><i>3</i>Hands</button>
+  <button class="tab" data-i="3"><i>4</i>Together</button>
+</nav>
+<button id="replay" title="Replay this stage" aria-label="Replay"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 12a8 8 0 1 1-2.6-5.9"/><path d="M20 4v5h-5"/></svg></button>
+
+<script src="style/eweb.js"></script>
+<script src="/js/fuckslides.js"></script>
+<script>
+(function(){
+  EW.dots({x: 1090, y: 24, w: 170, h: 150, gap: 9, r: .9, seed: 13, blobs: 2, thr: .45});
+
+  // monochrome line icons, same family as the rest of the deck
+  const ICONS = {
+    eye: '<path d="M4 24C9 15 16 11 24 11s15 4 20 13c-5 9-12 13-20 13S9 33 4 24z"/><circle cx="24" cy="24" r="6"/>',
+    brain: '<path d="M23 7c-5-3-12 0-12 6-4 1-6 6-3 10-3 3-2 8 2 10 0 5 6 8 10 5z"/><path d="M25 7c5-3 12 0 12 6 4 1 6 6 3 10 3 3 2 8-2 10 0 5-6 8-10 5z"/><path d="M16 19c3 0 5 2 7 2M32 19c-3 0-5 2-7 2M15 30c3-1 5 1 8 1M33 30c-3-1-5 1-8 1"/>',
+    fist: '<path d="M13 22h22v12a8 8 0 0 1-8 8h-6a8 8 0 0 1-8-8z"/><path d="M17 22v-6a2.7 2.7 0 0 1 5.4 0v6M22.4 22v-8a2.7 2.7 0 0 1 5.4 0v8M27.8 22v-6a2.7 2.7 0 0 1 5.4 0v6"/><path d="M13 27c-4-2-7 2-4 5l4 4"/>',
+    mesh: '<circle cx="9" cy="11" r="4.5"/><circle cx="39" cy="11" r="4.5"/><circle cx="24" cy="37" r="4.5"/><path d="M13 13l9 21M35 13l-9 21M14 11h20"/>',
+    db: '<ellipse cx="24" cy="12" rx="14" ry="5"/><path d="M10 12v24c0 3 6 5 14 5s14-2 14-5V12M10 24c0 3 6 5 14 5s14-2 14-5"/>',
+    monitor: '<rect x="6" y="8" width="36" height="25" rx="3"/><path d="M17 41H31M24 33V41"/>',
+    search: '<circle cx="21" cy="21" r="13"/><path d="M31 31L43 43"/>',
+    plug: '<path d="M17 5v10M31 5v10M11 15h26v8a13 13 0 0 1-26 0zM24 36v8"/>',
+    bot: '<path d="M24 12V8"/><circle cx="24" cy="5.5" r="2.4"/><rect x="8" y="12" width="32" height="27" rx="9"/><circle cx="18" cy="24" r="2.6" fill="#1D1E24" stroke="none"/><circle cx="30" cy="24" r="2.6" fill="#1D1E24" stroke="none"/><path d="M18 31.5Q24 36 30 31.5M3 26v6M45 26v6"/>',
+    code: '<path d="M16 14L6 24l10 10M32 14l10 10-10 10M28 8L20 40"/>',
+    gears: '<circle cx="18" cy="19" r="9" stroke-dasharray="4.4 3"/><circle cx="18" cy="19" r="3.5"/><circle cx="33" cy="33" r="7.5" stroke-dasharray="3.6 2.9"/><circle cx="33" cy="33" r="3"/>',
+    shield: '<path d="M24 5L41 11V24c0 9-7 15-17 19C14 39 7 33 7 24V11z"/><path d="M16 24l6 6 11-12"/>',
+    loop: '<path d="M8 24a12 12 0 0 1 21-8M40 24a12 12 0 0 1-21 8"/><path d="M30 8v8h-8M18 40v-8h8"/>'
+  };
+  document.querySelectorAll('.ic[data-ic]').forEach(el => {
+    const z = el.dataset.size || 44;
+    el.innerHTML = `<svg width="${z}" height="${z}" viewBox="0 0 48 48" fill="none" stroke="#1D1E24" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">${ICONS[el.dataset.ic]}</svg>`;
+  });
+
+  // stage switching: tabs, rail, number keys, or #2 style links. Arrow keys stay with the deck player.
+  const stages = [...document.querySelectorAll('.stage')], tabs = [...document.querySelectorAll('.tab')], nds = [...document.querySelectorAll('.nd')], rail = document.getElementById('rail');
+  const ACC = ['var(--teal)', 'var(--pink)', 'var(--orange)'];
+  let cur = -1, t0 = 0;
+  function go(i){
+    cur = Math.max(0, Math.min(3, i));
+    stages.forEach((s, k) => s.classList.toggle('on', k === cur));
+    tabs.forEach((t, k) => t.classList.toggle('on', k === cur));
+    nds.forEach((n, k) => n.classList.toggle('on', k === cur));
+    if (cur < 3) document.body.style.setProperty('--acc', ACC[cur]);
+    rail.classList.toggle('on', cur < 3);
+    t0 = performance.now() / 1000;
+  }
+  window.goStage = go;
+  tabs.forEach(t => t.addEventListener('click', () => go(+t.dataset.i)));
+  nds.forEach(n => n.addEventListener('click', () => go(+n.dataset.i)));
+  document.getElementById('replay').addEventListener('click', () => {
+    const c = cur; stages[c].classList.remove('on'); rail.classList.remove('on'); void stages[c].offsetWidth; go(c);
+  });
+  addEventListener('keydown', e => { if (e.key >= '1' && e.key <= '4' && !e.metaKey && !e.ctrlKey && !e.altKey) go(+e.key - 1); });
+
+  // the loop: a pulse travels senses -> brain -> hands -> back, lighting each node as it passes
+  const lp = document.getElementById('lp'), dot = document.getElementById('pdot'), L = lp.getTotalLength();
+  const nodes = [0, 1, 2].map(i => document.getElementById('n' + i)), at = [0, 408, 816];
+  (function loop(){
+    if (cur === 3){
+      const t = performance.now() / 1000 - t0 - 1.1;
+      if (t > 0){
+        const pos = (t * L / 7) % L, p = lp.getPointAtLength(pos);
+        dot.setAttribute('x', p.x - 6); dot.setAttribute('y', p.y - 6); dot.setAttribute('opacity', 1);
+        nodes.forEach((n, k) => n.classList.toggle('hit', Math.abs(pos - at[k]) < 46 || (k === 0 && pos > L - 46)));
+      }
+    } else { dot.setAttribute('opacity', 0); nodes.forEach(n => n.classList.remove('hit')); }
+    requestAnimationFrame(loop);
+  })();
+
+  const h = parseInt(location.hash.slice(1), 10);
+  go(h >= 1 && h <= 4 ? h - 1 : 0);
+})();
+</script>
+</body>
+</html>

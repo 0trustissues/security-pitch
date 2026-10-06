@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>From answers to action</title>
+<link rel="stylesheet" href="style/eweb.css">
+<style>
+  h1{font-size:46px;letter-spacing:-1.7px;margin-top:12px;white-space:nowrap}
+  .sub{font-size:18px;margin-top:10px}
+  .sub b{color:var(--blue);font-weight:600}
+
+  /* timeline: what is live now, and what is next */
+  .tl{position:absolute;left:72px;top:226px;width:1128px;z-index:2}
+  .tl .lab{position:absolute;top:0;font:600 11px var(--mono);letter-spacing:.08em;text-transform:uppercase}
+  .tl .l1{left:0;color:var(--blue)} .tl .l2{left:788px;color:var(--grey)}
+  .tl .bar1{position:absolute;left:0;top:24px;width:734px;height:4px;background:var(--blue);transform-origin:left;animation:grow 1s cubic-bezier(.6,0,.2,1) .2s both}
+  .tl .bar2{position:absolute;left:788px;top:25px;width:340px;border-top:2px dashed var(--grey-l);opacity:0;animation:fadein .5s ease 1.1s forwards}
+  @keyframes grow{from{transform:scaleX(0)}to{transform:none}}
+  @keyframes fadein{to{opacity:1}}
+
+  .row{position:absolute;left:72px;top:262px;display:flex;align-items:stretch;z-index:2}
+  .card{position:relative;width:340px;height:330px;background:#fff;border:1px solid var(--ink);padding:22px 24px 22px;display:flex;flex-direction:column}
+  .card.now{box-shadow:8px 8px 0 var(--blue)}
+  .card.next{border:1px dashed var(--grey-l);background:rgba(255,255,255,.6)}
+  .card .hd{display:flex;align-items:center;gap:14px;min-height:52px}
+  .card .hd .ic{line-height:0;flex:none}
+  .card h3{font:600 21px/1.15 var(--sans);letter-spacing:-.5px}
+  .card.next h3{color:var(--char)}
+  .card p{font-size:14.5px;line-height:1.45;color:var(--char);margin-top:14px}
+  .card ul{list-style:none;margin-top:14px}
+  .card li{display:flex;align-items:center;gap:11px;padding:6px 0;font-size:14.5px;color:var(--ink)}
+  .card li svg{flex:none;display:block}
+  .card li .tk{stroke-dasharray:16;stroke-dashoffset:16;animation:tick .35s ease var(--d) forwards}
+  @keyframes tick{to{stroke-dashoffset:0}}
+  .chip2{margin-top:auto;align-self:flex-start;font:600 10.5px var(--mono);letter-spacing:.08em;text-transform:uppercase;padding:5px 9px}
+  .chip2.live{background:var(--blue-l);color:var(--blue-d);border:1px solid var(--blue)}
+  .chip2.wip{background:var(--bg);color:var(--grey);border:1px dashed var(--grey-l)}
+
+  .gap{width:54px;position:relative}
+  .gap::before{content:'';position:absolute;left:12px;right:14px;top:164px;height:1.5px;background:var(--ink)}
+  .gap::after{content:'';position:absolute;right:12px;top:159.5px;border-left:8px solid var(--ink);border-top:5px solid transparent;border-bottom:5px solid transparent}
+  .gap.dim::before{background:none;border-top:1.5px dashed var(--grey-l);height:0}
+  .gap.dim::after{border-left-color:var(--grey-l)}
+</style>
+</head>
+<body class="soft" data-foot="Security · Answers to action">
+<div class="z">
+  <div class="eyebrow in1">From answers to action</div>
+  <h1 class="in2">Reactive today. Agentic now. <span class="b">Autonomous next.</span></h1>
+  <p class="sub in3">More than a chat box: Elastic AI is <b>in production today</b>.</p>
+</div>
+
+<div class="tl">
+  <span class="lab l1 in3">Available now · in production today</span>
+  <span class="lab l2 in5">In process</span>
+  <div class="bar1"></div><div class="bar2"></div>
+</div>
+
+<div class="row">
+  <div class="card now in3">
+    <div class="hd"><span class="ic" data-ic="wand"></span><h3>Reactive and assistive</h3></div>
+    <p>Ask in plain language. Get answers, context and the next step.</p>
+    <ul>
+      <li data-d=".9s">Natural language to ES|QL</li>
+      <li data-d="1.05s">Alert and error explanation</li>
+      <li data-d="1.2s">Guided runbooks</li>
+      <li data-d="1.35s">ML anomaly detection</li>
+    </ul>
+    <div class="chip2 live">In production today</div>
+  </div>
+  <div class="gap in4"></div>
+  <div class="card now in4">
+    <div class="hd"><span class="ic" data-ic="mesh"></span><h3>Agentic</h3></div>
+    <p>Correlates signals and surfaces a recommended action. No manual queries.</p>
+    <ul>
+      <li data-d="1.1s">Attack Discovery correlation</li>
+      <li data-d="1.25s">Cross-signal root cause</li>
+      <li data-d="1.4s">Recommended action surfaced</li>
+      <li data-d="1.55s">Workflow automation</li>
+    </ul>
+    <div class="chip2 live">In production today</div>
+  </div>
+  <div class="gap dim in5"></div>
+  <div class="card next in5">
+    <div class="hd"><span class="ic" data-ic="bot" style="opacity:.6"></span><h3>Autonomous and closed-loop</h3></div>
+    <p>Investigate, decide and remediate end-to-end, with human oversight.</p>
+    <ul>
+      <li data-d="0s" class="soon">Multi-step autonomous investigation</li>
+      <li data-d="0s" class="soon">Policy-guarded remediation</li>
+      <li data-d="0s" class="soon">Closed-loop automation</li>
+    </ul>
+    <div class="chip2 wip">In process</div>
+  </div>
+</div>
+
+<script src="style/eweb.js"></script>
+<script src="/js/fuckslides.js"></script>
+<script>
+(function(){
+  EW.dots({x: 1020, y: 20, w: 220, h: 150, gap: 9, r: .9, seed: 17, blobs: 2, thr: .45});
+  const ICONS = {
+    wand: '<path d="M10 40L32 18M28 14l6 6M16 6v8M12 10h8M38 28v6M35 31h6M38 6v4M36 8h4"/><path d="M8 42l4-4"/>',
+    mesh: '<circle cx="9" cy="11" r="4.5"/><circle cx="39" cy="11" r="4.5"/><circle cx="24" cy="37" r="4.5"/><path d="M13 13l9 21M35 13l-9 21M14 11h20"/>',
+    bot: '<path d="M24 12V8"/><circle cx="24" cy="5.5" r="2.4"/><rect x="8" y="12" width="32" height="27" rx="9"/><circle cx="18" cy="24" r="2.6" fill="#1D1E24" stroke="none"/><circle cx="30" cy="24" r="2.6" fill="#1D1E24" stroke="none"/><path d="M18 31.5Q24 36 30 31.5M3 26v6M45 26v6"/>'
+  };
+  document.querySelectorAll('.ic[data-ic]').forEach(el => {
+    el.innerHTML = `<svg width="38" height="38" viewBox="0 0 48 48" fill="none" stroke="#1D1E24" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">${ICONS[el.dataset.ic]}</svg>`;
+  });
+  // ticks draw in for what is live; what is next gets a hollow dashed marker
+  document.querySelectorAll('.card li').forEach(li => {
+    const soon = li.classList.contains('soon');
+    const mark = soon
+      ? '<svg data-gen width="20" height="20" viewBox="0 0 20 20"><circle cx="10" cy="10" r="8.5" fill="none" stroke="#98A2B3" stroke-width="1.6" stroke-dasharray="3 2.6"/></svg>'
+      : `<svg data-gen width="20" height="20" viewBox="0 0 20 20" style="--d:${li.dataset.d}"><circle cx="10" cy="10" r="10" fill="#0B64DD"/><path class="tk" d="M5.5 10.5l3 3 6-6.5" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>`;
+    li.insertAdjacentHTML('afterbegin', mark); EW.gen(li.firstElementChild);
+    if (soon) li.style.color = '#69707D';
+  });
+})();
+</script>
+</body>
+</html>

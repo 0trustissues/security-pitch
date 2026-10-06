@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>All your data, real-time, at scale</title>
+<link rel="stylesheet" href="style/eweb.css">
+<style>
+  .hd{position:absolute;left:72px;top:78px;width:1136px}
+  .hd h1{font-size:40px;letter-spacing:-1.5px;margin:0}
+  .hd .sub{font-size:16px;margin-top:6px}
+
+  #flow{position:absolute;left:0;top:0;z-index:1;pointer-events:none}
+  .a{position:absolute;z-index:3}
+  .lbl{position:absolute;z-index:3;font:600 10.5px var(--mono);letter-spacing:.1em;text-transform:uppercase;color:var(--grey)}
+
+  /* sources and outcomes */
+  .src,.out{position:absolute;z-index:3;width:164px;height:40px;background:#fff;border:1px solid var(--line);display:flex;align-items:center;justify-content:center;font:500 13px var(--sans);color:var(--ink)}
+  .src{border-left:4px solid var(--c)}
+  .out{height:44px;background:var(--blue-l);border-color:#BCD3F6;border-right:4px solid var(--blue);gap:9px;color:var(--blue-d);font-weight:600}
+  .out svg{flex:none}
+
+  /* the platform */
+  .pc{position:absolute;z-index:3;top:200px;width:218px;height:52px;background:#fff;border:2px solid var(--c);display:flex;flex-direction:column;align-items:center;justify-content:center}
+  .pc span{font:500 11px var(--sans);color:var(--grey)} .pc b{font:600 15px var(--sans);letter-spacing:-.3px;color:var(--ink);margin-top:2px}
+  .pf{position:absolute;z-index:3;left:300px;top:264px;width:680px;height:172px;background:#fff;border:1px solid var(--ink);box-shadow:6px 6px 0 var(--blue)}
+  .pf h4{position:absolute;left:0;right:0;top:12px;text-align:center;font:600 16px var(--sans);letter-spacing:-.3px}
+  .tile{position:absolute;top:42px;width:85px;height:62px;background:var(--bg);border:1px solid var(--line);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:5px;font:500 11px var(--sans);color:var(--char)}
+  .tile .ic{line-height:0}
+  .tile.hi{background:var(--blue-l);border-color:var(--blue);color:var(--blue-d)}
+  .lake{position:absolute;left:205px;top:116px;width:270px;height:30px;background:var(--blue-l);border:1px solid var(--blue);color:var(--blue-d);display:flex;align-items:center;justify-content:center;font:600 11px var(--mono);letter-spacing:.08em;text-transform:uppercase}
+  .dp{position:absolute;z-index:3;top:448px;width:218px;height:64px;background:#fff;border:1px solid var(--line);display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:0 6px}
+  .dp b{font:600 13.5px var(--sans);letter-spacing:-.2px} .dp span{font-size:11px;white-space:nowrap;line-height:1.35;color:var(--grey);margin-top:3px}
+
+  .bf{position:absolute;z-index:3;top:536px;height:96px;width:368px;background:#fff;border:1px solid var(--line);padding:14px 16px}
+  .bf i{display:block;width:8px;height:8px;background:var(--blue);margin-bottom:8px}
+  .bf b{display:block;font:600 16px var(--sans);letter-spacing:-.4px}
+  .bf span{display:block;font-size:12.5px;line-height:1.4;color:var(--grey);margin-top:4px}
+</style>
+</head>
+<body class="soft" data-foot="Security · Search AI Platform">
+<div class="z"><div class="eyebrow in1">The Elastic Search AI Platform</div></div>
+<div class="hd">
+  <h1 class="in2"><span class="b">All your data,</span> real-time, at scale.</h1>
+  <p class="sub in3">Accelerate mission outcomes by finding insights from any data source.</p>
+</div>
+
+<canvas id="flow" width="1280" height="720"></canvas>
+
+<!-- left: data sources -->
+<div class="lbl in3" style="left:72px;top:212px">Any data source</div>
+<div class="src in3" style="left:72px;top:236px;--c:var(--teal)">Endpoints</div>
+<div class="src in3" style="left:72px;top:284px;--c:var(--blue)">Applications</div>
+<div class="src in4" style="left:72px;top:332px;--c:var(--pink)">Infrastructure</div>
+<div class="src in4" style="left:72px;top:380px;--c:var(--yellow)">Services</div>
+<div class="src in5" style="left:72px;top:428px;--c:var(--orange)">Network / Security</div>
+
+<!-- center: the platform -->
+<div class="pc in3" style="left:300px;--c:var(--yellow)"><span>Build your own</span><b>Elasticsearch</b></div>
+<div class="pc in4" style="left:530px;--c:var(--pink)"><span>Out-of-the-box</span><b>Observability</b></div>
+<div class="pc in5" style="left:762px;--c:var(--orange)"><span>Out-of-the-box</span><b>Security</b></div>
+<div class="pf in4"><h4>Search AI Platform</h4><div id="tiles"></div><div class="lake">Search AI Lake</div></div>
+<div class="dp in5" style="left:300px"><b>Self-managed</b><span>Full control on your infrastructure</span></div>
+<div class="dp in5" style="left:531px"><b>Elastic Cloud</b><span>Managed service on AWS, GCP, Azure</span></div>
+<div class="dp in5" style="left:762px"><b>Serverless</b><span>Zero ops, automatic scaling</span></div>
+
+<!-- right: outcomes -->
+<div class="lbl in3" style="left:1044px;top:228px">Outcomes</div>
+<div class="out in3" style="left:1044px;top:252px"><span data-ic="chart"></span>Dashboards</div>
+<div class="out in4" style="left:1044px;top:306px"><span data-ic="link"></span>Integrations</div>
+<div class="out in4" style="left:1044px;top:360px"><span data-ic="target"></span>Orchestration</div>
+<div class="out in5" style="left:1044px;top:414px"><span data-ic="flow"></span>Workflows</div>
+
+<!-- benefits -->
+<div class="bf in6" style="left:72px"><i></i><b>One platform</b><span>Search, Observability and Security unified on a single data layer.</span></div>
+<div class="bf in6" style="left:456px"><i></i><b>Any deployment</b><span>Self-managed, cloud-hosted or fully serverless: your choice.</span></div>
+<div class="bf in6" style="left:840px"><i></i><b>Real-time insights</b><span>From ingestion to action in milliseconds, at petabyte scale.</span></div>
+
+<script src="style/eweb.js"></script>
+<script src="/js/fuckslides.js"></script>
+<script>
+(function(){
+  EW.dots({x: 1030, y: 14, w: 210, h: 150, gap: 9, r: .9, seed: 53, blobs: 2, thr: .45});
+  const lerp = (a, b, t) => a + (b - a) * t, clamp = (v, a = 0, b = 1) => Math.min(b, Math.max(a, v));
+  const hex = h => [1, 3, 5].map(i => parseInt(h.slice(i, i + 2), 16));
+  const mix = (a, b, t) => { const x = hex(a), y = hex(b); return 'rgb(' + x.map((v, i) => Math.round(lerp(v, y[i], t))).join(',') + ')'; };
+
+  const ICO = {
+    ingest: '<path d="M24 6v14M24 20l-12 8v8M24 20l12 8v8"/><circle cx="24" cy="6" r="3"/><circle cx="12" cy="38" r="3"/><circle cx="36" cy="38" r="3"/><circle cx="24" cy="26" r="3"/>',
+    gear: '<circle cx="24" cy="24" r="8"/><path d="M24 4v6M24 38v6M4 24h6M38 24h6M10 10l4 4M34 34l4 4M38 10l-4 4M14 34l-4 4"/>',
+    db: '<ellipse cx="24" cy="12" rx="14" ry="5"/><path d="M10 12v24c0 3 6 5 14 5s14-2 14-5V12M10 24c0 3 6 5 14 5s14-2 14-5"/>',
+    search: '<circle cx="21" cy="21" r="13"/><path d="M31 31L43 43"/>',
+    brain: '<path d="M23 7c-5-3-12 0-12 6-4 1-6 6-3 10-3 3-2 8 2 10 0 5 6 8 10 5z"/><path d="M25 7c5-3 12 0 12 6 4 1 6 6 3 10 3 3 2 8-2 10 0 5-6 8-10 5z"/>',
+    chart: '<path d="M6 6V42H44"/><path d="M12 32L21 22L28 28L40 14"/>',
+    refresh: '<path d="M8 24a16 16 0 0 1 28-10M40 24a16 16 0 0 1-28 10"/><path d="M38 6v9h-9M10 42v-9h9"/>',
+    link: '<path d="M20 28a8 8 0 0 0 11 0l7-7a8 8 0 0 0-11-11l-3 3M28 20a8 8 0 0 0-11 0l-7 7a8 8 0 0 0 11 11l3-3"/>',
+    target: '<circle cx="24" cy="24" r="17"/><circle cx="24" cy="24" r="8"/><circle cx="24" cy="24" r="2" fill="currentColor"/>',
+    flow: '<circle cx="10" cy="38" r="4"/><circle cx="38" cy="10" r="4"/><circle cx="38" cy="38" r="4"/><path d="M10 34V20a8 8 0 0 1 8-8h12M38 14v20"/>'
+  };
+  const svg = (n, z) => `<svg width="${z}" height="${z}" viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round">${ICO[n]}</svg>`;
+  document.querySelectorAll('[data-ic]').forEach(el => { el.innerHTML = svg(el.dataset.ic, 16); el.style.lineHeight = 0; });
+
+  const TILES = [['ingest', 'Ingestion'], ['gear', 'Processing'], ['db', 'Storage', 1], ['search', 'Search', 1], ['brain', 'AI & ML', 1], ['chart', 'Visualization'], ['refresh', 'Automation']];
+  document.getElementById('tiles').innerHTML = TILES.map(([i, n, hi], k) => `<div class="tile${hi ? ' hi' : ''}" style="left:${16 + k * 93.7}px"><span class="ic" style="color:${hi ? '#0B64DD' : '#69707D'}">${svg(i, 22)}</span>${n}</div>`).join('');
+
+  /* ---- the flowing dots: sources -> platform -> outcomes ---- */
+  const cv = document.getElementById('flow'), ctx = cv.getContext('2d');
+  const SRC = [{y: 256, c: '#02BCB7'}, {y: 304, c: '#0B64DD'}, {y: 352, c: '#F04E98'}, {y: 400, c: '#FEC514'}, {y: 448, c: '#FF7E62'}];
+  const OUT = [274, 328, 382, 436], X0 = 236, X1 = 1044, SPEED = 130;
+  const bez = (p, t) => { const u = 1 - t; return u * u * u * p[0] + 3 * u * u * t * p[1] + 3 * u * t * t * p[2] + t * t * t * p[3]; };
+  const dots = []; let spawn = 0;
+
+  function add(){
+    const s = SRC[Math.floor(Math.random() * SRC.length)], yo = OUT[Math.floor(Math.random() * OUT.length)];
+    dots.push({ys: s.y, yo, c: s.c, u: 0, r: 3 + Math.random() * 1.8, v: SPEED * (.85 + Math.random() * .3)});
+  }
+  function step(dt){
+    spawn -= dt;
+    if (spawn <= 0){ add(); spawn = .1 + Math.random() * .2; }
+    for (let i = dots.length - 1; i >= 0; i--){
+      const d = dots[i]; d.u += d.v * dt / 840;
+      if (d.u >= 1) dots.splice(i, 1);
+    }
+  }
+  function draw(){
+    ctx.clearRect(0, 0, 1280, 720);
+    for (const d of dots){
+      const t = d.u, x = lerp(X0, X1, t) + Math.sin(t * 9) * 0, y = bez([d.ys, d.ys, d.yo, d.yo], t);
+      const a = Math.min(1, t / .05, (1 - t) / .06), col = mix(d.c, '#0B64DD', clamp((t - .35) / .3));
+      ctx.globalAlpha = a; ctx.fillStyle = col; ctx.beginPath(); ctx.arc(x, y, d.r, 0, 6.283); ctx.fill();
+    }
+    ctx.globalAlpha = 1;
+  }
+  for (let i = 0; i < 360; i++) step(1 / 60);     // warm up so the flow is already running
+  draw();
+  let last = performance.now() / 1000;
+  (function loop(){ const n = performance.now() / 1000, dt = Math.min(.05, n - last); last = n; step(dt); draw(); requestAnimationFrame(loop); })();
+})();
+</script>
+</body>
+</html>
