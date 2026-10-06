@@ -136,7 +136,13 @@
       const g = document.createElementNS(NS, 'g'), poly = document.createElementNS(NS, 'polygon'); g.appendChild(poly); svg.appendChild(g);
       const tl = document.createElement('div'); tl.className = 'tl';
       tl.style.left = cx + 'px'; tl.style.top = (apex + TH * i + (o.small && i === 2 ? .42 : TXT_AT[i]) * TH) + 'px';
-      tl.innerHTML = LABELS[i].map(b => `<div class="blk">${o.small && i === 2 ? '' : icon(b.ic, o.small ? 20 : 24)}<b>${b.n}</b><i>${b.s}</i></div>`).join('');
+      tl.innerHTML = LABELS[i].map((b, bi) => {
+        // the diamond's bottom tier narrows to a point: its icon sits beside the title and the text rides higher where it is still wide
+        const dia = i === 2 && bi === 1, noIcon = o.small && i === 2 && !dia;
+        const base = o.small && i === 2 ? .42 : TXT_AT[i], shift = dia ? ((.3 - base) * TH).toFixed(1) : 0, z = o.small ? 20 : 24;
+        if (dia) return `<div class="blk" style="margin-top:${shift}px"><b style="display:inline-flex;align-items:center;gap:7px">${icon(b.ic, o.small ? 17 : 19)}<span>${b.n}</span></b><i>${b.s}</i></div>`;
+        return `<div class="blk">${noIcon ? '' : icon(b.ic, z)}<b>${b.n}</b><i>${b.s}</i></div>`;
+      }).join('');
       root.appendChild(tl);
       S.T.push({g, poly, tl, blk: [...tl.children]});
     }
