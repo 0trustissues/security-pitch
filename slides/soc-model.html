@@ -42,12 +42,6 @@
   .shift u{display:block;position:relative;width:100%;height:1px;background:var(--ink);text-decoration:none}
   .shift u::after{content:'';position:absolute;right:-1px;top:-4.5px;border-left:7px solid var(--ink);border-top:4.5px solid transparent;border-bottom:4.5px solid transparent}
 
-  /* stage switcher */
-  #tabs{position:absolute;left:50%;top:628px;transform:translateX(-50%);display:flex;gap:8px;z-index:10}
-  .tab{font:600 11px var(--mono);letter-spacing:.06em;text-transform:uppercase;color:var(--grey);background:#fff;border:1px solid var(--line);padding:8px 14px 8px 10px;display:inline-flex;align-items:center;gap:8px;cursor:pointer}
-  .tab i{font-style:normal;width:18px;height:18px;border:1px solid currentColor;border-radius:50%;display:inline-flex;align-items:center;justify-content:center;font-size:10px}
-  .tab.on{color:var(--blue);border-color:var(--blue);background:var(--blue-l)}
-  .tab:hover{border-color:var(--blue);color:var(--blue)}
   #replay{position:absolute;right:72px;top:628px;width:34px;height:34px;z-index:10;background:#fff;border:1px solid var(--line);color:var(--grey);cursor:pointer;display:flex;align-items:center;justify-content:center}
   #replay:hover{border-color:var(--blue);color:var(--blue)}
 </style>
@@ -55,28 +49,8 @@
 <body class="soft" data-foot="Security · SOC operating model">
 <div class="z"><div class="eyebrow in1">Security · <b>SOC operating model</b></div></div>
 
-<!-- 1. PYRAMID -->
-<section class="stage on" id="s1">
-  <div class="hd"><h1 class="in2">The triage <span class="b">pyramid.</span></h1>
-    <p class="sub in3">The traditional SOC pyramid, with masses of junior analysts triaging alerts, can't scale against AI-powered adversaries. The future is the diamond model.</p></div>
-  <div class="cen" style="left:392px;top:224px"><div class="pill o in3">Triage pyramid</div></div>
-  <div class="cen" style="left:392px;top:560px"><div class="cap in6" style="width:600px">Slow, manual triage. Built on burnout, and mathematically impossible to scale against AI-speed adversaries.</div></div>
-  <div class="info o in5"><h3><span class="ic" data-ic="warn" data-size="24"></span>The Pyramid</h3>
-    <ul><li><i></i>Junior-heavy alert triage</li><li><i></i>Burnout, churn, and cost</li><li><i></i>Breaks at AI attack speed</li></ul></div>
-</section>
-
-<!-- 2. DIAMOND -->
-<section class="stage" id="s2">
-  <div class="hd"><h1 class="in2">The <span class="b">diamond model.</span></h1>
-    <p class="sub in3">The traditional SOC pyramid, with masses of junior analysts triaging alerts, can't scale against AI-powered adversaries. The future is the diamond model.</p></div>
-  <div class="cen" style="left:392px;top:224px"><div class="pill b in3">Diamond model</div></div>
-  <div class="cen" style="left:392px;top:560px"><div class="cap in6" style="width:600px">Triage drops to automation. Analysts rise to investigation and engineering. Machine speed, with human judgment.</div></div>
-  <div class="info b in5"><h3><span class="ic" data-ic="gem" data-size="24"></span>The Diamond</h3>
-    <ul><li><i></i>Triage pushed to automation</li><li><i></i>Analysts elevated to engineering</li><li><i></i>Scales with machine-speed threats</li></ul></div>
-</section>
-
-<!-- 3. COMPARE -->
-<section class="stage" id="s3">
+<!-- THE SHIFT: pyramid to diamond, side by side -->
+<section class="stage on" id="s3">
   <div class="hd"><h1 class="in2">The shift, <span class="b">side by side.</span></h1></div>
   <div class="cen" style="left:322px;top:190px"><div class="pill o in3">Triage pyramid</div></div>
   <div class="cen" style="left:958px;top:190px"><div class="pill b in3">Diamond model</div></div>
@@ -85,12 +59,7 @@
   <div class="cen" style="left:958px;top:566px"><div class="cap in6" style="width:500px">Automated triage. Analysts elevated. Scales.</div></div>
 </section>
 
-<nav id="tabs">
-  <button class="tab on" data-i="0"><i>1</i>Pyramid</button>
-  <button class="tab" data-i="1"><i>2</i>Diamond</button>
-  <button class="tab" data-i="2"><i>3</i>Compare</button>
-</nav>
-<button id="replay" title="Replay this stage" aria-label="Replay"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 12a8 8 0 1 1-2.6-5.9"/><path d="M20 4v5h-5"/></svg></button>
+<button id="replay" title="Replay" aria-label="Replay"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 12a8 8 0 1 1-2.6-5.9"/><path d="M20 4v5h-5"/></svg></button>
 
 <script src="style/eweb.js"></script>
 <script src="/js/fuckslides.js"></script>
@@ -220,37 +189,18 @@
     return S;
   }
 
-  const A = makeScene({cx: 392, apex: 258, W: 620, H: 290});
   const B = makeScene({cx: 322, apex: 232, W: 500, H: 316, small: true});
   const C = makeScene({cx: 958, apex: 232, W: 500, H: 316, small: true});
 
   EW.dots({x: 1090, y: 24, w: 170, h: 150, gap: 9, r: .9, seed: 5, blobs: 2, thr: .45});
 
-  // stage switching: tabs, number keys, or #2 style links. Arrow keys stay with the deck player.
-  const stages = [...document.querySelectorAll('.stage')], tabs = [...document.querySelectorAll('.tab')];
-  let cur = -1;
-  function go(i){
-    const prev = cur; cur = clamp(i, 0, stages.length - 1);
-    stages.forEach((s, k) => s.classList.toggle('on', k === cur));
-    tabs.forEach((t, k) => t.classList.toggle('on', k === cur));
-    if (cur < 2){
-      A.show(true); B.show(false); C.show(false);
-      if (prev < 0 || prev === 2) { A.enter(0); if (cur === 1) A.go(1, .9); }
-      else A.go(cur === 1 ? 1 : 0, 0);
-    } else {
-      A.show(false); B.show(true); C.show(true);
-      B.enter(0); C.enter(0); C.go(1, 1.1);
-    }
-  }
-  window.goStage = go; window.__soc = {A, B, C, go};
-  tabs.forEach(t => t.addEventListener('click', () => go(+t.dataset.i)));
-  document.getElementById('replay').addEventListener('click', () => { const c = cur; cur = -1; stages[c].classList.remove('on'); void stages[c].offsetWidth; go(c); });
-  addEventListener('keydown', e => { if (e.key >= '1' && e.key <= '3' && !e.metaKey && !e.ctrlKey && !e.altKey) go(+e.key - 1); });
-
-  const h = parseInt(location.hash.slice(1), 10);
-  go(h >= 1 && h <= 3 ? h - 1 : 0);
+  // one view: the pyramid on the left, the diamond morphing in on the right. Arrow keys stay with the deck player.
+  function play(){ B.show(true); C.show(true); B.enter(0); C.enter(0); C.go(1, 1.1); }
+  window.__soc = {B, C, play};
+  document.getElementById('replay').addEventListener('click', play);
+  play();
   let last = performance.now() / 1000;
-  (function loop(){ const now = performance.now() / 1000, dt = Math.min(.05, now - last); last = now; A.update(now, dt); B.update(now, dt); C.update(now, dt); requestAnimationFrame(loop); })();
+  (function loop(){ const now = performance.now() / 1000, dt = Math.min(.05, now - last); last = now; B.update(now, dt); C.update(now, dt); requestAnimationFrame(loop); })();
 })();
 </script>
 </body>

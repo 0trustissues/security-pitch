@@ -11,19 +11,15 @@ module.exports = {
     'cover.html',
     'team.html',
     'why-now.html',
-    'problem-orientation.html',
     'soc-model.html',
-    'answers-to-action.html',
     'senses-brain-hands.html',
-    'search-ai-platform.html',
-    'all-your-data.html',
     'solution.html',
     'elastic-security-labs.html',
     'unified-platform.html',
     'multi-layer-security.html',
     'esql.html',
-    'closing.html',
     'demo.html',
+    'closing.html',
   ],
 
   // Human-readable labels for the overview panel (must match slides array length)
@@ -31,19 +27,15 @@ module.exports = {
     'Cover',
     'Team',
     'Why now',
-    'Problem orientation',
     'SOC operating model',
-    'From answers to action',
     'Senses, brain, hands',
-    'Search AI Platform',
-    'All your data',
     'Security solution',
     'Elastic Security Labs',
     'Unified platform',
     'Multi-layer security',
     'ES|QL',
-    'Thank you',
     'Demo',
+    'Thank you',
   ],
 
   // Optional: per-slide PDF overrides
@@ -53,5 +45,8 @@ module.exports = {
   //     extra: `document.querySelectorAll('.reveal').forEach(el => el.classList.add('visible'));`
   //   }
   // },
-  disabled: [],
+  disabled: [
+    'multi-layer-security.html',
+    'esql.html',
+  ],
 };

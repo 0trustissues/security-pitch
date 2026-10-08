@@ -35,17 +35,27 @@
   .k .vs{margin-top:auto;padding-top:12px;min-height:66px;border-top:1px solid var(--line);display:flex;gap:10px;align-items:flex-start;font-size:12.5px;line-height:1.4;color:var(--grey)}
   .k .vs b{flex:none;font:700 10px var(--mono);letter-spacing:.08em;background:var(--orange);color:var(--ink);padding:3px 6px;margin-top:1px}
 
-  /* stage 4: the loop */
+  /* stage 4: one alert, followed through the loop */
   #loop{position:absolute;left:0;top:0;width:1280px;height:720px;z-index:3;pointer-events:none}
-  .nodeL{position:absolute;top:252px;width:96px;height:96px;border-radius:50%;background:#fff;border:2px solid var(--ink);display:flex;align-items:center;justify-content:center;line-height:0;z-index:4;transition:background .25s,box-shadow .25s}
+  .nodeL{position:absolute;top:250px;width:88px;height:88px;border-radius:50%;background:#fff;border:2px solid var(--ink);display:flex;align-items:center;justify-content:center;line-height:0;z-index:4;transition:background .25s,box-shadow .25s}
   .nodeL.hit{background:var(--blue);box-shadow:0 0 0 7px rgba(11,100,221,.18)}
   .nodeL.hit svg{stroke:#fff}
-  .lb{position:absolute;top:372px;width:300px;text-align:center}
-  .lb b{display:block;font:600 24px var(--sans);letter-spacing:-.7px}
-  .lb i{display:block;font:600 11px var(--mono);font-style:normal;letter-spacing:.08em;text-transform:uppercase;color:var(--blue);margin-top:8px}
-  .lb span{display:block;font-size:14.5px;line-height:1.45;color:var(--char);margin-top:8px}
-  .cen{position:absolute;width:0;display:flex;justify-content:center}
-  .pillL{flex:none;white-space:nowrap;display:flex;align-items:center;gap:10px;background:var(--blue-l);border:1px solid var(--blue);color:var(--blue-d);font:600 12px var(--mono);letter-spacing:.08em;text-transform:uppercase;padding:9px 16px}
+  .col4{position:absolute;top:350px;width:300px;text-align:center;z-index:4}
+  .col4 b{display:block;font:600 22px var(--sans);letter-spacing:-.6px}
+  .col4 i{display:block;font:600 10.5px var(--mono);font-style:normal;letter-spacing:.08em;text-transform:uppercase;color:var(--blue);margin-top:5px}
+  .col4 .prods{display:flex;justify-content:center;gap:6px;margin-top:10px}
+  .col4 .prods span{font:600 10.5px var(--mono);letter-spacing:.02em;border:1px solid var(--ink);background:#fff;padding:4px 8px}
+  .ev{position:absolute;top:436px;width:300px;height:66px;z-index:4;background:#fff;border:1px solid var(--line);padding:10px 12px;text-align:left;opacity:.45;transition:opacity .4s,border-color .4s,box-shadow .4s}
+  .ev.lit{opacity:1;border-color:var(--ink);box-shadow:4px 4px 0 var(--blue)}
+  .ev u{display:block;text-decoration:none;font:600 9.5px var(--mono);letter-spacing:.1em;text-transform:uppercase;color:var(--grey)}
+  .ev.lit u{color:var(--blue)}
+  .ev span{display:block;font:500 12px/1.4 var(--mono);color:var(--ink);margin-top:5px}
+  .layer{position:absolute;left:112px;top:540px;width:1056px;height:46px;z-index:3;background:var(--blue);display:flex;align-items:center;justify-content:center;gap:26px;color:#fff;font:600 12px var(--mono);letter-spacing:.1em;text-transform:uppercase;box-shadow:5px 5px 0 var(--teal)}
+  .layer em{font-style:normal;font-weight:500;opacity:.85;letter-spacing:.06em}
+  .stem{position:absolute;top:502px;width:2px;height:38px;background:var(--blue);z-index:2;transform:translateX(-1px)}
+  .cen{position:absolute;width:0;display:flex;justify-content:center;z-index:5}
+  .pillL{flex:none;white-space:nowrap;display:flex;align-items:center;gap:9px;background:var(--blue-l);border:1px solid var(--blue);color:var(--blue-d);font:600 11px var(--mono);letter-spacing:.08em;text-transform:uppercase;padding:7px 14px;opacity:.4;transition:opacity .4s}
+  .pillL.lit{opacity:1}
 
   /* stage switcher */
   #tabs{position:absolute;left:50%;top:628px;transform:translateX(-50%);display:flex;gap:8px;z-index:10}
@@ -103,19 +113,27 @@
 <!-- 4. TOGETHER -->
 <section class="stage" id="s4">
   <div class="hd"><h1 class="in2">Built as one. <span class="b">Not stitched together.</span></h1>
-    <p class="sub in3">Three capabilities a platform must have natively to operate at machine speed.</p></div>
+    <p class="sub in3">Follow one alert through the loop. Same data, same platform, no handoffs.</p></div>
   <svg id="loop" viewBox="0 0 1280 720">
-    <path id="lp" d="M232 300H1048V252C1048 175 232 175 232 252V300" fill="none" stroke="#B5BFCE" stroke-width="2" stroke-dasharray="6 5"/>
-    <path d="M440 300l-8-4.5v9zM848 300l-8-4.5v9zM632 194.4l8-4.5v9zM232 252l-4.5-8h9z" fill="#B5BFCE"/>
+    <path id="lp" d="M232 294H1048V250C1048 172 232 172 232 250V294" fill="none" stroke="#B5BFCE" stroke-width="2" stroke-dasharray="6 5"/>
+    <path d="M440 294l-8-4.5v9zM848 294l-8-4.5v9zM632 190.4l8-4.5v9zM232 250l-4.5-8h9z" fill="#B5BFCE"/>
     <rect id="pdot" x="-6" y="-6" width="12" height="12" fill="#0B64DD" opacity="0"/>
   </svg>
-  <div class="nodeL in3" id="n0" style="left:184px"><span class="ic" data-ic="eye" data-size="48"></span></div>
-  <div class="nodeL in4" id="n1" style="left:592px"><span class="ic" data-ic="brain" data-size="48"></span></div>
-  <div class="nodeL in5" id="n2" style="left:1000px"><span class="ic" data-ic="fist" data-size="48"></span></div>
-  <div class="lb in3" style="left:82px"><b>Senses</b><i>Unified data and visibility</i><span>One agent. A hybrid data mesh with no egress and no rehydration.</span></div>
-  <div class="lb in4" style="left:490px"><b>Brain</b><i>Reason at machine speed</i><span>BM25 and vector in one query, with your choice of LLM.</span></div>
-  <div class="lb in5" style="left:898px"><b>Hands</b><i>Respond fast</i><span>Deterministic and agentic workflows. Automation or human-on-the-loop.</span></div>
-  <div class="cen" style="left:640px;top:500px"><div class="pillL in6"><span class="ic" data-ic="loop" data-size="18"></span>A continuous loop: detect, reason, respond</div></div>
+  <div class="cen" style="left:640px;top:182px"><div class="pillL in6" id="pl"><span class="ic" data-ic="loop" data-size="16"></span>Every response sharpens the next detection</div></div>
+
+  <div class="nodeL in3" id="n0" style="left:188px"><span class="ic" data-ic="eye" data-size="44"></span></div>
+  <div class="nodeL in4" id="n1" style="left:596px"><span class="ic" data-ic="brain" data-size="44"></span></div>
+  <div class="nodeL in5" id="n2" style="left:1004px"><span class="ic" data-ic="fist" data-size="44"></span></div>
+
+  <div class="col4 in3" style="left:82px"><b>Senses</b><i>See everything</i><div class="prods"><span>Elastic SIEM</span><span>Elastic Endpoint</span></div></div>
+  <div class="col4 in4" style="left:490px"><b>Brain</b><i>Reason fast</i><div class="prods"><span>Inference Service</span><span>Agent Builder</span></div></div>
+  <div class="col4 in5" style="left:898px"><b>Hands</b><i>Respond fast</i><div class="prods"><span>Workflows</span><span>Prevention</span></div></div>
+
+  <div class="ev in4" id="e0" style="left:82px"><u>The alert</u><span>14 failed logins in 90s, new country, one admin account.</span></div>
+  <div class="ev in5" id="e1" style="left:490px"><u>The call</u><span>Credential stuffing. Risk 92. Same user, 3 hosts.</span></div>
+  <div class="ev in6" id="e2" style="left:898px"><u>The response</u><span>Host isolated. Account locked. Ticket opened. You approve.</span></div>
+  <div class="stem" style="left:232px"></div><div class="stem" style="left:640px"></div><div class="stem" style="left:1048px"></div>
+  <div class="layer in6"><span>One data layer</span><em>one index · one agent · open APIs</em></div>
 </section>
 
 <nav id="tabs">
@@ -174,18 +192,21 @@
   });
   addEventListener('keydown', e => { if (e.key >= '1' && e.key <= '4' && !e.metaKey && !e.ctrlKey && !e.altKey) go(+e.key - 1); });
 
-  // the loop: a pulse travels senses -> brain -> hands -> back, lighting each node as it passes
+  // the loop: one alert travels senses -> brain -> hands -> back; each step lights as the pulse reaches it
   const lp = document.getElementById('lp'), dot = document.getElementById('pdot'), L = lp.getTotalLength();
-  const nodes = [0, 1, 2].map(i => document.getElementById('n' + i)), at = [0, 408, 816];
+  const nodes = [0, 1, 2].map(i => document.getElementById('n' + i)), evs = [0, 1, 2].map(i => document.getElementById('e' + i)), pl = document.getElementById('pl'), at = [0, 408, 816];
+  const CYCLE = 9;
   (function loop(){
     if (cur === 3){
       const t = performance.now() / 1000 - t0 - 1.1;
       if (t > 0){
-        const pos = (t * L / 7) % L, p = lp.getPointAtLength(pos);
+        const pos = ((t % CYCLE) / CYCLE) * L, p = lp.getPointAtLength(pos);
         dot.setAttribute('x', p.x - 6); dot.setAttribute('y', p.y - 6); dot.setAttribute('opacity', 1);
-        nodes.forEach((n, k) => n.classList.toggle('hit', Math.abs(pos - at[k]) < 46 || (k === 0 && pos > L - 46)));
+        nodes.forEach((n, k) => n.classList.toggle('hit', Math.abs(pos - at[k]) < 46));
+        evs.forEach((e, k) => e.classList.toggle('lit', pos >= at[k] - 10));
+        pl.classList.toggle('lit', pos > at[2] + 60);
       }
-    } else { dot.setAttribute('opacity', 0); nodes.forEach(n => n.classList.remove('hit')); }
+    } else { dot.setAttribute('opacity', 0); nodes.forEach(n => n.classList.remove('hit')); evs.forEach(e => e.classList.remove('lit')); pl.classList.remove('lit'); }
     requestAnimationFrame(loop);
   })();
 
